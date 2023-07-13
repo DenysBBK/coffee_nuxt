@@ -5,56 +5,71 @@
             <h4>Don`t have account? <NuxtLink to="/registration" class="signup">Registration</NuxtLink> </h4>
             <v-form @submit.prevent="submitForm">
                 <v-text-field
-                    v-model="email.value"
+                    v-model="email"
                     label="Email"
                     class="login_input"
                     :rules="emailValidator"
                     >
                 </v-text-field>
                 <v-text-field
-                    v-model="password.value"
+                    v-model="password"
+                    type="password"
                     label="Password"
                     class="login_input"
                     :rules="passwordValidator">
                 </v-text-field>
                 <div class="login_data">
-                <v-radio-group v-model="toAccount">
+                <v-radio-group v-model="toAccount.value">
                 <v-radio label="To cafe account" value="shops"></v-radio>
                 <v-radio label="To user account" value="users"></v-radio>
+                <p class="text-center text-red" v-if="!toAccount.isValid">Need to choose one option</p>
                 </v-radio-group>
-                <v-btn class="login_btn" type="submit">Login</v-btn>
+                <v-btn class="login_btn" type="submit" :loading="load">Login</v-btn>
             </div>
             </v-form>
         </v-container>
     </div>
 </template>
 <script setup lang="ts">
-import { dataType, loginTypes } from '../types/loginTypes'
+import {loginTypes, dataType } from '../types/loginTypes'
 
+const email:Ref<string> = ref('')
+const emailValidator = [(value: string | null) => value?.length! >= 3 || 'First name must be at least 3 characters.']
 
-const email:dataType = reactive({
-    value:'',
-    isValid:true
-})
-const emailValidator = [(value: string | null) => value?.length! > 3 || 'First name must be at least 3 characters.']
-
-const password:dataType = reactive({
-    value:'',
-    isValid:true
-})
+const password:Ref<string> = ref('')
 const passwordValidator = [((value: string | null) => value?.length! >= 6 || 'First name must be at least 6 characters.')]
 
-const toAccount:Ref<string> = ref('')
+const toAccount: dataType = reactive({
+    value:'',
+    isValid:true
+})
+watch(toAccount, ():void => {
+    if(toAccount.value == ''){
+        toAccount.isValid = false 
+    }else{
+        toAccount.isValid = true
+    }
+})
 
-function submitForm():void{
+const load:Ref<boolean> = ref(false)
+
+async function submitForm():Promise<void>{
+    if(email.value == '' || password.value == '')return
+    if(toAccount.value == ''){
+        toAccount.isValid = false
+        return
+    }
+    load.value = true
     const actionPayload:loginTypes = {
         email:email.value,
         password:password.value,
         type:toAccount.value
     };
     try{
-        useAuthStore().signIn(actionPayload)
-        
+       await useAuthStore().signIn(actionPayload)
+       load.value = false
+       useRouter().push('/profile')
+       
     }catch(error){
         console.log(error)
     }

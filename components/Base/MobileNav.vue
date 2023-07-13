@@ -58,7 +58,7 @@ const drawer:Ref<boolean> = ref(false)
 }
 .nav_btns{
     background-color: #fcdfdc;
-   max-height: 50%;
+   
 }
 .main_btn{
     color: #1d0502;

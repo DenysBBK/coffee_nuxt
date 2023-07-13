@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { loginTypes, loginItem, authState } from "types/loginTypes";
+import { signUpData } from "types/regTypes";
 
 export const useAuthStore = defineStore('auth', {
     state:():authState =>({
@@ -54,6 +55,45 @@ export const useAuthStore = defineStore('auth', {
         this.$state.userId = data.localId;
         this.$state.uid = id;
         this.$state.type = payload.type
-        }
+        },
+        async signUp(payload:signUpData):Promise<void>{
+            const theId: number = new Date().getTime()
+            const respTable= await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCn1i-L0RTLONbk82ySwxsEkqvxfJkokqI`,{
+                method:"POST",
+                body:JSON.stringify({
+                    email:payload.email,
+                    password:payload.password,
+                    id:theId,
+                    returnSecureToken:true
+                })
+    
+            })
+            const dataTable = await respTable.json()
+            if(!respTable.ok){
+                let userOrCafe;
+                    if(payload.type === 'users') userOrCafe = 'User';
+                    if(payload.type === 'shops') userOrCafe = 'Cafe';
+                let errorKey;
+                    if(dataTable.error.message === 'INVALID_EMAIL') errorKey = 'Invalid email'
+                const error = new Error(dataTable.error.message === "EMAIL_EXISTS" ? `${userOrCafe} is already exsist` : errorKey)
+            throw error
+            }else{
+                const mode:string = payload.type;
+                const responce:any = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${mode}/${theId}.json`,{
+                method: "PUT",
+                body:JSON.stringify({
+                    email:payload.email,
+                    name:payload.name,
+                    id:theId
+                })
+                })
+                const data = await responce.json()
+                if(!responce.ok){
+                    const error:Error = new Error(data.error.message)
+                throw error
+                };
+            }
+            },
+    
     }
 })
