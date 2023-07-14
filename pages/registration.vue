@@ -85,7 +85,7 @@ function toShopAccout():void {toAccount.value = 'shops'; }
 function toUserAccout():void {toAccount.value = 'users'; }
 
 
-function submitForm(){
+async function submitForm(){
     if(email.value == '' || password.value == '' || passwordConfirmation.value == '' || toAccount.value == '' || checkbox.value == false) return
     const actionPayload:signUpData = {
         email:email.value,
@@ -94,7 +94,8 @@ function submitForm(){
         type:toAccount.value
     }
     try{
-        useAuthStore().signUp(actionPayload)
+        await useAuthStore().signUp(actionPayload)
+        useRouter().push('/login')
     }catch(error){
         console.log(error)
         
