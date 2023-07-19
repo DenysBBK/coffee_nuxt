@@ -6,8 +6,8 @@
                 <div class="profile_info">
                     <p class="profile_item"><b>Name:</b> {{ props.name }}</p>
                     <p class="profile_item"><b>Phone:</b> {{ props.phone }}</p>
-                    <p class="profile_item"><b>Card:</b> {{ props.card }}</p>
-                    <p class="profile_item"><b>Card number:</b> {{ props.cardNumber }}</p>
+                    <p class="profile_item"><b>Bank:</b> {{ props.bank }}</p>
+                    <p class="profile_item"><b>Card number:</b> {{ props.cardNumber == '' ? '': props.cardNumber.slice(0, -8) + "********"  }}</p>
                 </div>
                 <img
                 src="../../public/images/photo.jpg">
@@ -36,13 +36,13 @@ const props = defineProps({
         type:String,
         required:false
     },
-    card:{
+    bank:{
         type:String,
         required:false
     },
     cardNumber:{
         type:String,
-        required:false
+        required:true
     }
 })
 const emits = defineEmits(['edit'])
