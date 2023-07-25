@@ -42,9 +42,9 @@ export interface getCafeData{
     city:string
 }
 export interface postUserData{
-    phone:string,
-    bank:string,
-    card:string,
+    phone:string | undefined,
+    bank:string | undefined,
+    card:string | undefined,
     name:string
 }
 export interface postCafeData{

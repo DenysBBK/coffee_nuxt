@@ -10,7 +10,6 @@
                     prepend-icon="mdi-camera"
                     class="update_input"
                     :v-model="photo"
-                    @change="handleFileInputChange"
                     ></v-file-input>
                     <v-text-field
                     class="update_input"
@@ -47,49 +46,62 @@
     </div>
 </template>
 <script setup lang="ts">
+const props = defineProps({
+    name:{
+        type:String,
+        required:true
+    },
+    phone:{
+        type:String,
+        required:false
+    },
+    bank:{
+        type:String,
+        required:false
+    },
+    cardNumber:{
+        type:String,
+        required:true
+    }
+})
 
 const load:Ref<boolean> = ref(false)
-const name:Ref<string> = ref('');
-const phone:Ref<string> = ref('');
-const card:Ref<string> = ref('');
+const name:Ref<string> = ref(props.name);
+const phone:Ref<string | undefined> = ref(props.phone);
+const card:Ref<string | undefined> = ref(props.cardNumber);
 const cardValidator = [((value: string | null) => value?.length! == 16 || 'Card need to have 16 numbers ')]
-const bank:Ref<string> = ref('');
+const bank:Ref<string | undefined> = ref(props.bank);
 const photo = ref(null)
 
 
 const emits = defineEmits(['edited']);
 
-function handleFileInputChange(event:any):any{
-      const files = event.target.files;
-      if (files.length > 0) {
-        photo.value = files[0];
-      }
-    };
 
 async function edited(){
-    // load.value = true
-    // const userUpdatedData = {
-    //     name:name.value,
-    //     phone:phone.value,
-    //     card:card.value,
-    //     bank:bank.value
-    // }
-    // try{
-    //     await useProfileStore().postUser(userUpdatedData)
-    //     emits('edited', userUpdatedData)
-    // }catch(error){
-    //     console.log(error)
+    load.value = true
+    const userUpdatedData = {
+        name:name.value,
+        phone:phone.value,
+        card:card.value,
+        bank:bank.value
+    }
+    try{
+        await useProfileStore().postUser(userUpdatedData)
+        emits('edited', userUpdatedData)
+    }catch(error){
+        console.log(error)
         
-    // }
-    // load.value = false
-    console.log(photo.value)
+    }
+    load.value = false
+    
     
 }
 
 
 </script>
 <style scoped lang="scss">
-.profile_container{
+.profile{
+    &_container{
     width: 100%;
     background-color: #cff7fc;
     border-radius: 5%;
@@ -97,19 +109,25 @@ async function edited(){
     width: 50%;
     
 }
-.update_input{
-    background-color: white;
-    margin-bottom: 15px;
 }
-.update_main{
-    background-color: #cff7fc;
-}
-.profile_update{
+    &_update{
     padding-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     align-self: center;
 }
+
 }
+.update{
+    &_input{
+    background-color: white;
+    margin-bottom: 15px;
+}
+    &_main{
+    background-color: #cff7fc;
+}
+}
+
+
 </style>

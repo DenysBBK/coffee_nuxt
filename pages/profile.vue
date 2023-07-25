@@ -7,12 +7,18 @@
         :cardNumber="userCard"
         @edit="editProfile"></user-profile>
         <user-edit-profile v-if="updatedProfile"
+        :name="userName"
+        :phone="userPhone"
+        :bank="userBank"
+        :cardNumber="userCard"
         @edited="profileIsUpdated"></user-edit-profile>
     </div>
 </template>
 <script setup lang="ts">
 const updatedProfile:Ref<boolean> = ref(false);
+    
 const userData = useProfileStore().userInfo;
+
 const userName:Ref<string> = ref('');
 const userPhone:Ref<string> = ref('');
 const userBank:Ref<string> = ref('');
@@ -30,11 +36,16 @@ function profileIsUpdated(data:any){
     userCard.value = data.card
     
 }
-// const userData = useProfileStore().user
 
 
-onBeforeMount(() =>{
-    useProfileStore().getUserData();
+onMounted(async () =>{
+    try{
+        await useProfileStore().getUserData();
+
+    }catch(error){
+        console.log(error)
+        
+    }
     console.log(userName)
     
     userName.value = userData.name;
