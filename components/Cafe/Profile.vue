@@ -5,51 +5,48 @@
             <div class="profile_block">
                 <div class="profile_info">
                     <p class="profile_item"><b>Name:</b> {{ props.name }}</p>
-                    <p class="profile_item"><b>Phone:</b> {{ props.phone }}</p>
-                    <p class="profile_item"><b>Bank:</b> {{ props.bank }}</p>
-                    <p class="profile_item"><b>Card number:</b> {{ props.cardNumber == '' ? '': props.cardNumber.slice(0, -8) + "********"  }}</p>
+                    <p class="profile_item"><b>City:</b> {{ props.city }}</p>
+                    <p class="profile_item"><b>Address:</b> {{ props.address }}</p>
+                    <p class="profile_item"><b>Available positions:</b></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(item, index) in props.positions" :key="index">
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.price }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <img src="../../public/images/photo.jpg">
             </div>
             <div class="profile_update">
-                <v-btn variant="outlined" v-on:click="editProfile">Update profile</v-btn>
-            </div>
-            <div class="profile_btns">
-                <v-btn prepend-icon="mdi-arrow-left" class="profile_btn">Active orders</v-btn>
-                <v-btn append-icon="mdi-arrow-right" class="profile_btn">Make order</v-btn>
-
+                <v-btn variant="outlined" v-on:click="editProfile">Update profile </v-btn>
             </div>
         </v-container>
     </div>
 </template>
 <script setup lang="ts">
 
+import {Positions} from '../../types/profileTypes'
 
+const props = defineProps<{
+  name: string;
+  address?: string; 
+  city?: string;    
+  positions: Positions[];
+}>();
 
-const props = defineProps({
-    name:{
-        type:String,
-        required:true
-    },
-    phone:{
-        type:String,
-        required:false
-    },
-    bank:{
-        type:String,
-        required:false
-    },
-    cardNumber:{
-        type:String,
-        required:true
-    }
-})
 const emits = defineEmits(['edit'])
 
 function editProfile(){
     emits('edit')
 }
-
 </script>
 <style scoped lang="scss">
 .profile{
@@ -70,30 +67,20 @@ function editProfile(){
         flex-direction: row;
     }
 }
+    &_block img{
+    max-height: 200px;
+ }
     &_info{
     display: flex;
     flex-direction: column;
     gap: 10px;
-
 }
+    &_info table{
+        padding-top: 20px;
+    }
     &_item{
     font-size: 20px
 
-}
-    &_btns{
-    display: flex;
-    justify-content: space-around;
-    padding-top: 70px;
-    flex-direction: column;
-    gap: 20px;
-    @media screen and (min-width: 450px) {
-        flex-direction: row;
-    }
-}
-
-    &_btn{
-    background-color: blue;
-    color: white;
 }
     &_update{
     padding-top: 70px;
@@ -103,12 +90,5 @@ function editProfile(){
     align-self: center;
 }
 
-
 }
-
-
-
-
-
-
 </style>
