@@ -5,6 +5,7 @@
         :address="cafeAddress"
         :city="cafeCity"
         :positions="cafePositions"
+        :phone="cafePhone"
         @edit="editProfile">
 
         </cafe-profile>
@@ -12,7 +13,9 @@
         :positions="cafePositions"
         :name="cafeName"
         :address="cafeAddress"
-        :city="cafeCity">
+        :city="cafeCity"
+        :phone="cafePhone"
+        @edited="profileIsUpdated">
 
         </cafe-edit-profile>
     </div>
@@ -22,10 +25,11 @@ import { Positions } from '../types/profileTypes'
 
 const cafeData = useProfileStore().cafeInfo
 
-const updatedProfile:Ref<boolean> = ref(true);
-const cafeName:Ref<string> = ref('Aroma');
+const updatedProfile:Ref<boolean> = ref(false);
+const cafeName:Ref<string> = ref('');
 const cafeAddress:Ref<string> = ref('');
 const cafeCity:Ref<string> = ref('');
+const cafePhone:Ref<string> = ref('')
 let cafePositions:Positions[] = reactive([{
     name:'',
     price:''
@@ -37,10 +41,11 @@ function editProfile():void{
 
 function profileIsUpdated(data:any):void{
     updatedProfile.value = false;
-    cafeName.value = data.cafeName;
-    cafeAddress.value = data.cafeAddress;
-    cafeCity.value = data.cafeCity;
-    cafePositions.values = data.cafePositions
+    cafeName.value = data.name;
+    cafeAddress.value = data.address;
+    cafeCity.value = data.city;
+    cafePositions = data.positions
+    cafePhone.value = data.phone
     
 }
 
@@ -56,6 +61,7 @@ onMounted(async () =>{
     cafeAddress.value = cafeData.address;
     cafeCity.value = cafeData.city;
     cafePositions = cafeData.positions
+    cafePhone.value = cafeData.phone
     
 })
 
