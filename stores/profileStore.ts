@@ -75,16 +75,17 @@ export const useProfileStore = defineStore('profile', {
                 phone:payload.phone,
                 positions:payload.positions,
                 city:payload.city,
-                orders:payload.orders
+                name:payload.name
             };
             const responce = await fetch(url,{
                 method:"PUT",
                 body:JSON.stringify(fullData)
             });
             const data = await responce.json();
-            if(!data.ok){
-                throw new Error('Cant post the data')
+            if(!data){
+                throw new Error()
             }
+            
         },
         async getCafeData():Promise<void>{
             let uid = localStorage.getItem('uid');

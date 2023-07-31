@@ -84,6 +84,7 @@ async function submitForm():Promise<void>{
 useHead({
     title:'Login'
 })
+
 </script>
 <style scoped lang="scss">
 .login_btn{

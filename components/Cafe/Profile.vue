@@ -7,6 +7,7 @@
                     <p class="profile_item"><b>Name:</b> {{ props.name }}</p>
                     <p class="profile_item"><b>City:</b> {{ props.city }}</p>
                     <p class="profile_item"><b>Address:</b> {{ props.address }}</p>
+                    <p class="profile_item"><b>Contact phone:</b> {{ props.phone }}</p>
                     <p class="profile_item"><b>Available positions:</b></p>
                     <table>
                         <thead>
@@ -38,7 +39,8 @@ import {Positions} from '../../types/profileTypes'
 const props = defineProps<{
   name: string;
   address?: string; 
-  city?: string;    
+  city?: string;
+  phone?:string;  
   positions: Positions[];
 }>();
 

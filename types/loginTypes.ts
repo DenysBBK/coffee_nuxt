@@ -2,7 +2,8 @@ export interface authState{
     userId:string | null,
     token:string|null,
     uid:string | undefined,
-    type:string
+    type:string,
+    isAuthenticated:boolean
 }
 export interface dataType{
     value:string,

@@ -15,6 +15,8 @@
     </div>
 </template>
 <script setup lang="ts">
+
+
 const updatedProfile:Ref<boolean> = ref(false);
     
 const userData = useProfileStore().userInfo;
@@ -55,5 +57,9 @@ onMounted(async () =>{
  
     
 })
+definePageMeta({
+    middleware:'authenticated'
+})
+
 
 </script>

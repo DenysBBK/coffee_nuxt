@@ -10,16 +10,21 @@
                 </NuxtLink>
             </div>
             <div class="navigation_routes">
-                <NuxtLink to="/login">
+                <NuxtLink to="/login" v-if="!auth.isAuthenticated">
                     <base-button text="login"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/registration">
-                    <base-button text="Registration"></base-button>
+                    <base-button text="Registration" v-if="!auth.isAuthenticated"></base-button>
                 </NuxtLink>
+                <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
             </div>
         </nav>
     </v-container>
 </template>
+<script setup lang="ts">
+const auth = useAuthStore()
+
+</script>
 <style scoped>
 .btn{
     color: red;

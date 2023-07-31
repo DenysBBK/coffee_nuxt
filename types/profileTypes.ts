@@ -48,11 +48,11 @@ export interface postUserData{
     name:string
 }
 export interface postCafeData{
-    city:string,
-    address:string,
-    phone:string,
+    city:string | undefined,
+    address:string | undefined,
+    phone:string | undefined,
     positions:Positions[],
-    orders:any[]
+   name:string
 }
 export interface shopsArr{
     address:string,

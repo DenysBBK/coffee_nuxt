@@ -8,13 +8,20 @@
                     label="Caffe photo">
                     </v-file-input>
                     <v-text-field
-                    label="Caffe name">
+                    label="Caffe name"
+                    v-model="name">
                     </v-text-field>
                     <v-text-field
-                    label="City">
+                    label="City"
+                    v-model="city">
                     </v-text-field>
                     <v-text-field
-                    label="Address">
+                    label="Address"
+                    v-model="address">
+                    </v-text-field>
+                    <v-text-field
+                    label="Contact phone"
+                    v-model="phone">
                     </v-text-field>
                     <h3 class="text-center pb-10">Positions</h3>
                     <v-table>
@@ -30,46 +37,105 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in props.positions" :key="index">
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.price }}</td>
-                                <td><v-btn variant="tonal" size="x-small">delete</v-btn></td>
+                            <tr v-for="(item, index) in allPositions" :key="index">
+                                <td :id="'name'+index">{{ item.name }}</td>
+                                <td :id="'price'+index">{{ item.price }}</td>
+                                <td><v-btn variant="tonal" size="x-small" v-on:click="deletePosition(index)">delete</v-btn></td>
                             </tr>
                         </tbody>
                     </v-table>
                     <div class="add_input" v-if="isNewPositionInput">
                         <v-text-field
-                        label="Position name"></v-text-field>
+                        label="Position name"
+                        type="text"
+                        v-model="newPosition.name"></v-text-field>
                         <v-text-field
-                        label="Price"></v-text-field>
-                        <v-btn icon="mdi-checkbox-marked-circle" class="approve_btn"></v-btn>
+                        label="Price"
+                        type="text"
+                        v-model="newPosition.price"></v-text-field>
+                        <v-btn icon="mdi-checkbox-marked-circle" class="approve_btn" v-on:click="pushPosition"></v-btn>
                         <v-btn icon="mdi-cancel" class="disapprove_btn" v-on:click="addNewPosition"></v-btn>
                     </div>
                     <v-btn v-if="!isNewPositionInput" variant="outlined" size="small" class="update_btn" v-on:click="addNewPosition">Add new position</v-btn>
                 </div>
             </v-form>
+            <div class="profile_update">
+                <v-btn variant="outlined" v-on:click="edited" class="edit_btn"
+                :loading="load">Update profile</v-btn>
+            </div>
         </v-container>
     </div>
 </template>
 <script setup lang="ts">
+
 import {Positions} from '../../types/profileTypes'
 
+const props = defineProps<{
+    name: string;
+    address?: string; 
+    city?: string;
+    phone?:string;  
+    positions: Positions[];
+}>();
+
 const isNewPositionInput:Ref<boolean> = ref(false);
+const newPosition:Positions = reactive({
+    name:'',
+    price:''
+})
+
+
+const allPositions:Positions[] = reactive([])
+
+function pushPosition():void{
+    allPositions.push({
+        name:newPosition.name,
+        price:newPosition.price
+    })
+    addNewPosition()
+    newPosition.price = '';
+    newPosition.name = '';
+}
 
 function addNewPosition():void{
     isNewPositionInput.value = !isNewPositionInput.value
 }
 
-const props = defineProps<{
-  name: string;
-  address?: string; 
-  city?: string;    
-  positions: Positions[];
-}>();
-
-function edited(){
-    console.log('Hello')
+function deletePosition(index:number):void{
+    console.log('hello')
+    allPositions.splice(index, 1)
+    console.log(allPositions)
     
+}
+props.positions.forEach(one => {
+    allPositions.push(one)
+})
+
+const name:Ref<string> = ref(props.name);
+const city:Ref<string | undefined> = ref(props.city);
+const address:Ref<string | undefined> = ref(props.address);
+const phone:Ref<string | undefined> = ref(props.phone)
+const load:Ref<boolean> = ref(false)
+
+const emits = defineEmits(['edited']);
+
+async function edited():Promise<void>{
+    load.value = true
+    const cafeUpdatedData = {
+        address:address.value,
+        phone:phone.value,
+        positions:allPositions,
+        city:city.value,
+        name:name.value
+    }
+    try{
+        await useProfileStore().postCafe(cafeUpdatedData);
+        emits('edited', cafeUpdatedData)
+    }catch(error){
+        console.log(error)
+        
+    }
+   load.value = false
 }
 
 </script>
@@ -118,6 +184,11 @@ function edited(){
 }
 .disapprove_btn{
     color: red;
+}
+.edit_btn{
+    color: white;
+    background-color: blue;
+    
 }
 
 

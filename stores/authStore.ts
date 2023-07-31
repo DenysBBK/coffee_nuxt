@@ -7,7 +7,8 @@ export const useAuthStore = defineStore('auth', {
         userId: null,
         token: null,
         uid:'',
-        type:''
+        type:'',
+        isAuthenticated:false
     }),
     actions:{
         async signIn(payload:loginTypes):Promise<void>{
@@ -55,6 +56,7 @@ export const useAuthStore = defineStore('auth', {
         this.$state.userId = data.localId;
         this.$state.uid = id;
         this.$state.type = payload.type
+        this.$state.isAuthenticated = true
         },
         async signUp(payload:signUpData):Promise<void>{
             const theId: number = new Date().getTime()
@@ -94,6 +96,19 @@ export const useAuthStore = defineStore('auth', {
                 };
             }
             },
+            logout():void{
+                localStorage.removeItem('uid');
+                localStorage.removeItem('token');
+                localStorage.removeItem('localId');
+                localStorage.removeItem('type');
+                this.$state.token = null;
+                this.$state.userId = null;
+                this.$state.uid = '';
+                this.$state.type = ''
+                this.$state.isAuthenticated = false
+                useRouter().push('/login')
+                
+            }
     
     }
 })
