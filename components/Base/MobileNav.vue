@@ -21,12 +21,13 @@
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" location="right" temporary class="nav_btns">
             <div class="mobile_btn">
-                <NuxtLink to="/login">
+                <NuxtLink to="/login" v-if="!auth.isAuthenticated">
                     <base-button text="login"></base-button>
                 </NuxtLink>
-                <NuxtLink to="/registration">
+                <NuxtLink to="/registration" v-if="!auth.isAuthenticated">
                     <base-button text="Registration"></base-button>
                 </NuxtLink>
+                    <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
             </div>
         </v-navigation-drawer>
         <v-card-text>
@@ -36,7 +37,9 @@
 </v-container>
 </template>
 <script setup lang="ts">
-const drawer:Ref<boolean> = ref(false)
+const drawer:Ref<boolean> = ref(false);
+
+const auth = useAuthStore()
 </script>
 <style scoped lang="scss">
 .mobile_bar{
@@ -48,8 +51,10 @@ const drawer:Ref<boolean> = ref(false)
 }
 .navigator{
     z-index: 1;
+    
 }
 .mobile_btn{
+   
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -58,7 +63,7 @@ const drawer:Ref<boolean> = ref(false)
 }
 .nav_btns{
     background-color: #fcdfdc;
-   
+    min-width: 60%;
 }
 .main_btn{
     color: #1d0502;

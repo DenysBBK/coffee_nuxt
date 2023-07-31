@@ -63,6 +63,10 @@ onMounted(async () =>{
     cafePositions = cafeData.positions
     cafePhone.value = cafeData.phone
     
+});
+
+definePageMeta({
+    middleware:'authenticated'
 })
 
 </script>

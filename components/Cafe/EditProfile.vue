@@ -67,7 +67,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { emit } from 'process';
+
 import {Positions} from '../../types/profileTypes'
 
 const props = defineProps<{

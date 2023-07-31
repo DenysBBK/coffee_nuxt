@@ -105,6 +105,7 @@ async function submitForm(){
 useHead({
     title:'Registration'
 })
+
 </script>
 <style scoped lang="scss">
 .signin{
