@@ -16,7 +16,10 @@
             </div>
             <div class="profile_btns">
                 <v-btn prepend-icon="mdi-arrow-left" class="profile_btn">Active orders</v-btn>
-                <v-btn append-icon="mdi-arrow-right" class="profile_btn">Make order</v-btn>
+                <NuxtLink to="/order">
+                    <v-btn append-icon="mdi-arrow-right" class="profile_btn">Make order</v-btn>
+                </NuxtLink>
+                
 
             </div>
         </v-container>
