@@ -1,17 +1,18 @@
-
-    <template>
+<template>
   <v-card
     class="mx-auto"
-    max-width="250"
+    max-width="500"
   >
     <img class="card-img"
       src="../../public/images/card-img.png"
       height="200"  
-    >
-    <v-card-title>
-      {{ props.name }}
-    </v-card-title>
-    <v-btn class="card-btn">Order</v-btn>
+      >
+      <v-card-title>
+        {{ props.name }}
+      </v-card-title>
+        <base-order-modal 
+          :data="props.fullData">
+        </base-order-modal>
     <v-card-actions>
       <v-btn
         color="orange-lighten-1"
@@ -19,22 +20,19 @@
       >
         Positions
       </v-btn>
-
       <v-spacer></v-spacer>
-
       <v-btn
         :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
         @click="show = !show"
       ></v-btn>
     </v-card-actions>
-
     <v-expand-transition>
       <div v-show="show">
         <v-divider></v-divider>
 
         <v-card-text>
           <ul class="card-positions">
-            <li v-for="item in props.positions">
+            <li v-for="(item, index) in props.positions" :key="index">
               {{ item.name }} - 
               {{ item.price }} UAH
             </li>
@@ -47,11 +45,13 @@
 
 <script setup lang="ts">
 import { Positions } from 'types/profileTypes';
+import { shopsArr } from 'types/profileTypes';
 const show:Ref<boolean> = ref(false)
 
 const props = defineProps<{
   name?:string,
-  positions?:Positions[]
+  positions?:Positions[],
+  fullData: shopsArr
 
 }>()
 </script>
