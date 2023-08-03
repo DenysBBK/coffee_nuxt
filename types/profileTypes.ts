@@ -22,7 +22,7 @@ export interface profileState{
         positions:Positions[],
         city:string
     },
-    shops:any[]
+    shops:shopsArr[]
 }
 export interface getUserData{
     bank:string,
