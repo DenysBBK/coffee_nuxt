@@ -11,7 +11,9 @@
         {{ props.name }}
       </v-card-title>
         <base-order-modal 
-          :data="props.fullData">
+          :data="props.fullData"
+          
+          >
         </base-order-modal>
     <v-card-actions>
       <v-btn
@@ -46,7 +48,12 @@
 <script setup lang="ts">
 import { Positions } from 'types/profileTypes';
 import { shopsArr } from 'types/profileTypes';
-const show:Ref<boolean> = ref(false)
+const show:Ref<boolean> = ref(false);
+
+
+
+
+
 
 const props = defineProps<{
   name?:string,
