@@ -12,7 +12,7 @@
       </v-card-title>
         <base-order-modal 
           :data="props.fullData"
-          
+          @order="orderRequest"
           >
         </base-order-modal>
     <v-card-actions>
@@ -50,7 +50,10 @@ import { Positions } from 'types/profileTypes';
 import { shopsArr } from 'types/profileTypes';
 const show:Ref<boolean> = ref(false);
 
-
+function orderRequest(data:Positions[]){
+  console.log(data)
+  
+}
 
 
 

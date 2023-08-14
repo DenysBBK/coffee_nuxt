@@ -48,14 +48,24 @@
                     </div>
                 <p class="modal_subtitle">Your order list:</p>
                 <p v-if="isOrderListEmpty">-</p>
-                <ul v-if="!isOrderListEmpty">
+                <ul v-if="!isOrderListEmpty" class="modal_list">
                   <li v-for="(item, index) in orderList" :key="index">
-                  {{ `${item.name}, ${item.price} UAH` }}</li>
+                  {{ `${item.name}, ${item.price} UAH` }}
+                  <v-btn icon="mdi-cancel" size="20px" class="modal_disaprove" @click="removeFromOrderList(index)"></v-btn>
+                </li>
                 </ul>
                 <p class="pt-6" v-if="!isOrderListEmpty">Total price: {{ totalPrice }} UAH</p>
+                <span v-if="orderListValidator" class="order_validator">Order list is empty</span>
               </v-card-text>
               <div class="modal_confirm">
-                <base-button text="Confirm order" @click="confirmOrder" :loading="isLoading"></base-button>
+                <base-button text="Confirm order" @click="() => {
+                  if(orderList.length == 0){
+                  orderListValidator = true;
+                  return
+                    } 
+                  confirmOrder()
+                  isActive.value = false
+                }" :loading="isLoading"></base-button>
               </div>
               <v-card-actions class="justify-end">
                 <v-btn
@@ -95,6 +105,7 @@ const thePositions= computed(() => {
 const choosenPosition:Ref<string> = ref('')
 const isOrderListEmpty:Ref<boolean> = ref(true);
 const orderList:Ref<Positions[]> = ref([]);
+const orderListValidator:Ref<boolean> = ref(false);
 
 const totalPrice:Ref<number> = ref(0)
 const isLoading:Ref<boolean> = ref(false)
@@ -103,22 +114,28 @@ function addToOrderList():void{
   const findItem = thePositions.value.find(item => item.text == choosenPosition.value)
   if(findItem){
     isOrderListEmpty.value = false
+    orderListValidator.value = false
     orderList.value.push(findItem.itemData)
     totalPrice.value = totalPrice.value + Number(findItem.itemData.price)
   }
   
 }
-const needToClose:Ref<boolean> = ref(false)
+function removeFromOrderList(index:number):void{
+ 
+  const [item] = orderList.value.splice(index, 1);
+  totalPrice.value = totalPrice.value - Number(item.price)
+}
+
 
 const emit = defineEmits(['order'])
 function confirmOrder():void{
- console.log('tolik')
-  
-  
-  
+ console.log('tolik') 
  
-  
-  // emit('order', orderList.value)
+emit('order', orderList.value)
+orderList.value = [];
+totalPrice.value = 0;
+isOrderListEmpty.value = true;
+choosenPosition.value = ''
 }
 
 
@@ -134,11 +151,13 @@ function confirmOrder():void{
         
     }
     &_list{
-        list-style-type: none;
-        padding-top: 40px;
+        
+        padding-top: 10px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
+      
+        
         
     
         
@@ -158,6 +177,9 @@ function confirmOrder():void{
       font-weight: 300;
       font-size: 20px;
     }
+    &_disaprove{
+      color: red;
+    }
     
 }
 .list_item{
@@ -167,5 +189,8 @@ function confirmOrder():void{
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.order_validator{
+  color: red;
 }
 </style>
