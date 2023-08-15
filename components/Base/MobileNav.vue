@@ -27,6 +27,9 @@
                 <NuxtLink to="/registration" v-if="!auth.isAuthenticated">
                     <base-button text="Registration"></base-button>
                 </NuxtLink>
+                <NuxtLink to="/active-orders" v-if="type === 'users' && auth.isAuthenticated">
+                    <base-button text="Active orders"></base-button>
+                </NuxtLink>
                     <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
             </div>
         </v-navigation-drawer>
@@ -39,7 +42,8 @@
 <script setup lang="ts">
 const drawer:Ref<boolean> = ref(false);
 
-const auth = useAuthStore()
+const auth = useAuthStore();
+const type:Ref<string | null> = ref(localStorage.getItem('type'))
 </script>
 <style scoped lang="scss">
 .mobile_bar{

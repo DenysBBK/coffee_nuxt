@@ -48,10 +48,29 @@
 <script setup lang="ts">
 import { Positions } from 'types/profileTypes';
 import { shopsArr } from 'types/profileTypes';
+import { userOrderData } from 'types/orderTypes';
 const show:Ref<boolean> = ref(false);
 
-function orderRequest(data:Positions[]){
-  console.log(data)
+async function orderRequest(data:Positions[]):Promise<void>{
+  
+  
+  try{
+    const orderData: userOrderData = {
+      uid:localStorage.getItem('uid'),
+      name:useProfileStore().user.name,
+      positions:data,
+      id:props.fullData.id,
+      shopName:props.fullData.name                  
+    }
+    console.log(orderData)
+    
+    await useOrderStore().postOrder(orderData)
+    
+
+  }catch(error){
+    console.log(error)
+    
+  }
   
 }
 
