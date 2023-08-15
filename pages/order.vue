@@ -23,7 +23,8 @@
                 v-for="item in allShops"
                 :key="item.id"
                 :name="item.name"
-                :positions="item.positions"></base-card>
+                :positions="item.positions"
+                :fullData="item"></base-card>
             </div>
         </v-container>
     </div>
