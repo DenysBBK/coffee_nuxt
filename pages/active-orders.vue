@@ -61,7 +61,9 @@ onBeforeMount(async() => {
         
     }
 })
-
+definePageMeta({
+    middleware:'authenticated'
+})
 </script>
 <style scoped lang="scss">
 .orders{

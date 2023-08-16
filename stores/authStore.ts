@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { defineStore } from "pinia";
 import { loginTypes, loginItem, authState } from "types/loginTypes";
 import { signUpData } from "types/regTypes";
@@ -110,5 +111,8 @@ export const useAuthStore = defineStore('auth', {
                 
             }
     
+    },
+    getters:{
+        useType:(state:authState) => state.type
     }
 })

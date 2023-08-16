@@ -16,8 +16,17 @@
                 <NuxtLink to="/registration">
                     <base-button text="Registration" v-if="!auth.isAuthenticated"></base-button>
                 </NuxtLink>
+                <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
+                    <base-button text="Order"></base-button>
+                </NuxtLink>
                 <NuxtLink to="/active-orders" v-if="type === 'users' && auth.isAuthenticated">
                     <base-button text="Active orders"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/profile" v-if="type === 'users' && auth.isAuthenticated">
+                    <base-button text="Profile"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/history" v-if="type === 'users' && auth.isAuthenticated">
+                    <base-button text="History"></base-button>
                 </NuxtLink>
                 <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
             </div>
@@ -26,7 +35,9 @@
 </template>
 <script setup lang="ts">
 const auth = useAuthStore()
-const type:Ref<string | null> = ref(localStorage.getItem('type'))
+const type:ComputedRef<string> = computed(():string => {
+    return useAuthStore().useType
+})
 
 </script>
 <style scoped>
