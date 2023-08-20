@@ -19,13 +19,19 @@
                 <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
                     <base-button text="Order"></base-button>
                 </NuxtLink>
+                <NuxtLink to="/cafe-profile" v-if="type === 'shops' && auth.isAuthenticated">
+                    <base-button text="Profile"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/orders" v-if="type === 'shops' && auth.isAuthenticated">
+                    <base-button text="Orders"></base-button>
+                </NuxtLink>
                 <NuxtLink to="/active-orders" v-if="type === 'users' && auth.isAuthenticated">
                     <base-button text="Active orders"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/profile" v-if="type === 'users' && auth.isAuthenticated">
                     <base-button text="Profile"></base-button>
                 </NuxtLink>
-                <NuxtLink to="/history" v-if="type === 'users' && auth.isAuthenticated">
+                <NuxtLink to="/history" v-if=" auth.isAuthenticated">
                     <base-button text="History"></base-button>
                 </NuxtLink>
                 <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>

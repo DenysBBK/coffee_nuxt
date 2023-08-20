@@ -1,62 +1,64 @@
 <template>
     <div>
-       <v-container class="orders_container">
-            <h1 class="text-center pb-10" v-if="userOrders.length" >Active orders</h1>
-            <h1 class="text-center pb-10" v-if="!userOrders.length">There is no orders</h1>
+        <v-container class="orders_container">
+            <h1 class="text-center pb-10" v-if="shopOrders.length" >Orders</h1>
+            <h1 class="text-center pb-10" v-if="!shopOrders.length">There is no orders</h1>
             <div class="orders_main">
-                <div class="orders_item" v-for="(item, index) in userOrders" :key="index">
-                    <p class="order_name">{{ item.fromCafe }}</p>
+                <div class="orders_item" v-for="(item, index) in shopOrders" :key="index">
+                    <p class="order_name">{{ item.userName}}</p>
                     <div>
                         <ul class="order_list" v-for="(pos, i) in item.positions" :key="i">
-                        <li>{{ pos.name }} {{ pos.price }}, UAH</li>
-                    </ul>
+                            <li>{{ pos.name }} {{ pos.price }}, UAH</li>
+                        </ul>
                     </div>
                     <div>
                         <p class="order_status">{{ status(item.status) }}</p>
-                        <v-btn @click="finishOrder(index)" class="order_btn" v-if="item.status === 2" >Finish</v-btn>
+                        <v-btn v-if="item.status === 0" class="order_btn" v-on:click="changeOrder(index, 1)">Take in work</v-btn>
+                        <v-btn v-if="item.status === 1" class="order_btn" v-on:click="changeOrder(index, 2)">Finish</v-btn>
                     </div>
                 </div>
             </div>
-       </v-container>
+        </v-container>
     </div>
 </template>
 <script setup lang="ts">
 import { ordersArr } from 'types/orderTypes';
 
-const userOrders:ComputedRef<ordersArr[]> = computed(() => {
+const shopOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3)
 })
+
 function status(item:number):string{
             if(item === 0)return 'Pending';
-            if(item === 1)return 'Preparing';
-            if(item === 2){
-                return 'Ready'
+            if(item === 1){
+                return 'Preparing'
             }else{
-                return 'Finished'
-            };
-            
+                return 'Ready'
+            }
 }
 
-async function finishOrder(index:number):Promise<void>{
-    userOrders.value[index].status = 3;
-            let findOrder = {
-                position:userOrders.value[index].positionId,
-                placeId:userOrders.value[index].cafeId,
-                status:3,
-                type:'users'
-            }
+async function changeOrder(index:number, forType:number):Promise<void>{
+    shopOrders.value[index].status = forType 
+        let findOrder = {
+                position:shopOrders.value[index].positionId,
+                placeId:shopOrders.value[index].cafeId,
+                status:forType,
+                type:'shops'
+            } 
     try{
         await useOrderStore().updateOrder(findOrder);
-        await useOrderStore().getOrders('user')
+        await useOrderStore().getOrders('shop')
     }catch(error){
         console.log(error)
         
     }
 }
 
+
+
 onBeforeMount(async() => {
     try{
-    await useOrderStore().getOrders('user')
+    await useOrderStore().getOrders('shop')
     }catch(error){
         console.log(error)
         
@@ -108,5 +110,4 @@ definePageMeta({
 
     }
 }
-
 </style>

@@ -1,15 +1,16 @@
 <template>
     <div>
         <v-container class="history_container">
-            <h1 class="text-center pb-10" >Orders History</h1>
+            <h1 class="text-center pb-10" v-if="ordersItems.length" >Orders History</h1>
+            <h1 class="text-center pb-10" v-if="!ordersItems.length" >You dont have items in history</h1>
             <div class="history_main">
-                <div class="history_table">
-                    <span>Shop name</span>
+                <div class="history_table" v-if="ordersItems.length">
+                    <span >{{ type == 'users'?'Coffe Shop Name':'User Name' }}</span>
                     <span>Positions</span>
                     <span>Date</span>
                 </div>
-                <div class="history_item" v-for="(item, index) in userOrders" :key="index">
-                    <p class="item_name">{{ type = 'users'?item.fromCafe:item.userName }}</p>
+                <div class="history_item" v-for="(item, index) in ordersItems" :key="index">
+                    <p class="item_name">{{ type == 'users'?item.fromCafe:item.userName }}</p>
                     <div>
                     <ul class="item_list" v-for="(pos, i) in item.positions" :key="i">
                         <li>{{ pos.name }}, {{ pos.price }}/UAH</li>
@@ -23,7 +24,7 @@
 </template>
 <script setup lang="ts">
 import { ordersArr } from 'types/orderTypes';
-const userOrders:ComputedRef<ordersArr[]> = computed(() => {
+const ordersItems:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status === 3)
 })
 

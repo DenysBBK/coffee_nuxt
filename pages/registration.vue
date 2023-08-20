@@ -66,10 +66,10 @@
 import {signUpData} from '../types/regTypes'
 
 const email:Ref<string> = ref('');
-const emailValidator = [(value: string | null) => value?.length! >= 3 || 'First name must be at least 3 characters.']
+const emailValidator = [(value: string | null) => value?.length! >= 3 || 'Email must include at least 3 characters.']
 
 const password:Ref<string> = ref('')
-const passwordValidator = [((value: string | null) => value?.length! >= 6 || 'First name must be at least 6 characters.')]
+const passwordValidator = [((value: string | null) => value?.length! >= 6 || 'Passwrod must include at least 6 characters.')]
 
 const passwordConfirmation:Ref<string> = ref('');
 const confirmationRules = [((value: string | null) => value == password.value|| 'Field should match Password')]
