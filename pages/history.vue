@@ -10,7 +10,7 @@
                     <span>Date</span>
                 </div>
                 <div class="history_item" v-for="(item, index) in ordersItems" :key="index">
-                    <p class="item_name">{{ type == 'users'?item.fromCafe:item.userName }}</p>
+                    <p class="item_name">{{ type = 'users'?item.fromCafe:item.userName }}</p>
                     <div>
                     <ul class="item_list" v-for="(pos, i) in item.positions" :key="i">
                         <li>{{ pos.name }}, {{ pos.price }}/UAH</li>
@@ -47,6 +47,9 @@ onBeforeMount(async() => {
 })
 definePageMeta({
     middleware:'authenticated'
+})
+useHead({
+    title:'History'
 })
 </script>
 <style scoped lang="scss">

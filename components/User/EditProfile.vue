@@ -4,13 +4,22 @@
             <h1 class="text-center pb-10" >Update Profile</h1>
             <v-form @submit.prevent="edited">
                 <div class="update_main">
-                    <v-file-input
-                    label="Add your photo"
-                    variant="filled"
-                    prepend-icon="mdi-camera"
-                    class="update_input"
-                    :v-model="photo"
-                    ></v-file-input>
+                    <p>Choose you avatar:</p>
+                    <div class="update_img">
+                        <div class="update_avatar">
+                            <img :src=mainAvatar(choosenImage) class="profile_img">
+                            <button class="update_btn" @click.prevent="makeDefault" type="button">
+                                <span class="update_span">Make default</span>
+                            </button>
+                        </div>
+                        <div class="update_avatars" >
+                            <div v-for="item in photoarr" :key="item">
+                                <button @click.prevent="changeAvatar(item)">
+                                    <img :src=allImages(item) class="profile_img">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <v-text-field
                     class="update_input"
                     label="Name"
@@ -39,7 +48,7 @@
                 </div>
                 <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="edited"
-                :loading="load">Update profile</v-btn>
+                :loading="load" type="submit">Update profile</v-btn>
             </div>
         </v-form>
         </v-container>
@@ -62,6 +71,10 @@ const props = defineProps({
     cardNumber:{
         type:String,
         required:true
+    },
+    avatar:{
+        type:Number,
+        required:true
     }
 })
 
@@ -71,21 +84,37 @@ const phone:Ref<string | undefined> = ref(props.phone);
 const card:Ref<string | undefined> = ref(props.cardNumber);
 const cardValidator = [((value: string | null) => value?.length! == 16 || 'Card need to have 16 numbers ')]
 const bank:Ref<string | undefined> = ref(props.bank);
-const photo = ref(null)
+const choosenImage:Ref<number> = ref(props.avatar)
 
+const photoarr:number[] = [1,2,3,4,5,6]
+function allImages(item:number):string{
+    return `/images/${item}.png`
+}
+
+function mainAvatar(item:number):string{
+    return `/images/${item}.png`
+}
+
+function changeAvatar(item:number):void{
+    choosenImage.value = item
+}
+function makeDefault():void{
+    choosenImage.value = 0
+}
 
 const emits = defineEmits(['edited']);
-
-
 async function edited(){
     load.value = true
     const userUpdatedData = {
         name:name.value,
         phone:phone.value,
         card:card.value,
-        bank:bank.value
+        bank:bank.value,
+        avatar:choosenImage.value
     }
     try{
+        console.log(choosenImage.value)
+        
         await useProfileStore().postUser(userUpdatedData)
         emits('edited', userUpdatedData)
     }catch(error){
@@ -127,6 +156,43 @@ async function edited(){
     &_main{
     background-color: #cff7fc;
 }
+    &_img{
+        display: flex;
+        justify-content: space-between;
+        gap: 50px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    &_avatars{
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 500px;
+        gap: 5px;
+    }
+    &_avatar{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    &_btn{
+        background-color: white;
+        border-radius: 50px;
+        padding: 5px;
+        &:hover{
+            outline:2px black solid;
+        }
+    }
+    &_span{
+        margin: 0;
+        text-align: center;
+    }
+}
+
+.profile_img{
+    max-width: 70px;
+        max-height: 70px;
+        align-items: center;
 }
 
 

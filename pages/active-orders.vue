@@ -65,6 +65,9 @@ onBeforeMount(async() => {
 definePageMeta({
     middleware:'authenticated'
 })
+useHead({
+    title:'Active orders'
+})
 </script>
 <style scoped lang="scss">
 .orders{

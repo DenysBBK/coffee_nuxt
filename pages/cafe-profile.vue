@@ -68,5 +68,10 @@ onMounted(async () =>{
 definePageMeta({
     middleware:'authenticated'
 })
+useHead({
+    title:'Profile'
+})
+
+
 
 </script>

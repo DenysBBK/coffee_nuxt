@@ -12,6 +12,7 @@ export interface profileState{
         id:number|null,
         name:string,
         phone:string
+        avatar:number
     },
     cafe:{
         address:string,
@@ -30,7 +31,8 @@ export interface getUserData{
     email:string,
     id:number,
     name:string,
-    phone:string
+    phone:string,
+    avatar:number
 }
 export interface getCafeData{
     address:string,
@@ -45,7 +47,8 @@ export interface postUserData{
     phone:string | undefined,
     bank:string | undefined,
     card:string | undefined,
-    name:string
+    name:string,
+    avatar:number
 }
 export interface postCafeData{
     city:string | undefined,

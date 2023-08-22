@@ -87,7 +87,8 @@ export const useAuthStore = defineStore('auth', {
                 body:JSON.stringify({
                     email:payload.email,
                     name:payload.name,
-                    id:theId
+                    id:theId,
+                    avatar:0
                 })
                 })
                 const data = await responce.json()

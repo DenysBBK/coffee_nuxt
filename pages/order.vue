@@ -91,6 +91,9 @@ onBeforeMount(async() => {
 definePageMeta({
     middleware:'authenticated'
 })
+useHead({
+    title:'Order'
+})
 </script>
 <style scoped lang="scss">
 .order{
