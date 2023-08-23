@@ -6,6 +6,7 @@
         :city="cafeCity"
         :positions="cafePositions"
         :phone="cafePhone"
+        :avatar="cafeAvatar"
         @edit="editProfile">
 
         </cafe-profile>
@@ -15,6 +16,7 @@
         :address="cafeAddress"
         :city="cafeCity"
         :phone="cafePhone"
+        :avatar="cafeAvatar"
         @edited="profileIsUpdated">
 
         </cafe-edit-profile>
@@ -33,7 +35,8 @@ const cafePhone:Ref<string> = ref('')
 let cafePositions:Positions[] = reactive([{
     name:'',
     price:''
-}])   
+}])
+const cafeAvatar:Ref<number> = ref(7)
 
 function editProfile():void{
     updatedProfile.value = true
@@ -45,7 +48,8 @@ function profileIsUpdated(data:any):void{
     cafeAddress.value = data.address;
     cafeCity.value = data.city;
     cafePositions = data.positions
-    cafePhone.value = data.phone
+    cafePhone.value = data.phone;
+    cafeAvatar.value = data.avatar
     
 }
 
@@ -62,6 +66,7 @@ onMounted(async () =>{
     cafeCity.value = cafeData.city;
     cafePositions = cafeData.positions
     cafePhone.value = cafeData.phone
+    cafeAvatar.value = cafeData.avatar
     
 });
 

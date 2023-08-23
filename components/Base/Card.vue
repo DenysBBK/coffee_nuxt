@@ -4,7 +4,7 @@
     max-width="500"
   >
     <img class="card-img"
-      src="../../public/images/card-img.png"
+    :src=userAvatar(props.avatar)
       height="200"  
       >
       <v-card-title>
@@ -52,8 +52,7 @@ import { userOrderData } from 'types/orderTypes';
 const show:Ref<boolean> = ref(false);
 
 async function orderRequest(data:Positions[]):Promise<void>{
-  
-  
+
   try{
     const orderData: userOrderData = {
       uid:localStorage.getItem('uid'),
@@ -74,15 +73,16 @@ async function orderRequest(data:Positions[]):Promise<void>{
   
 }
 
-
-
-
 const props = defineProps<{
   name?:string,
   positions?:Positions[],
   fullData: shopsArr
-
+  avatar:number
 }>()
+
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
+}
 </script>
 <style scoped lang="scss">
 .card-img{

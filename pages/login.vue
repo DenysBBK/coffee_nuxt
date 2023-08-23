@@ -34,10 +34,10 @@
 import {loginTypes, dataType } from '../types/loginTypes'
 
 const email:Ref<string> = ref('')
-const emailValidator = [(value: string | null) => value?.length! >= 3 || 'First name must be at least 3 characters.']
+const emailValidator = [(value: string | null) => value?.length! > 0 || 'Email must be not empty']
 
 const password:Ref<string> = ref('')
-const passwordValidator = [((value: string | null) => value?.length! >= 6 || 'First name must be at least 6 characters.')]
+const passwordValidator = [((value: string | null) => value?.length! > 0 || 'Password must be not empty')]
 
 const toAccount: dataType = reactive({
     value:'',
@@ -74,6 +74,8 @@ async function submitForm():Promise<void>{
     }catch(error){
         console.log(error)
     }
+    
+    load.value = false
     email.value = '';
     password.value = '';
     toAccount.value = ''

@@ -112,9 +112,7 @@ async function edited(){
         bank:bank.value,
         avatar:choosenImage.value
     }
-    try{
-        console.log(choosenImage.value)
-        
+    try{  
         await useProfileStore().postUser(userUpdatedData)
         emits('edited', userUpdatedData)
     }catch(error){

@@ -24,7 +24,7 @@
                         </tbody>
                     </table>
                 </div>
-                <img src="../../public/images/photo.jpg">
+                <img :src=userAvatar(props.avatar)>
             </div>
             <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="editProfile">Update profile </v-btn>
@@ -42,7 +42,13 @@ const props = defineProps<{
   city?: string;
   phone?:string;  
   positions: Positions[];
+  avatar:number
 }>();
+
+
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
+}
 
 const emits = defineEmits(['edit'])
 

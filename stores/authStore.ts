@@ -76,11 +76,13 @@ export const useAuthStore = defineStore('auth', {
                 let userOrCafe;
                     if(payload.type === 'users') userOrCafe = 'User';
                     if(payload.type === 'shops') userOrCafe = 'Cafe';
+                
                 let errorKey;
                     if(dataTable.error.message === 'INVALID_EMAIL') errorKey = 'Invalid email'
                 const error = new Error(dataTable.error.message === "EMAIL_EXISTS" ? `${userOrCafe} is already exsist` : errorKey)
             throw error
             }else{
+                let avatarType:number = payload.type === 'users'? 0:7
                 const mode:string = payload.type;
                 const responce:any = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${mode}/${theId}.json`,{
                 method: "PUT",
@@ -88,7 +90,7 @@ export const useAuthStore = defineStore('auth', {
                     email:payload.email,
                     name:payload.name,
                     id:theId,
-                    avatar:0
+                    avatar:avatarType
                 })
                 })
                 const data = await responce.json()
