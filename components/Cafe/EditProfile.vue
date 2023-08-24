@@ -4,9 +4,22 @@
             <h1 class="text-center pb-10" >Update Profile</h1>
             <v-form @submit.prevent="edited">
                 <div class="update_main">
-                    <v-file-input
-                    label="Caffe photo">
-                    </v-file-input>
+                    <p>Choose cafe avatar:</p>
+                    <div class="update_img">
+                        <div class="update_avatar">
+                            <img :src=mainAvatar(choosenImage) class="profile_img">
+                            <button class="avatar_btn" @click.prevent="makeDefault" type="button">
+                                <span class="update_span">Make default</span>
+                            </button>
+                        </div>
+                        <div class="update_avatars" >
+                            <div v-for="item in photoarr" :key="item">
+                                <button @click.prevent="changeAvatar(item)">
+                                    <img :src=allImages(item) class="profile_img">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <v-text-field
                     label="Caffe name"
                     v-model="name">
@@ -76,6 +89,7 @@ const props = defineProps<{
     city?: string;
     phone?:string;  
     positions: Positions[];
+    avatar:number
 }>();
 
 const isNewPositionInput:Ref<boolean> = ref(false);
@@ -116,6 +130,22 @@ const city:Ref<string | undefined> = ref(props.city);
 const address:Ref<string | undefined> = ref(props.address);
 const phone:Ref<string | undefined> = ref(props.phone)
 const load:Ref<boolean> = ref(false)
+const choosenImage:Ref<number> = ref(props.avatar);
+
+const photoarr:number[] = [8,9,10,11,12,13]
+function mainAvatar(item:number):string{
+    return `/images/${item}.png`
+};
+function makeDefault():void{
+    choosenImage.value = 7
+}
+function allImages(item:number):string{
+    return `/images/${item}.png`
+}
+function changeAvatar(item:number):void{
+    choosenImage.value = item
+}
+
 
 const emits = defineEmits(['edited']);
 
@@ -126,7 +156,8 @@ async function edited():Promise<void>{
         phone:phone.value,
         positions:allPositions,
         city:city.value,
-        name:name.value
+        name:name.value,
+        avatar:choosenImage.value
     }
     try{
         await useProfileStore().postCafe(cafeUpdatedData);
@@ -157,6 +188,12 @@ async function edited():Promise<void>{
     justify-content: center;
     align-self: center;
 }
+    &_img{
+    max-width: 70px;
+        max-height: 70px;
+        align-items: center;
+}
+
 
 }
 .update{
@@ -172,6 +209,25 @@ async function edited():Promise<void>{
         color:#FEF2F1;
         background-color: #7d4e08;
 }
+    &_img{
+        display: flex;
+        justify-content: space-between;
+        gap: 50px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    &_avatar{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    &_avatars{
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 500px;
+        gap: 10px;
+    }
 }
 .add_input{
     padding-top: 20px;
@@ -189,6 +245,14 @@ async function edited():Promise<void>{
     color: white;
     background-color: blue;
     
+}
+.avatar_btn{
+    background-color: white;
+        border-radius: 50px;
+        padding: 5px;
+        &:hover{
+            outline:2px black solid;
+        }
 }
 
 

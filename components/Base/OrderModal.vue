@@ -127,7 +127,8 @@ function removeFromOrderList(index:number):void{
 }
 
 
-const emit = defineEmits(['order'])
+const emit = defineEmits(['order']);
+
 function confirmOrder():void{
  console.log('tolik') 
  

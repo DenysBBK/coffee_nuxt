@@ -10,7 +10,8 @@ export const useProfileStore = defineStore('profile', {
             email:'',
             id:null,
             name:'',
-            phone:''
+            phone:'',
+            avatar:0
         },
         cafe:{
             address:'',
@@ -22,7 +23,8 @@ export const useProfileStore = defineStore('profile', {
                 name:'',
                 price:''
             }],
-            city:''
+            city:'',
+            avatar:7
         },
         shops:[]
     }),
@@ -39,7 +41,8 @@ export const useProfileStore = defineStore('profile', {
                 name:payload.name,
                 bank:payload.bank,
                 card:payload.card,
-                phone:payload.phone
+                phone:payload.phone,
+                avatar:payload.avatar
             }
             const responce = await fetch(url,{
                 method:"PUT",
@@ -61,6 +64,7 @@ export const useProfileStore = defineStore('profile', {
             this.$state.user.id = data.id;
             this.$state.user.name = data.name;
             this.$state.user.phone = data.phone
+            this.$state.user.avatar = data.avatar
             
         },
         async postCafe(payload:postCafeData):Promise<void>{
@@ -75,7 +79,8 @@ export const useProfileStore = defineStore('profile', {
                 phone:payload.phone,
                 positions:payload.positions,
                 city:payload.city,
-                name:payload.name
+                name:payload.name,
+                avatar:payload.avatar
             };
             const responce = await fetch(url,{
                 method:"PUT",
@@ -99,6 +104,7 @@ export const useProfileStore = defineStore('profile', {
             this.$state.cafe.phone = data.phone
             this.$state.cafe.positions = data.positions
             this.$state.cafe.city = data.city
+            this.$state.cafe.avatar = data.avatar
         },
         async getCoffeeShops():Promise<void>{
             const responce = await fetch('https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops.json');
@@ -113,7 +119,8 @@ export const useProfileStore = defineStore('profile', {
                     id:data[one].id,
                     name:data[one].name,
                     phone:data[one].phone,
-                    positions:data[one].positions
+                    positions:data[one].positions,
+                    avatar:data[one].avatar
                 };
                 shops.push(item)
             };

@@ -27,6 +27,24 @@
                 <NuxtLink to="/registration" v-if="!auth.isAuthenticated">
                     <base-button text="Registration"></base-button>
                 </NuxtLink>
+                <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
+                    <base-button text="Order"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/cafe-profile" v-if="type === 'shops' && auth.isAuthenticated">
+                    <base-button text="Proifle"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/orders" v-if="type === 'shops' && auth.isAuthenticated">
+                    <base-button text="Orders"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/active-orders" v-if="type === 'users' && auth.isAuthenticated">
+                    <base-button text="Active orders"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/profile" v-if="type === 'users' && auth.isAuthenticated">
+                    <base-button text="Profile"></base-button>
+                </NuxtLink>
+                <NuxtLink to="/history" v-if="auth.isAuthenticated">
+                    <base-button text="History"></base-button>
+                </NuxtLink>
                     <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
             </div>
         </v-navigation-drawer>
@@ -39,7 +57,11 @@
 <script setup lang="ts">
 const drawer:Ref<boolean> = ref(false);
 
-const auth = useAuthStore()
+const auth = useAuthStore();
+const type:ComputedRef<string> = computed(():string => {
+    return useAuthStore().useType
+})
+
 </script>
 <style scoped lang="scss">
 .mobile_bar{

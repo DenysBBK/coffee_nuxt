@@ -24,6 +24,7 @@
                 :key="item.id"
                 :name="item.name"
                 :positions="item.positions"
+                :avatar="item.avatar"
                 :fullData="item"></base-card>
             </div>
         </v-container>
@@ -77,6 +78,7 @@ const allShops:ComputedRef<shopsArr[] | undefined> = computed(() =>{
 onBeforeMount(async() => {
     try{
         await useProfileStore().getCoffeeShops()
+        console.log(useProfileStore().shopsInfo)
         
         shops.value.forEach(item => {
     shopsCity.value.push(item.city)
@@ -88,7 +90,12 @@ onBeforeMount(async() => {
         
     }
 })
-
+definePageMeta({
+    middleware:'authenticated'
+})
+useHead({
+    title:'Order'
+})
 </script>
 <style scoped lang="scss">
 .order{

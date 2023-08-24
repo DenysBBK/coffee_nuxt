@@ -9,13 +9,15 @@
                     <p class="profile_item"><b>Bank:</b> {{ props.bank }}</p>
                     <p class="profile_item"><b>Card number:</b> {{ props.cardNumber == '' ? '': props.cardNumber.slice(0, -8) + "********"  }}</p>
                 </div>
-                <img src="../../public/images/photo.jpg">
+                <img :src=userAvatar(props.avatar) class="profile_img">
             </div>
             <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="editProfile">Update profile</v-btn>
             </div>
             <div class="profile_btns">
-                <v-btn prepend-icon="mdi-arrow-left" class="profile_btn">Active orders</v-btn>
+                <NuxtLink to="/active-orders">
+                    <v-btn prepend-icon="mdi-arrow-left" class="profile_btn">Active orders</v-btn>
+                </NuxtLink>
                 <NuxtLink to="/order">
                     <v-btn append-icon="mdi-arrow-right" class="profile_btn">Make order</v-btn>
                 </NuxtLink>
@@ -26,8 +28,6 @@
     </div>
 </template>
 <script setup lang="ts">
-
-
 
 const props = defineProps({
     name:{
@@ -45,8 +45,16 @@ const props = defineProps({
     cardNumber:{
         type:String,
         required:true
+    },
+    avatar:{
+        type:Number,
+        required:true
     }
-})
+});
+
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
+}
 const emits = defineEmits(['edit'])
 
 function editProfile(){
@@ -69,8 +77,10 @@ function editProfile(){
     justify-content: space-around;
     flex-direction: column-reverse;
     gap: 20px;
+    align-items: center;
     @media screen and (min-width: 450px) {
         flex-direction: row;
+        
     }
 }
     &_info{
@@ -105,6 +115,11 @@ function editProfile(){
     justify-content: center;
     align-self: center;
 }
+    &_img{
+        max-width: 100px;
+        max-height: 100px;
+        align-items: center;
+    }
 
 
 }

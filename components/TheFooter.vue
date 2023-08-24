@@ -2,8 +2,12 @@
     <footer>
         <v-divider></v-divider>
         <div class="footer_btn">
-            <base-button text="Terms"></base-button>
-            <base-button text="Privacy"></base-button>
+            <NuxtLink to="/terms">
+                <base-button text="Terms"></base-button>
+            </NuxtLink>
+            <NuxtLink to="/privacy-policy">
+                <base-button text="Privacy"></base-button>
+            </NuxtLink>
         </div>
                 <p class="footer_text">2023 Take and go. All rights reserved</p>
     </footer>
