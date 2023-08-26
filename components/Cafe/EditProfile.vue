@@ -88,7 +88,7 @@ const props = defineProps<{
     address?: string; 
     city?: string;
     phone?:string;  
-    positions: Positions[];
+    positions?: Positions[]|undefined;
     avatar:number
 }>();
 
@@ -121,9 +121,12 @@ function deletePosition(index:number):void{
     console.log(allPositions)
     
 }
-props.positions.forEach(one => {
+if(props.positions){
+    props.positions.forEach(one => {
     allPositions.push(one)
 })
+}
+
 
 const name:Ref<string> = ref(props.name);
 const city:Ref<string | undefined> = ref(props.city);

@@ -52,17 +52,18 @@ import { userOrderData } from 'types/orderTypes';
 const show:Ref<boolean> = ref(false);
 
 async function orderRequest(data:Positions[]):Promise<void>{
-
-  try{
-    const orderData: userOrderData = {
+  const orderData: userOrderData = {
       uid:localStorage.getItem('uid'),
       name:useProfileStore().user.name,
       positions:data,
       id:props.fullData.id,
-      shopName:props.fullData.name                  
+      shopName:props.fullData.name,
+      cafeAvatar:props.avatar,
+      userAvatar:useProfileStore().userInfo.avatar              
     }
+  try{
+    await useProfileStore().getUserData()
     console.log(orderData)
-    
     await useOrderStore().postOrder(orderData)
     
 

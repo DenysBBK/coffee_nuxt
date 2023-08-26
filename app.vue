@@ -1,4 +1,7 @@
 <template>
+  <Link to="/">
+  <img src="/public/images/cup.png"> 
+  </Link>
   <div class="main_content">
     <div class="header">
       <Navbar/>
@@ -11,10 +14,6 @@
 const route = useRoute()
 console.log(route.name)
 
-console.log()
-
-
-console.log('Tolik')
 </script>
 <style>
 html,

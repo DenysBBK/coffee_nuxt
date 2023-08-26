@@ -5,7 +5,10 @@
             <h1 class="text-center pb-10" v-if="!userOrders.length">There is no orders</h1>
             <div class="orders_main">
                 <div class="orders_item" v-for="(item, index) in userOrders" :key="index">
-                    <p class="order_name">{{ item.fromCafe }}</p>
+                    <div class="order_avatar">
+                        <img :src=userAvatar(item.cafeAvatar) class="order_img">
+                        <p class="order_name">{{ item.fromCafe }}</p>
+                    </div>
                     <div>
                         <ul class="order_list" v-for="(pos, i) in item.positions" :key="i">
                         <li>{{ pos.name }} {{ pos.price }}, UAH</li>
@@ -36,9 +39,12 @@ function status(item:number):string{
             };
             
 }
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
+}
 
 async function finishOrder(index:number):Promise<void>{
-    userOrders.value[index].status = 3;
+    userOrders.value[index].status == 3;
             let findOrder = {
                 position:userOrders.value[index].positionId,
                 placeId:userOrders.value[index].cafeId,
@@ -57,6 +63,8 @@ async function finishOrder(index:number):Promise<void>{
 onBeforeMount(async() => {
     try{
     await useOrderStore().getOrders('user')
+    console.log(userOrders.value)
+    
     }catch(error){
         console.log(error)
         
@@ -109,6 +117,18 @@ useHead({
     &_list{
         list-style-type: none;
 
+    }
+    &_avatar{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap:5px;
+        align-items: center;
+    }
+    &_img{
+        max-width: 75px;
+        max-height: 75px;
+        
     }
 }
 

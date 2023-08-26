@@ -15,7 +15,9 @@ export interface ordersArr{
         price:string
     }],
     userId?:string,
-    userName?:string
+    userName?:string,
+    cafeAvatar:number,
+    userAvatar:number
 }
 interface orderItem{
     positionId:number,
@@ -23,16 +25,21 @@ interface orderItem{
     positions:[{
         name:string,
         price:string
-    }]
+    }],
+    cafeAvatar:number,
+    userAvatar:number
+    
 }
 export interface userOrderItem extends orderItem{
     fromCafe:string,
     cafeId:number,
     
+    
 }
 export interface cafeOrderItem extends orderItem{
     userId:string,
-    userName:string
+    userName:string,
+    
 }
 
 export interface userOrderData {
@@ -40,7 +47,9 @@ export interface userOrderData {
     id:number,
     shopName:string,
     uid:string | null,
-    positions:Positions[]
+    positions:Positions[],
+    userAvatar:number,
+    cafeAvatar:number
 }
 export interface updatedOrder{
     placeId:string | number | undefined,
