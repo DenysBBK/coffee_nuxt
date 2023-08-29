@@ -31,6 +31,7 @@ body{
 .main_content{
   flex: 1 1 auto;
   
+  
 }
 
 
@@ -64,4 +65,5 @@ body{
   opacity: 1;
   transform: translateX(0);
 }
+
 </style>

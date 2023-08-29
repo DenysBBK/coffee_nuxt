@@ -1,6 +1,11 @@
 <template>
-    <div>
+    <div >
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert"></base-alert>
         <v-container class="login_container">
+            
             <h1 class="text-center pb-3" >Login</h1>
             <h4>Don`t have account? <NuxtLink to="/registration" class="signup">Registration</NuxtLink> </h4>
             <v-form @submit.prevent="submitForm">
@@ -25,13 +30,19 @@
                 <p class="text-center text-red" v-if="!toAccount.isValid">Need to choose one option</p>
                 </v-radio-group>
                 <v-btn class="login_btn" type="submit" :loading="load">Login</v-btn>
+                <v-btn type="button" v-on:click="testButton">Click</v-btn>
             </div>
             </v-form>
         </v-container>
     </div>
 </template>
 <script setup lang="ts">
-import {loginTypes, dataType } from '../types/loginTypes'
+import {loginTypes, dataType } from '../types/loginTypes';
+
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+function testButton():void{
+    show('success', 'Hello from alert')
+}
 
 const email:Ref<string> = ref('')
 const emailValidator = [(value: string | null) => value?.length! > 0 || 'Email must be not empty']

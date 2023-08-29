@@ -1,12 +1,12 @@
 <template>
-   
+   <div class="main_navigation">
     <div class="base_nav">
         <BaseNav/>
     </div>
     <div class="mobile_nav">
         <BaseMobileNav/>
     </div>
-
+    </div>
 </template>
 <style scoped lang="scss">
 .mobile_nav{
@@ -19,4 +19,5 @@
         display: none;
     }
 }
+
 </style>
