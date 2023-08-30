@@ -6,12 +6,12 @@
             :aletrType="typeOfAlert"></base-alert>
         <v-container class="login_container">
             
-            <h1 class="text-center pb-3" >Login</h1>
-            <h4>Don`t have account? <NuxtLink to="/registration" class="signup">Registration</NuxtLink> </h4>
+            <h1 class="text-center pb-3" >{{ lagns.login.main }}</h1>
+            <h4>{{ lagns.login.haveAccount }} <NuxtLink to="/registration" class="signup">{{ lagns.login.toRegistration }}</NuxtLink> </h4>
             <v-form @submit.prevent="submitForm">
                 <v-text-field
                     v-model="email"
-                    label="Email"
+                    :label="lagns.login.email"
                     class="login_input"
                     :rules="emailValidator"
                     >
@@ -19,18 +19,18 @@
                 <v-text-field
                     v-model="password"
                     type="password"
-                    label="Password"
+                    :label="lagns.login.password"
                     class="login_input"
                     :rules="passwordValidator">
                 </v-text-field>
                 <div class="login_data">
                 <v-radio-group v-model="toAccount.value">
-                <v-radio label="To cafe account" value="shops"></v-radio>
-                <v-radio label="To user account" value="users"></v-radio>
+                <v-radio :label="lagns.login.toCafeAccount" value="shops"></v-radio>
+                <v-radio :label="lagns.login.toUserAccount" value="users"></v-radio>
                 <p class="text-center text-red" v-if="!toAccount.isValid">Need to choose one option</p>
                 </v-radio-group>
-                <v-btn class="login_btn" type="submit" :loading="load">Login</v-btn>
-                <v-btn type="button" v-on:click="testButton">Click</v-btn>
+                <v-btn class="login_btn" type="submit" :loading="load">{{ lagns.login.btn }}</v-btn>
+                <!-- <v-btn type="button" v-on:click="testButton">Click</v-btn> -->
             </div>
             </v-form>
         </v-container>
@@ -38,6 +38,9 @@
 </template>
 <script setup lang="ts">
 import {loginTypes, dataType } from '../types/loginTypes';
+import{languageState} from '../types/languageTypes'
+
+const lagns:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 function testButton():void{

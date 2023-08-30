@@ -1,15 +1,16 @@
 // import {ref, watch} from 'vue'
 
 export default function useAlert(){
+    type alertType = "error" | "success" | "warning" | "info" | undefined
     const showAlert:Ref<boolean> = ref(false);
-    const typeOfAlert:Ref<string> = ref('');
+    const typeOfAlert:Ref<alertType> = ref(undefined);
     const alertText:Ref<string> = ref('');
 
     function close():void{
         showAlert.value = false
     }
 
-    function show(type:string, text:string):void{
+    function show(type:alertType, text:string):void{
         showAlert.value = true
         typeOfAlert.value = type
         alertText.value = text

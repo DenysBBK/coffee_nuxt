@@ -22,10 +22,10 @@
         <v-navigation-drawer v-model="drawer" location="right" temporary class="nav_btns">
             <div class="mobile_btn">
                 <NuxtLink to="/login" v-if="!auth.isAuthenticated">
-                    <base-button text="login"></base-button>
+                    <base-button :text="lagns.header.login"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/registration" v-if="!auth.isAuthenticated">
-                    <base-button text="Registration"></base-button>
+                    <base-button :text="lagns.header.registration"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
                     <base-button text="Order"></base-button>
@@ -46,6 +46,7 @@
                     <base-button text="History"></base-button>
                 </NuxtLink>
                     <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
+                <BaseLanguage></BaseLanguage>
             </div>
         </v-navigation-drawer>
         <v-card-text>
@@ -55,6 +56,9 @@
 </v-container>
 </template>
 <script setup lang="ts">
+import{languageState} from '../../types/languageTypes'
+const lagns:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+
 const drawer:Ref<boolean> = ref(false);
 
 const auth = useAuthStore();
