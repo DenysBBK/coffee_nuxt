@@ -13,6 +13,23 @@ export interface languageState{
     header:{
         login:string,
         registration:string
+    },
+    registration:{
+        main:string,
+        haveAccount:string,
+        toLogin:string,
+        toUser:string,
+        toCaffe:string,
+        name:string,
+        cafeName:string,
+        email:string,
+        password:string,
+        confirmPassword:string,
+        agree:string,
+        terms:string,
+        and:string,
+        policy:string,
+        register:string
     }
 
 }

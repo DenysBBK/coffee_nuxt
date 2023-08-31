@@ -1,12 +1,12 @@
 <template >
-    <teleport to="body">  
+    <teleport to="body">
             <div class="alert_block">
                 <v-alert
                 :type="props.aletrType"
                 :title="alertTitle"
                 class="alert"
                 ></v-alert>
-            </div>
+            </div> 
     </teleport>
 </template>
 <script setup lang="ts">

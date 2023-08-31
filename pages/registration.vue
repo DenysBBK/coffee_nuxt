@@ -1,62 +1,61 @@
 <template>
     <div>
         <v-container class="login_container">
-            <h1 class="text-center pb-3" >Registration</h1>
-            <h4 class="text-center">Already have account?<NuxtLink to="/login" class="signin"> Login</NuxtLink> </h4>
+            <h1 class="text-center pb-3" >{{ langs.registration.main }}</h1>
+            <h4 class="text-center">{{ langs.registration.haveAccount }} <NuxtLink to="/login" class="signin"> {{ langs.registration.toLogin }}</NuxtLink> </h4>
             <v-form @submit.prevent="submitForm">
                 <div class="choose_btns">
-                    <v-btn v-on:click="toUserAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'users'}">User</v-btn>
-                    <v-btn v-on:click="toShopAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'shops'}">Cafe</v-btn>
+                    <v-btn v-on:click="toUserAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'users'}">{{ langs.registration.toUser }}</v-btn>
+                    <v-btn v-on:click="toShopAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'shops'}">{{ langs.registration.toCaffe }}</v-btn>
                 </div>
                 <v-text-field
                 v-model="name"
-                :label="toAccount == 'users' ? 'Name':'Coffee-shop name'"
+                :label="toAccount == 'users' ? langs.registration.name:langs.registration.cafeName"
                 class="login_input"
                 :rules="nameValidator">
                 </v-text-field>
                 <v-text-field
                     v-model="email"
-                    label="Email"
+                    :label="langs.registration.email"
                     class="login_input"
                     :rules="emailValidator">
                 </v-text-field>
                 <v-text-field
                     v-model="password"
                     type="password"
-                    label="Password"
+                    :label="langs.registration.password"
                     class="login_input"
                     :rules="passwordValidator">
                 </v-text-field>
                 <v-text-field
                     v-model="passwordConfirmation"
                     type="password"
-                    label="Confirm password"
+                    :label="langs.registration.confirmPassword"
                     class="login_input"
                     :rules="confirmationRules">
                 </v-text-field>
                 <v-checkbox v-model="checkbox">
                     <template v-slot:label>
                         <div>
-                        I agree with
+                        {{ langs.registration.agree }}
                             <v-tooltip location="bottom">
                                 <template v-slot:activator="{ props }">
-                                <NuxtLink to="/terms" class="terms">Terms of Service</NuxtLink>
+                                <NuxtLink to="/terms" class="terms">{{ langs.registration.terms }}</NuxtLink>
                                 </template>
                                 Opens in new window
                             </v-tooltip>
-                        and
+                        {{ langs.registration.and }}
                         <v-tooltip location="bottom">
                                 <template v-slot:activator="{ props }">
-                                <NuxtLink to="/privacy-policy" class="terms">Privacy Policy</NuxtLink>
+                                <NuxtLink to="/privacy-policy" class="terms">{{ langs.registration.policy }}</NuxtLink>
                                 </template>
                                 Opens in new window
                         </v-tooltip>
-
                         </div>
                     </template>
                 </v-checkbox>
                 <div class="signup_btn">
-                    <v-btn class="login_btn" type="submit">Registration</v-btn>
+                    <v-btn class="login_btn" type="submit">{{ langs.registration.register }}</v-btn>
                 </div>
             </v-form>
         </v-container>
@@ -64,6 +63,9 @@
 </template>
 <script setup lang="ts">
 import {signUpData} from '../types/regTypes'
+import{languageState} from '../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const email:Ref<string> = ref('');
 const emailValidator = [(value: string | null) => value?.length! >= 3 || 'Email must include at least 3 characters.']
