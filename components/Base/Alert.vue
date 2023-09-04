@@ -1,12 +1,13 @@
 <template >
     <teleport to="body">
-            <div class="alert_block">
-                <v-alert
-                :type="props.aletrType"
-                :title="alertTitle"
-                class="alert"
-                ></v-alert>
-            </div> 
+        <transition name="alert-t">
+               <v-alert
+               :type="props.aletrType"
+               :title="alertTitle"
+               class="alert"
+               v-if="visible"
+               ></v-alert>
+        </transition>
     </teleport>
 </template>
 <script setup lang="ts">
@@ -15,43 +16,35 @@ const props = defineProps<{
     aletrType:alert,
     alertTitle:string
 }>()
+const visible:Ref<boolean> = ref(true)
 
-definePageMeta({
-    layoutTransition:{
-        name:'alert',
-        mode:'out-in'
-    }
-})
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .alert{
-    max-width: 25%;
+    max-width: 30%;
     position: fixed;
   top: 80px;
   right: 20px;
   z-index: 1000;
     @media  screen and (max-width: 750px) {
-        max-width: 50%;
-    }
-    &_block{
-        display: flex;
-        justify-content: flex-end;       
+        max-width: 80%;
     }
 }
-
-.alert-enter-active,
-.alert-leave-active {
+.alert-t-enter-active,
+.alert-t-leave-active {
   transition: all 0.8s ease-in;
 }
 
-.alert-enter,
-.alert-leave-to {
+.alert-t-enter,
+.alert-t-leave-to {
+  opacity: 1;
+  transform: translateX(30px);
+}
+
+.alert-t-enter-from {
   opacity: 0;
   transform: translateX(30px);
 }
 
-.alert-enter-from {
-  opacity: 0;
-  transform: translateX(30px);
-}
+
 </style>

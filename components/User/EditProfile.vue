@@ -1,15 +1,15 @@
 <template>
     <div>
         <v-container class="profile_container">
-            <h1 class="text-center pb-10" >Update Profile</h1>
+            <h1 class="text-center pb-10" >{{ langs.userProfile.updateTitle }}</h1>
             <v-form @submit.prevent="edited">
                 <div class="update_main">
-                    <p>Choose you avatar:</p>
+                    <p>{{ langs.userProfile.chooseAvatar }}:</p>
                     <div class="update_img">
                         <div class="update_avatar">
                             <img :src=mainAvatar(choosenImage) class="profile_img">
                             <button class="update_btn" @click.prevent="makeDefault" type="button">
-                                <span class="update_span">Make default</span>
+                                <span class="update_span">{{ langs.userProfile.makeDefault }}</span>
                             </button>
                         </div>
                         <div class="update_avatars" >
@@ -22,25 +22,25 @@
                     </div>
                     <v-text-field
                     class="update_input"
-                    label="Name"
+                    :label="langs.userProfile.name"
                     type="text"
                     v-model="name"
                     ></v-text-field>
                     <v-text-field
                     class="update_input"
-                    label="Phone"
+                    :label="langs.userProfile.phone"
                     type="text"
                     v-model="phone"
                     ></v-text-field>
                     <v-combobox
                     class="update_input"
-                    label="Choose you bank"
+                    :label="langs.userProfile.chooseBank"
                     :items="['Monobank', 'PrivatBank', 'Oshad Bank', 'Pumb']"
                     v-model="bank"
                     ></v-combobox>
                     <v-text-field
                     class="update_input"
-                    label="Bank Card"
+                    :label="langs.userProfile.cardNumber"
                     type="text"
                     v-model="card"
                     :rules="cardValidator"
@@ -48,13 +48,16 @@
                 </div>
                 <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="edited"
-                :loading="load" type="submit">Update profile</v-btn>
+                :loading="load" type="submit">{{ langs.userProfile.save }}</v-btn>
             </div>
         </v-form>
         </v-container>
     </div>
 </template>
 <script setup lang="ts">
+import{languageState} from '../../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const props = defineProps({
     name:{
         type:String,

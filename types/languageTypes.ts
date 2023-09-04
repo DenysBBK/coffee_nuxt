@@ -12,7 +12,13 @@ export interface languageState{
     },
     header:{
         login:string,
-        registration:string
+        registration:string,
+        order:string,
+        activeOrders:string,
+        profile:string,
+        history:string,
+        logout:string,
+        orders:string
     },
     registration:{
         main:string,
@@ -30,6 +36,32 @@ export interface languageState{
         and:string,
         policy:string,
         register:string
+    },
+    userProfile:{
+        title:string,
+        name:string,
+        phone:string,
+        bank:string,
+        cardNumber:string,
+        update:string,
+        makeOrder:string,
+        chooseBank:string,
+        updateTitle:string,
+        chooseAvatar:string,
+        makeDefault:string,
+        save:string
+
+    },
+    cafeProfile:{
+        title:string,
+        name:string,
+        city:string,
+        address:string,
+        phone:string,
+        positions:string,
+        item:string,
+        price:string,
+        update:string
     }
 
 }

@@ -17,7 +17,13 @@ export const useLanguageStore = defineStore('language', {
         },
         header:{
             login:'Login',
-            registration:'Registration'
+            registration:'Registration',
+            order:'Order',
+            activeOrders:'Active orders',
+            profile:'Profile',
+            history:'History',
+            logout:'Logout',
+            orders:'Orders'
         },
         registration:{
             main:'Registration',
@@ -35,6 +41,31 @@ export const useLanguageStore = defineStore('language', {
             and:'and',
             register:'Registration',
             policy:'Privacy Policy',
+        },
+        userProfile:{
+            title:'Profile',
+            name:'Name',
+            phone:'Phone',
+            bank:'Bank',
+            cardNumber:'Card number',
+            update:'Update profile',
+            makeOrder:'Make order',
+            chooseBank:'Choose you bank',
+            updateTitle:'Update profile',
+            chooseAvatar:'Choose your avatar',
+            makeDefault:'Default',
+            save:'Save changes'
+        },
+        cafeProfile:{
+            title:'Profile',
+            name:'Name',
+            city:'City',
+            address:'Address',
+            phone:'Contact phone',
+            positions:'Available positions',
+            item:'Item',
+            price:'Price',
+            update:'Update profile'
         }
     }),
     actions:{
@@ -56,6 +87,12 @@ export const useLanguageStore = defineStore('language', {
         //HEADER
         this.$state.header.login = data.header.login;
         this.$state.header.registration = data.header.registration;
+        this.$state.header.order = data.header.order;
+        this.$state.header.activeOrders = data.header.activeOrders;
+        this.$state.header.profile = data.header.profile;
+        this.$state.header.history = data.header.history;
+        this.$state.header.logout = data.header.logout;
+        this.$state.header.orders = data.header.orders
         
         //REGISTRATION
         this.$state.registration.main = data.registration.main;
@@ -73,8 +110,31 @@ export const useLanguageStore = defineStore('language', {
         this.$state.registration.and = data.registration.and;
         this.$state.registration.policy = data.registration.policy;
         this.$state.registration.register = data.registration.register
-        
-        
+
+        //USER PROFILE
+        this.$state.userProfile.title = data.userProfile.title;
+        this.$state.userProfile.name = data.userProfile.name;
+        this.$state.userProfile.phone = data.userProfile.phone;
+        this.$state.userProfile.bank = data.userProfile.bank;
+        this.$state.userProfile.cardNumber = data.userProfile.cardNumber;
+        this.$state.userProfile.update = data.userProfile.update;
+        this.$state.userProfile.makeOrder = data.userProfile.makeOrder;
+        this.$state.userProfile.chooseBank = data.userProfile.chooseBank;
+        this.$state.userProfile.updateTitle = data.userProfile.updateTitle;
+        this.$state.userProfile.chooseAvatar = data.userProfile.chooseAvatar;
+        this.$state.userProfile.makeDefault = data.userProfile.makeDefault;
+        this.$state.userProfile.save = data.userProfile.save
+
+        //CAFE PROFILE
+        this.$state.cafeProfile.title = data.cafeProfile.title;
+        this.$state.cafeProfile.name = data.cafeProfile.name;
+        this.$state.cafeProfile.city = data.cafeProfile.city;
+        this.$state.cafeProfile.address = data.cafeProfile.address;
+        this.$state.cafeProfile.phone = data.cafeProfile.phone;
+        this.$state.cafeProfile.positions = data.cafeProfile.positions;
+        this.$state.cafeProfile.item = data.cafeProfile.item;
+        this.$state.cafeProfile.price = data.cafeProfile.price;
+        this.$state.cafeProfile.update = data.cafeProfile.update
         }
     },
     getters:{

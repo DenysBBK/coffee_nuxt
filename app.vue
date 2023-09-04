@@ -1,4 +1,5 @@
 <template>
+  
   <Link to="/">
   <img src="/public/images/cup.png"> 
   </Link>

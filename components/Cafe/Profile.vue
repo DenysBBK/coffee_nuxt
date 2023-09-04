@@ -1,19 +1,19 @@
 <template>
     <div>
         <v-container class="profile_container">
-            <h1 class="text-center pb-10" >Profile</h1>
+            <h1 class="text-center pb-10" >{{ langs.cafeProfile.title }}</h1>
             <div class="profile_block">
                 <div class="profile_info">
-                    <p class="profile_item"><b>Name:</b> {{ props.name }}</p>
-                    <p class="profile_item"><b>City:</b> {{ props.city }}</p>
-                    <p class="profile_item"><b>Address:</b> {{ props.address }}</p>
-                    <p class="profile_item"><b>Contact phone:</b> {{ props.phone }}</p>
-                    <p class="profile_item"><b>Available positions:</b></p>
+                    <p class="profile_item"><b>{{ langs.cafeProfile.name }}:</b> {{ props.name }}</p>
+                    <p class="profile_item"><b>{{ langs.cafeProfile.city }}:</b> {{ props.city }}</p>
+                    <p class="profile_item"><b>{{ langs.cafeProfile.address }}:</b> {{ props.address }}</p>
+                    <p class="profile_item"><b>{{ langs.cafeProfile.phone }}:</b> {{ props.phone }}</p>
+                    <p class="profile_item"><b>{{ langs.cafeProfile.positions }}:</b></p>
                     <table>
                         <thead>
                             <tr>
-                                <th>Item</th>
-                                <th>Price</th>
+                                <th>{{ langs.cafeProfile.item }}</th>
+                                <th>{{ langs.cafeProfile.price }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,7 +27,7 @@
                 <img :src=userAvatar(props.avatar)>
             </div>
             <div class="profile_update">
-                <v-btn variant="outlined" v-on:click="editProfile">Update profile </v-btn>
+                <v-btn variant="outlined" v-on:click="editProfile">{{ langs.cafeProfile.update }} </v-btn>
             </div>
         </v-container>
     </div>
@@ -35,7 +35,9 @@
 <script setup lang="ts">
 
 import {Positions} from '../../types/profileTypes'
+import{languageState} from '../../types/languageTypes'
 
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const props = defineProps<{
   name: string;
   address?: string; 

@@ -3,7 +3,8 @@
         <base-alert
            v-if="showAlert"
             :alertTitle="alertText"
-            :aletrType="typeOfAlert"></base-alert>
+            :aletrType="typeOfAlert">
+        </base-alert>
         <v-container class="login_container">
             
             <h1 class="text-center pb-3" >{{ lagns.login.main }}</h1>
@@ -30,7 +31,7 @@
                 <p class="text-center text-red" v-if="!toAccount.isValid">Need to choose one option</p>
                 </v-radio-group>
                 <v-btn class="login_btn" type="submit" :loading="load">{{ lagns.login.btn }}</v-btn>
-                <!-- <v-btn type="button" v-on:click="testButton">Click</v-btn> -->
+                <v-btn type="button" v-on:click="testButton">Click</v-btn>
             </div>
             </v-form>
         </v-container>
@@ -47,23 +48,23 @@ function testButton():void{
     show('success', 'Hello from alert')
 }
 
-const email:Ref<string> = ref('')
-const emailValidator = [(value: string | null) => value?.length! > 0 || 'Email must be not empty']
+const email:Ref<string|null> = ref(null)
+const emailValidator = [(value: string ) => value?.length! > 0 || 'Email must be not empty']
 
-const password:Ref<string> = ref('')
-const passwordValidator = [((value: string | null) => value?.length! > 0 || 'Password must be not empty')]
+const password:Ref<string|null> = ref(null)
+const passwordValidator = [((value: string ) => value?.length! > 0 || 'Password must be not empty')]
 
 const toAccount: dataType = reactive({
     value:'',
-    isValid:true
+    isValid:true,
 })
-watch(toAccount, ():void => {
-    if(toAccount.value == ''){
-        toAccount.isValid = false 
-    }else{
-        toAccount.isValid = true
-    }
-})
+// watch(toAccount, ():void => {
+//     if(toAccount.value == ''){
+//         toAccount.isValid = false 
+//     }else{
+//         toAccount.isValid = true
+//     }
+// })
 
 const load:Ref<boolean> = ref(false)
 
@@ -80,19 +81,23 @@ async function submitForm():Promise<void>{
         type:toAccount.value
     };
     try{
+        
        await useAuthStore().signIn(actionPayload)
        load.value = false
        toAccount.value == 'users' ? useRouter().push('/profile') : useRouter().push('/cafe-profile')
     //    useRouter().push('/profile')
        
-    }catch(error){
-        console.log(error)
+    }catch(Er:any){
+        load.value = false
+        show("error", Er.message )
     }
+        email.value = null;
+        password.value = null;
+        toAccount.value = '';
+        toAccount.isValid = true
+        console.log(toAccount.isValid)
+        
     
-    load.value = false
-    email.value = '';
-    password.value = '';
-    toAccount.value = ''
     
     
 }
