@@ -1,4 +1,9 @@
 <template>
+  <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
   <v-card
     class="mx-auto"
     max-width="500"
@@ -24,12 +29,12 @@
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="show = !show"
+        :icon="showP ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="showP = !showP"
       ></v-btn>
     </v-card-actions>
     <v-expand-transition>
-      <div v-show="show">
+      <div v-show="showP">
         <v-divider></v-divider>
 
         <v-card-text>
@@ -49,7 +54,11 @@
 import { Positions } from 'types/profileTypes';
 import { shopsArr } from 'types/profileTypes';
 import { userOrderData } from 'types/orderTypes';
-const show:Ref<boolean> = ref(false);
+const showP:Ref<boolean> = ref(false);
+
+  const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+
+  const emit = defineEmits(['makeOrder'])
 
 async function orderRequest(data:Positions[]):Promise<void>{
   const orderData: userOrderData = {
@@ -64,13 +73,16 @@ async function orderRequest(data:Positions[]):Promise<void>{
   try{
     await useProfileStore().getUserData()
     console.log(orderData)
-    await useOrderStore().postOrder(orderData)
+    await useOrderStore().postOrder(orderData);
+    function great():void{
+      emit('makeOrder', 'Tolik')
+    }
     
-
   }catch(error){
     console.log(error)
     
   }
+  
   
 }
 

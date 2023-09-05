@@ -8,18 +8,9 @@
       fill-dot
     >
       <v-card>
-        <v-card-title class="bg-purple-lighten-2">
-          <v-icon
-            size="large"
-            class="me-4"
-            icon="mdi-magnify"
-          ></v-icon>
-          <h2 class="font-weight-light">
-            Title 1
-          </h2>
-        </v-card-title>
-        <v-card-text>
-          Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit.
+        
+        <v-card-text class="main_text">
+          Do you like to drink coffee very much, but are you already tired of constant queues?
         </v-card-text>
       </v-card>
     </v-timeline-item>
@@ -30,17 +21,9 @@
       size="x-small"
     >
       <v-card>
-        <v-card-title class="bg-amber-lighten-1 justify-end">
-          <h2 class="me-4 font-weight-light">
-            Title 2
-          </h2>
-          <v-icon
-            size="large"
-            icon="mdi-home-outline"
-          ></v-icon>
-        </v-card-title>
-        <v-card-text>
-          Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit.
+        
+        <v-card-text class="main_text">
+          Would you like your coffee to be prepared as you walk to the coffee shop so that when you arrive, you can pick up your coffee and continue on your way?
         </v-card-text>
       </v-card>
     </v-timeline-item>
@@ -50,18 +33,13 @@
       fill-dot
     >
       <v-card>
-        <v-card-title class="bg-cyan-lighten-1">
-          <v-icon
-            class="me-4"
-            size="large"
-            icon="mdi-email-outline"
-          ></v-icon>
-          <h2 class="font-weight-light">
-            Title 3
-          </h2>
-        </v-card-title>
-        <v-card-text>
-          Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit.
+        
+        <v-card-text class="main_text">
+          All you need to do is 4 simple things:
+          <br>1. <NuxtLink to="/registration">Register</NuxtLink>
+          <br>2. Find a coffee shop along the way
+                    <br>3. Order coffee
+                    <br>4. Pick up a drink on the way when it is ready
         </v-card-text>
       </v-card>
     </v-timeline-item>
@@ -72,38 +50,9 @@
       size="x-small"
     >
       <v-card>
-        <v-card-title class="bg-red-lighten-1 justify-end">
-          <h2 class="me-4 font-weight-light">
-            Title 4
-          </h2>
-          <v-icon
-            size="large"
-            icon="mdi-account-multiple-outline"
-          ></v-icon>
-        </v-card-title>
-        <v-card-text>
-          Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit.
-        </v-card-text>
-      </v-card>
-    </v-timeline-item>
-
-    <v-timeline-item
-      dot-color="green-lighten-1"
-      fill-dot
-    >
-      <v-card>
-        <v-card-title class="bg-green-lighten-1">
-          <v-icon
-            class="me-4"
-            size="large"
-            icon="mdi-phone-in-talk"
-          ></v-icon>
-          <h2 class="font-weight-light">
-            Title 5
-          </h2>
-        </v-card-title>
-        <v-card-text>
-          Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit.
+        
+        <v-card-text class="main_text">
+          Enjoy your favorite coffee that you now have without queuing!
         </v-card-text>
       </v-card>
     </v-timeline-item>
@@ -116,3 +65,12 @@ useHead({
     title:'Main'
 })
 </script>
+<style scoped lang="scss">
+.main{
+  &_text{
+    font-size: 20px;
+    padding-top: 10px;
+    line-height: 25px;
+  }
+}
+</style>

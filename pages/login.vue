@@ -31,7 +31,7 @@
                 <p class="text-center text-red" v-if="!toAccount.isValid">Need to choose one option</p>
                 </v-radio-group>
                 <v-btn class="login_btn" type="submit" :loading="load">{{ lagns.login.btn }}</v-btn>
-                <v-btn type="button" v-on:click="testButton">Click</v-btn>
+                
             </div>
             </v-form>
         </v-container>
@@ -44,15 +44,14 @@ import{languageState} from '../types/languageTypes'
 const lagns:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
-function testButton():void{
-    show('success', 'Hello from alert')
-}
+
 
 const email:Ref<string|null> = ref(null)
 const emailValidator = [(value: string ) => value?.length! > 0 || 'Email must be not empty']
 
 const password:Ref<string|null> = ref(null)
-const passwordValidator = [((value: string ) => value?.length! > 0 || 'Password must be not empty')]
+const passwordValidator = [((value: string ) => value?.length! > 0 || 'Password must be not empty'),
+((value: string) => value?.length! > 3 || 'Need more than 3 letters') ]
 
 const toAccount: dataType = reactive({
     value:'',
@@ -95,7 +94,7 @@ async function submitForm():Promise<void>{
         password.value = null;
         toAccount.value = '';
         toAccount.isValid = true
-        console.log(toAccount.isValid)
+        
         
     
     

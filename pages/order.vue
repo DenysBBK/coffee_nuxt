@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <v-container class="order_container">
             <h1 class="text-center pb-10" >Make an order</h1>
             <v-autocomplete
@@ -25,7 +26,8 @@
                 :name="item.name"
                 :positions="item.positions"
                 :avatar="item.avatar"
-                :fullData="item"></base-card>
+                :fullData="item"
+               ></base-card>
             </div>
         </v-container>
     </div>
@@ -33,11 +35,14 @@
 <script setup lang="ts">
 import { shopsArr } from 'types/profileTypes';
 
+
+
 const shopsCity:Ref<string[]> = ref([])
 const choosenCity:Ref<string | null> = ref(null)
 const shops:ComputedRef<shopsArr[]> = computed(() => {
     return useProfileStore().shopsInfo
 })
+
 
 const shopsAddresses:Ref<string[]> = ref([])
 const filteredShops:Ref<shopsArr[]> = ref([])

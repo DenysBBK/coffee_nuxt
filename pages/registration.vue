@@ -1,5 +1,10 @@
 <template>
     <div>
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <v-container class="login_container">
             <h1 class="text-center pb-3" >{{ langs.registration.main }}</h1>
             <h4 class="text-center">{{ langs.registration.haveAccount }} <NuxtLink to="/login" class="signin"> {{ langs.registration.toLogin }}</NuxtLink> </h4>
@@ -65,19 +70,21 @@
 import {signUpData} from '../types/regTypes'
 import{languageState} from '../types/languageTypes'
 
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
-const email:Ref<string> = ref('');
-const emailValidator = [(value: string | null) => value?.length! >= 3 || 'Email must include at least 3 characters.']
+const email:Ref<string | null> = ref(null);
+const emailValidator = [(value: string ) => value?.length! >= 3 || 'Email must include at least 3 characters.']
 
-const password:Ref<string> = ref('')
-const passwordValidator = [((value: string | null) => value?.length! >= 6 || 'Passwrod must include at least 6 characters.')]
+const password:Ref<string | null> = ref(null)
+const passwordValidator = [((value: string ) => value?.length! >= 6 || 'Passwrod must include at least 6 characters.')]
 
-const passwordConfirmation:Ref<string> = ref('');
-const confirmationRules = [((value: string | null) => value == password.value|| 'Field should match Password')]
+const passwordConfirmation:Ref<string | null> = ref(null);
+const confirmationRules = [((value: string ) => value == password.value|| 'Field should match Password')]
 
-const name:Ref<string> = ref('');
-const nameValidator = [((value:string|null) => value?.length! >= 3 || 'At least 3 characters')]
+const name:Ref<string | null> = ref(null);
+const nameValidator = [((value:StringConstructor) => value?.length! >= 3 || 'At least 3 characters')]
 
 const toAccount:Ref<string> = ref('users');
 
@@ -98,10 +105,15 @@ async function submitForm(){
     try{
         await useAuthStore().signUp(actionPayload)
         useRouter().push('/login')
-    }catch(error){
-        console.log(error)
-        
+    }catch(Er:any){
+        show("error", Er.message )
     }
+    email.value = null;
+    password.value = null;
+    passwordConfirmation.value = null;
+    name.value = null;
+    checkbox.value = false
+    
 }
 
 useHead({
