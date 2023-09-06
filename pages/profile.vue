@@ -17,7 +17,9 @@
     </div>
 </template>
 <script setup lang="ts">
+import{languageState} from '../types/languageTypes'
 
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const updatedProfile:Ref<boolean> = ref(false);
     
@@ -65,7 +67,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Profile'
+    title:langs.value.pageTitles.userProfile
 })
 
 </script>

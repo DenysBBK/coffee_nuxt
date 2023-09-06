@@ -1,6 +1,10 @@
 <template>
     <div>
-        
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <v-container class="order_container">
             <h1 class="text-center pb-10" >Make an order</h1>
             <v-autocomplete
@@ -27,6 +31,7 @@
                 :positions="item.positions"
                 :avatar="item.avatar"
                 :fullData="item"
+                @makeOrder="triggerAlert"
                ></base-card>
             </div>
         </v-container>
@@ -34,7 +39,10 @@
 </template>
 <script setup lang="ts">
 import { shopsArr } from 'types/profileTypes';
+import{languageState} from '../types/languageTypes'
 
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 
 const shopsCity:Ref<string[]> = ref([])
@@ -42,6 +50,11 @@ const choosenCity:Ref<string | null> = ref(null)
 const shops:ComputedRef<shopsArr[]> = computed(() => {
     return useProfileStore().shopsInfo
 })
+
+function triggerAlert(data:string):void{
+    show('success', data);
+    console.log('From Order')
+};
 
 
 const shopsAddresses:Ref<string[]> = ref([])
@@ -99,7 +112,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Order'
+    title:langs.value.pageTitles.orderPage
 })
 </script>
 <style scoped lang="scss">

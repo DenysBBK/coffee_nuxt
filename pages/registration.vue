@@ -117,7 +117,7 @@ async function submitForm(){
 }
 
 useHead({
-    title:'Registration'
+    title:langs.value.pageTitles.registration
 })
 
 </script>

@@ -26,6 +26,9 @@
 </template>
 <script setup lang="ts">
 import { ordersArr } from 'types/orderTypes';
+import{languageState} from '../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const shopOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3)
@@ -76,7 +79,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Orders'
+    title:langs.value.pageTitles.ordersPage
 })
 </script>
 <style scoped lang="scss">
@@ -93,6 +96,8 @@ useHead({
         display: flex;
         flex-direction: column;
         gap: 15px;
+        max-height: 600px;
+        overflow-y: auto;
     }
     &_item{
         display: flex;

@@ -3,28 +3,37 @@
        <v-container class="orders_container">
             <h1 class="text-center pb-10" v-if="userOrders.length" >Active orders</h1>
             <h1 class="text-center pb-10" v-if="!userOrders.length">There is no orders</h1>
+            
             <div class="orders_main">
                 <div class="orders_item" v-for="(item, index) in userOrders" :key="index">
+                    
                     <div class="order_avatar">
                         <img :src=userAvatar(item.cafeAvatar) class="order_img">
                         <p class="order_name">{{ item.fromCafe }}</p>
                     </div>
+                    
                     <div>
                         <ul class="order_list" v-for="(pos, i) in item.positions" :key="i">
                         <li>{{ pos.name }} {{ pos.price }}, UAH</li>
                     </ul>
                     </div>
+                
                     <div>
                         <p class="order_status">{{ status(item.status) }}</p>
                         <v-btn @click="finishOrder(index)" class="order_btn" v-if="item.status === 2" >Finish</v-btn>
                     </div>
                 </div>
             </div>
+       
        </v-container>
     </div>
 </template>
 <script setup lang="ts">
 import { ordersArr } from 'types/orderTypes';
+
+import{languageState} from '../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const userOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3)
@@ -74,7 +83,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Active orders'
+    title:langs.value.pageTitles.acitveOrders
 })
 </script>
 <style scoped lang="scss">
@@ -91,6 +100,8 @@ useHead({
         display: flex;
         flex-direction: column;
         gap: 15px;
+        max-height: 600px;
+        overflow-y: auto;
     }
     &_item{
         display: flex;

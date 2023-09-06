@@ -62,6 +62,19 @@ export interface languageState{
         item:string,
         price:string,
         update:string
+    },
+    pageTitles:{
+        acitveOrders:string,
+        cafeProfile:string,
+        history:string,
+        mainPage:string,
+        login:string,
+        orderPage:string,
+        ordersPage:string,
+        privacyPolicy:string,
+        userProfile:string,
+        registration:string,
+        terms:string
     }
 
 }

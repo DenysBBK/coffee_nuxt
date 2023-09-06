@@ -66,6 +66,19 @@ export const useLanguageStore = defineStore('language', {
             item:'Item',
             price:'Price',
             update:'Update profile'
+        },
+        pageTitles:{
+            acitveOrders:'Active orders',
+            cafeProfile:'Profile',
+            history:'History',
+            mainPage:'Main',
+            login:'Login',
+            orderPage:'Order',
+            ordersPage:'Orders',
+            privacyPolicy:'Privacy Policy',
+            userProfile:'Profile',
+            registration:'Registration',
+            terms:'Terms of Services'
         }
     }),
     actions:{
@@ -73,6 +86,19 @@ export const useLanguageStore = defineStore('language', {
         const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/languages/${type}.json`);
         const data = await responce.json();
         console.log(data)
+        //PAGE TITLES
+        this.$state.pageTitles.acitveOrders = data.pageTitles.activeOrders;
+        this.$state.pageTitles.cafeProfile = data.pageTitles.cafeProfile;
+        this.$state.pageTitles.history = data.pageTitles.history;
+        this.$state.pageTitles.mainPage = data.pageTitles.mainPage;
+        this.$state.pageTitles.login = data.pageTitles.login;
+        this.$state.pageTitles.orderPage = data.pageTitles.orderPage;
+        this.$state.pageTitles.ordersPage = data.pageTitles.ordersPage;
+        this.$state.pageTitles.privacyPolicy = data.pageTitles.privacyPolicy;
+        this.$state.pageTitles.userProfile = data.pageTitles.userProfile;
+        this.$state.pageTitles.registration = data.pageTitles.registration;
+        this.$state.pageTitles.terms = data.pageTitles.terms;
+
         //LOGIN
         this.$state.language = data.language;
         this.$state.login.btn = data.login.btn;

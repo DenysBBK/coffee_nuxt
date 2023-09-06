@@ -63,7 +63,8 @@
                   orderListValidator = true;
                   return
                     } 
-                  confirmOrder()
+                  confirmOrder();
+                  
                   isActive.value = false
                 }" :loading="isLoading"></base-button>
               </div>
@@ -127,10 +128,11 @@ function removeFromOrderList(index:number):void{
 }
 
 
-const emit = defineEmits(['order']);
+const emit = defineEmits(['order','makeAlert']);
 
 function confirmOrder():void{
-emit('order', orderList.value)
+emit('order', orderList.value);
+emit('makeAlert', 'Success order!')
 orderList.value = [];
 totalPrice.value = 0;
 isOrderListEmpty.value = true;

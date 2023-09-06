@@ -1,9 +1,5 @@
 <template>
-  <base-alert
-           v-if="showAlert"
-            :alertTitle="alertText"
-            :aletrType="typeOfAlert">
-        </base-alert>
+ 
   <v-card
     class="mx-auto"
     max-width="500"
@@ -18,6 +14,7 @@
         <base-order-modal 
           :data="props.fullData"
           @order="orderRequest"
+          @makeAlert="successAlert"
           >
         </base-order-modal>
     <v-card-actions>
@@ -56,11 +53,15 @@ import { shopsArr } from 'types/profileTypes';
 import { userOrderData } from 'types/orderTypes';
 const showP:Ref<boolean> = ref(false);
 
-  const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+ 
 
   const emit = defineEmits(['makeOrder'])
+function successAlert(data:string):void{
+  emit('makeOrder', data)
+}
 
 async function orderRequest(data:Positions[]):Promise<void>{
+  
   const orderData: userOrderData = {
       uid:localStorage.getItem('uid'),
       name:useProfileStore().user.name,
@@ -74,9 +75,7 @@ async function orderRequest(data:Positions[]):Promise<void>{
     await useProfileStore().getUserData()
     console.log(orderData)
     await useOrderStore().postOrder(orderData);
-    function great():void{
-      emit('makeOrder', 'Tolik')
-    }
+    
     
   }catch(error){
     console.log(error)
