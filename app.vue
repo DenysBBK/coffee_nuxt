@@ -1,4 +1,8 @@
 <template>
+  
+  <Link to="/">
+  <img src="/public/images/cup.png"> 
+  </Link>
   <div class="main_content">
     <div class="header">
       <Navbar/>
@@ -11,10 +15,6 @@
 const route = useRoute()
 console.log(route.name)
 
-console.log()
-
-
-console.log('Tolik')
 </script>
 <style>
 html,
@@ -31,6 +31,7 @@ body{
 }
 .main_content{
   flex: 1 1 auto;
+  
   
 }
 
@@ -65,4 +66,5 @@ body{
   opacity: 1;
   transform: translateX(0);
 }
+
 </style>

@@ -3,7 +3,7 @@
       <v-col cols="auto">
         <v-dialog
           transition="dialog-bottom-transition"
-          width="auto"
+          class="modal_main"
         >
           <template v-slot:activator="{ props }">
             <v-btn
@@ -29,7 +29,7 @@
                     >
                     <v-combobox 
                       
-                    class="pt-8"
+                    class="modal_input"
                     label="Choose drink"
                     variant="outlined"
                     :items="thePositions.map(item => item.text)"
@@ -63,7 +63,8 @@
                   orderListValidator = true;
                   return
                     } 
-                  confirmOrder()
+                  confirmOrder();
+                  
                   isActive.value = false
                 }" :loading="isLoading"></base-button>
               </div>
@@ -127,12 +128,11 @@ function removeFromOrderList(index:number):void{
 }
 
 
-const emit = defineEmits(['order']);
+const emit = defineEmits(['order','makeAlert']);
 
 function confirmOrder():void{
- console.log('tolik') 
- 
-emit('order', orderList.value)
+emit('order', orderList.value);
+emit('makeAlert', 'Success order!')
 orderList.value = [];
 totalPrice.value = 0;
 isOrderListEmpty.value = true;
@@ -157,11 +157,6 @@ choosenPosition.value = ''
         display: flex;
         flex-direction: column;
         gap: 10px;
-      
-        
-        
-    
-        
     }
     &_positions{
         display: flex;
@@ -181,6 +176,19 @@ choosenPosition.value = ''
     &_disaprove{
       color: red;
     }
+    &_input{
+      padding-top: 30px;
+      width: 100%;
+    }
+    &_main{
+      width: 100%;
+      @media screen and (min-width: 750px) {
+    width: 50%; 
+    }
+    @media screen and (min-width: 1450px) {
+    width: 30%; 
+    }
+    }
     
 }
 .list_item{
@@ -189,7 +197,8 @@ choosenPosition.value = ''
 .order_drop{
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 30px;
+  // padding: 30px;
 }
 .order_validator{
   color: red;

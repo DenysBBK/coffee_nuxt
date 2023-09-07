@@ -17,7 +17,9 @@
     </div>
 </template>
 <script setup lang="ts">
+import{languageState} from '../types/languageTypes'
 
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const updatedProfile:Ref<boolean> = ref(false);
     
@@ -41,9 +43,13 @@ function profileIsUpdated(data:any){
     userCard.value = data.card
     userAvatar.value = data.avatar
 }
-
+const router = useRouter();
 
 onMounted(async () =>{
+  console.log(router)
+  
+    
+    
     try{
         await useProfileStore().getUserData();
 
@@ -51,8 +57,6 @@ onMounted(async () =>{
         console.log(error)
         
     }
-    console.log(userName)
-    
     userName.value = userData.name;
     userPhone.value = userData.phone;
     userBank.value = userData.bank;
@@ -65,7 +69,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Profile'
+    title:langs.value.pageTitles.userProfile
 })
 
 </script>

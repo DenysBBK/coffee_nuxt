@@ -1,27 +1,46 @@
 <template>
     <div>
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
        <v-container class="orders_container">
             <h1 class="text-center pb-10" v-if="userOrders.length" >Active orders</h1>
             <h1 class="text-center pb-10" v-if="!userOrders.length">There is no orders</h1>
+            
             <div class="orders_main">
                 <div class="orders_item" v-for="(item, index) in userOrders" :key="index">
-                    <p class="order_name">{{ item.fromCafe }}</p>
+                    
+                    <div class="order_avatar">
+                        <img :src=userAvatar(item.cafeAvatar) class="order_img">
+                        <p class="order_name">{{ item.fromCafe }}</p>
+                    </div>
+                    
                     <div>
                         <ul class="order_list" v-for="(pos, i) in item.positions" :key="i">
                         <li>{{ pos.name }} {{ pos.price }}, UAH</li>
                     </ul>
                     </div>
+                
                     <div>
                         <p class="order_status">{{ status(item.status) }}</p>
                         <v-btn @click="finishOrder(index)" class="order_btn" v-if="item.status === 2" >Finish</v-btn>
                     </div>
                 </div>
             </div>
+       
        </v-container>
     </div>
 </template>
 <script setup lang="ts">
 import { ordersArr } from 'types/orderTypes';
+
+import{languageState} from '../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 const userOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3)
@@ -36,9 +55,12 @@ function status(item:number):string{
             };
             
 }
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
+}
 
 async function finishOrder(index:number):Promise<void>{
-    userOrders.value[index].status = 3;
+    userOrders.value[index].status == 3;
             let findOrder = {
                 position:userOrders.value[index].positionId,
                 placeId:userOrders.value[index].cafeId,
@@ -48,6 +70,7 @@ async function finishOrder(index:number):Promise<void>{
     try{
         await useOrderStore().updateOrder(findOrder);
         await useOrderStore().getOrders('user')
+        show('success', 'Order is finished')
     }catch(error){
         console.log(error)
         
@@ -57,6 +80,8 @@ async function finishOrder(index:number):Promise<void>{
 onBeforeMount(async() => {
     try{
     await useOrderStore().getOrders('user')
+    console.log(userOrders.value)
+    
     }catch(error){
         console.log(error)
         
@@ -66,7 +91,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Active orders'
+    title:langs.value.pageTitles.acitveOrders
 })
 </script>
 <style scoped lang="scss">
@@ -83,6 +108,8 @@ useHead({
         display: flex;
         flex-direction: column;
         gap: 15px;
+        max-height: 600px;
+        overflow-y: auto;
     }
     &_item{
         display: flex;
@@ -109,6 +136,18 @@ useHead({
     &_list{
         list-style-type: none;
 
+    }
+    &_avatar{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap:5px;
+        align-items: center;
+    }
+    &_img{
+        max-width: 75px;
+        max-height: 75px;
+        
     }
 }
 

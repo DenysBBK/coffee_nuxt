@@ -7,11 +7,11 @@ export interface authState{
 }
 export interface dataType{
     value:string,
-    isValid:boolean
+    isValid:boolean,
 }
 export interface loginTypes{
-    email:string,
-    password:string,
+    email:string|null,
+    password:string|null,
     type:string
 }
 export interface loginItem{

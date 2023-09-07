@@ -24,10 +24,12 @@
                     label="Caffe name"
                     v-model="name">
                     </v-text-field>
-                    <v-text-field
+                    <v-combobox
+                    :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
                     label="City"
-                    v-model="city">
-                    </v-text-field>
+                    v-model="city"
+                    >
+                    </v-combobox>
                     <v-text-field
                     label="Address"
                     v-model="address">
@@ -88,7 +90,7 @@ const props = defineProps<{
     address?: string; 
     city?: string;
     phone?:string;  
-    positions: Positions[];
+    positions?: Positions[]|undefined;
     avatar:number
 }>();
 
@@ -121,9 +123,12 @@ function deletePosition(index:number):void{
     console.log(allPositions)
     
 }
-props.positions.forEach(one => {
+if(props.positions){
+    props.positions.forEach(one => {
     allPositions.push(one)
 })
+}
+
 
 const name:Ref<string> = ref(props.name);
 const city:Ref<string | undefined> = ref(props.city);

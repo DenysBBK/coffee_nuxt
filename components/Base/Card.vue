@@ -1,4 +1,5 @@
 <template>
+ 
   <v-card
     class="mx-auto"
     max-width="500"
@@ -13,6 +14,7 @@
         <base-order-modal 
           :data="props.fullData"
           @order="orderRequest"
+          @makeAlert="successAlert"
           >
         </base-order-modal>
     <v-card-actions>
@@ -24,12 +26,12 @@
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="show = !show"
+        :icon="showP ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="showP = !showP"
       ></v-btn>
     </v-card-actions>
     <v-expand-transition>
-      <div v-show="show">
+      <div v-show="showP">
         <v-divider></v-divider>
 
         <v-card-text>
@@ -49,27 +51,37 @@
 import { Positions } from 'types/profileTypes';
 import { shopsArr } from 'types/profileTypes';
 import { userOrderData } from 'types/orderTypes';
-const show:Ref<boolean> = ref(false);
+const showP:Ref<boolean> = ref(false);
+
+ 
+
+  const emit = defineEmits(['makeOrder'])
+function successAlert(data:string):void{
+  emit('makeOrder', data)
+}
 
 async function orderRequest(data:Positions[]):Promise<void>{
-
-  try{
-    const orderData: userOrderData = {
+  
+  const orderData: userOrderData = {
       uid:localStorage.getItem('uid'),
       name:useProfileStore().user.name,
       positions:data,
       id:props.fullData.id,
-      shopName:props.fullData.name                  
+      shopName:props.fullData.name,
+      cafeAvatar:props.avatar,
+      userAvatar:useProfileStore().userInfo.avatar              
     }
+  try{
+    await useProfileStore().getUserData()
     console.log(orderData)
+    await useOrderStore().postOrder(orderData);
     
-    await useOrderStore().postOrder(orderData)
     
-
   }catch(error){
     console.log(error)
     
   }
+  
   
 }
 

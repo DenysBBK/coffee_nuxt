@@ -1,11 +1,19 @@
 <template>
     <div>
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <v-container class="orders_container">
             <h1 class="text-center pb-10" v-if="shopOrders.length" >Orders</h1>
             <h1 class="text-center pb-10" v-if="!shopOrders.length">There is no orders</h1>
             <div class="orders_main">
                 <div class="orders_item" v-for="(item, index) in shopOrders" :key="index">
-                    <p class="order_name">{{ item.userName}}</p>
+                    <div class="order_avatar">
+                        <img :src=userAvatar(item.userAvatar) class="order_img">
+                        <p class="order_name">{{ item.userName}}</p>
+                    </div>
                     <div>
                         <ul class="order_list" v-for="(pos, i) in item.positions" :key="i">
                             <li>{{ pos.name }} {{ pos.price }}, UAH</li>
@@ -23,6 +31,11 @@
 </template>
 <script setup lang="ts">
 import { ordersArr } from 'types/orderTypes';
+import{languageState} from '../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 const shopOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3)
@@ -35,19 +48,25 @@ function status(item:number):string{
             }else{
                 return 'Ready'
             }
+};
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
 }
 
 async function changeOrder(index:number, forType:number):Promise<void>{
-    shopOrders.value[index].status = forType 
+    shopOrders.value[index].status == forType 
         let findOrder = {
                 position:shopOrders.value[index].positionId,
-                placeId:shopOrders.value[index].cafeId,
+                placeId:shopOrders.value[index].userId,
                 status:forType,
                 type:'shops'
             } 
     try{
+        console.log(findOrder)
         await useOrderStore().updateOrder(findOrder);
         await useOrderStore().getOrders('shop')
+        if(forType == 1){show('success', 'Order in work')}
+        if(forType == 2){show('success', 'Order is finished')}
     }catch(error){
         console.log(error)
         
@@ -68,7 +87,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Orders'
+    title:langs.value.pageTitles.ordersPage
 })
 </script>
 <style scoped lang="scss">
@@ -85,6 +104,8 @@ useHead({
         display: flex;
         flex-direction: column;
         gap: 15px;
+        max-height: 600px;
+        overflow-y: auto;
     }
     &_item{
         display: flex;
@@ -111,6 +132,18 @@ useHead({
     &_list{
         list-style-type: none;
 
+    }
+    &_avatar{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap:5px;
+        align-items: center;
+    }
+    &_img{
+        max-width: 75px;
+        max-height: 75px;
+        
     }
 }
 </style>

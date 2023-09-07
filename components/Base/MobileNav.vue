@@ -22,30 +22,34 @@
         <v-navigation-drawer v-model="drawer" location="right" temporary class="nav_btns">
             <div class="mobile_btn">
                 <NuxtLink to="/login" v-if="!auth.isAuthenticated">
-                    <base-button text="login"></base-button>
+                    <base-button :text="langs.header.login"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/registration" v-if="!auth.isAuthenticated">
-                    <base-button text="Registration"></base-button>
+                    <base-button :text="langs.header.registration"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button text="Order"></base-button>
+                    <base-button :text="langs.header.order"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/cafe-profile" v-if="type === 'shops' && auth.isAuthenticated">
-                    <base-button text="Proifle"></base-button>
+                    <base-button :text="langs.header.profile"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/orders" v-if="type === 'shops' && auth.isAuthenticated">
-                    <base-button text="Orders"></base-button>
+                    <base-button :text="langs.header.orders"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/active-orders" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button text="Active orders"></base-button>
+                    <base-button :text="langs.header.activeOrders"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/profile" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button text="Profile"></base-button>
+                    <base-button :text="langs.header.profile"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/history" v-if="auth.isAuthenticated">
-                    <base-button text="History"></base-button>
+                    <base-button :text="langs.header.history"></base-button>
                 </NuxtLink>
-                    <base-button text="Logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
+                    <base-button :text="langs.header.logout" 
+                    v-on:click="auth.logout()" 
+                    v-if="auth.isAuthenticated"
+                    class="logout_btn"></base-button>
+                <BaseLanguage></BaseLanguage>
             </div>
         </v-navigation-drawer>
         <v-card-text>
@@ -55,6 +59,9 @@
 </v-container>
 </template>
 <script setup lang="ts">
+import{languageState} from '../../types/languageTypes'
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+
 const drawer:Ref<boolean> = ref(false);
 
 const auth = useAuthStore();
@@ -95,6 +102,9 @@ const type:ComputedRef<string> = computed(():string => {
 .nav_icon{
     display: flex;
     align-items: center;
+}
+.logout_btn{
+    max-width: 100px;
 }
 
 </style>

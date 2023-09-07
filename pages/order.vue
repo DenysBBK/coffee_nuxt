@@ -1,23 +1,31 @@
 <template>
     <div>
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <v-container class="order_container">
             <h1 class="text-center pb-10" >Make an order</h1>
             <v-autocomplete
             label="Choose your city"
             variant="outlined"
-            :items="shopsCity"
+            :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
             v-model="choosenCity"
             v-on:update:model-value="changeCity"
             >
         </v-autocomplete>
         
-            <v-autocomplete v-if="choosenCity !== null"
+            <v-autocomplete v-if="choosenCity !== null && shopsAddresses.length !== 0"
             label="Choose the address"
             variant="outlined"
             :items="shopsAddresses"
             v-model="choosenAdress"
             v-on:update:model-value="changeAddress">
             </v-autocomplete>
+            <p class="order_text" v-if="choosenCity !== null &&  shopsAddresses.length === 0">
+                There are no coffee shops in this city
+            </p>
             <div class="order_cards">
                 <base-card
                 v-for="item in allShops"
@@ -25,19 +33,33 @@
                 :name="item.name"
                 :positions="item.positions"
                 :avatar="item.avatar"
-                :fullData="item"></base-card>
+                :fullData="item"
+                @makeOrder="triggerAlert"
+               ></base-card>
             </div>
         </v-container>
     </div>
 </template>
 <script setup lang="ts">
 import { shopsArr } from 'types/profileTypes';
+import{languageState} from '../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+
+
 
 const shopsCity:Ref<string[]> = ref([])
 const choosenCity:Ref<string | null> = ref(null)
 const shops:ComputedRef<shopsArr[]> = computed(() => {
     return useProfileStore().shopsInfo
 })
+
+function triggerAlert(data:string):void{
+    show('success', data);
+    console.log('From Order')
+};
+
 
 const shopsAddresses:Ref<string[]> = ref([])
 const filteredShops:Ref<shopsArr[]> = ref([])
@@ -94,7 +116,7 @@ definePageMeta({
     middleware:'authenticated'
 })
 useHead({
-    title:'Order'
+    title:langs.value.pageTitles.orderPage
 })
 </script>
 <style scoped lang="scss">
@@ -111,6 +133,12 @@ useHead({
         gap: 20px;
         flex-wrap: wrap;
         padding-top: 30px;
+    }
+    &_text{
+        text-align: center;
+        padding-top: 10px;
+        font-size: 20px;
+        
     }
 }
 </style>

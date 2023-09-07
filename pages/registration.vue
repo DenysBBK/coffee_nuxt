@@ -1,62 +1,75 @@
 <template>
     <div>
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <v-container class="login_container">
-            <h1 class="text-center pb-3" >Registration</h1>
-            <h4 class="text-center">Already have account?<NuxtLink to="/login" class="signin"> Login</NuxtLink> </h4>
+            <h1 class="text-center pb-3" >{{ langs.registration.main }}</h1>
+            <h4 class="text-center">{{ langs.registration.haveAccount }} <NuxtLink to="/login" class="signin"> {{ langs.registration.toLogin }}</NuxtLink> </h4>
             <v-form @submit.prevent="submitForm">
                 <div class="choose_btns">
-                    <v-btn v-on:click="toUserAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'users'}">User</v-btn>
-                    <v-btn v-on:click="toShopAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'shops'}">Cafe</v-btn>
+                    <v-btn v-on:click="toUserAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'users'}">{{ langs.registration.toUser }}</v-btn>
+                    <v-btn v-on:click="toShopAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'shops'}">{{ langs.registration.toCaffe }}</v-btn>
                 </div>
                 <v-text-field
                 v-model="name"
-                :label="toAccount == 'users' ? 'Name':'Coffee-shop name'"
+                :label="toAccount == 'users' ? langs.registration.name:langs.registration.cafeName"
                 class="login_input"
                 :rules="nameValidator">
                 </v-text-field>
                 <v-text-field
                     v-model="email"
-                    label="Email"
+                    :label="langs.registration.email"
                     class="login_input"
                     :rules="emailValidator">
                 </v-text-field>
                 <v-text-field
                     v-model="password"
                     type="password"
-                    label="Password"
+                    :label="langs.registration.password"
                     class="login_input"
                     :rules="passwordValidator">
                 </v-text-field>
                 <v-text-field
                     v-model="passwordConfirmation"
                     type="password"
-                    label="Confirm password"
+                    :label="langs.registration.confirmPassword"
                     class="login_input"
                     :rules="confirmationRules">
                 </v-text-field>
+                <v-combobox
+                v-if="!toUserAccount"
+                class="login_input"
+                :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
+                label="Choose you city"
+                v-model="city"
+                >
+
+                </v-combobox>
                 <v-checkbox v-model="checkbox">
                     <template v-slot:label>
                         <div>
-                        I agree with
+                        {{ langs.registration.agree }}
                             <v-tooltip location="bottom">
                                 <template v-slot:activator="{ props }">
-                                <NuxtLink to="/terms" class="terms">Terms of Service</NuxtLink>
+                                <NuxtLink to="/terms" class="terms">{{ langs.registration.terms }}</NuxtLink>
                                 </template>
                                 Opens in new window
                             </v-tooltip>
-                        and
+                        {{ langs.registration.and }}
                         <v-tooltip location="bottom">
                                 <template v-slot:activator="{ props }">
-                                <NuxtLink to="/privacy-policy" class="terms">Privacy Policy</NuxtLink>
+                                <NuxtLink to="/privacy-policy" class="terms">{{ langs.registration.policy }}</NuxtLink>
                                 </template>
                                 Opens in new window
                         </v-tooltip>
-
                         </div>
                     </template>
                 </v-checkbox>
                 <div class="signup_btn">
-                    <v-btn class="login_btn" type="submit">Registration</v-btn>
+                    <v-btn class="login_btn" type="submit">{{ langs.registration.register }}</v-btn>
                 </div>
             </v-form>
         </v-container>
@@ -64,19 +77,25 @@
 </template>
 <script setup lang="ts">
 import {signUpData} from '../types/regTypes'
+import{languageState} from '../types/languageTypes'
 
-const email:Ref<string> = ref('');
-const emailValidator = [(value: string | null) => value?.length! >= 3 || 'Email must include at least 3 characters.']
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
-const password:Ref<string> = ref('')
-const passwordValidator = [((value: string | null) => value?.length! >= 6 || 'Passwrod must include at least 6 characters.')]
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
-const passwordConfirmation:Ref<string> = ref('');
-const confirmationRules = [((value: string | null) => value == password.value|| 'Field should match Password')]
+const email:Ref<string | null> = ref(null);
+const emailValidator = [(value: string ) => value?.length! >= 3 || 'Email must include at least 3 characters.']
 
-const name:Ref<string> = ref('');
-const nameValidator = [((value:string|null) => value?.length! >= 3 || 'At least 3 characters')]
+const password:Ref<string | null> = ref(null)
+const passwordValidator = [((value: string ) => value?.length! >= 6 || 'Passwrod must include at least 6 characters.')]
 
+const passwordConfirmation:Ref<string | null> = ref(null);
+const confirmationRules = [((value: string ) => value == password.value|| 'Field should match Password')]
+
+const name:Ref<string | null> = ref(null);
+const nameValidator = [((value:StringConstructor) => value?.length! >= 3 || 'At least 3 characters')]
+
+const city:Ref<string> = ref('')
 const toAccount:Ref<string> = ref('users');
 
 const checkbox:Ref<boolean> = ref(false)
@@ -84,26 +103,48 @@ const checkbox:Ref<boolean> = ref(false)
 function toShopAccout():void {toAccount.value = 'shops'; }
 function toUserAccout():void {toAccount.value = 'users'; }
 
+const toUserAccount:ComputedRef<boolean> = computed(():boolean => {
+    if(toAccount.value == 'users'){
+        return true
+    }else{
+        return false
+    }
+})
 
 async function submitForm(){
     if(email.value == '' || password.value == '' || passwordConfirmation.value == '' || toAccount.value == '' || checkbox.value == false) return
-    const actionPayload:signUpData = {
+    let actionPayload:signUpData;
+    if(toAccount.value == 'users'){
+        actionPayload = {
         email:email.value,
         password:password.value,
         name:name.value,
-        type:toAccount.value
+        type:toAccount.value}
+    }else{
+        actionPayload = {
+        email:email.value,
+        password:password.value,
+        name:name.value,
+        type:toAccount.value,
+        city:city.value 
+        }
     }
     try{
         await useAuthStore().signUp(actionPayload)
         useRouter().push('/login')
-    }catch(error){
-        console.log(error)
-        
+    }catch(Er:any){
+        show("error", Er.message )
     }
+    email.value = null;
+    password.value = null;
+    passwordConfirmation.value = null;
+    name.value = null;
+    checkbox.value = false
+    
 }
 
 useHead({
-    title:'Registration'
+    title:langs.value.pageTitles.registration
 })
 
 </script>

@@ -12,10 +12,8 @@ export const useOrderStore = defineStore('orders', {
             const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${type}/${id}/orders.json`);
             const data = await responce.json();
     
-            if(!data){
-                console.log('No orders')
+            if(!data)console.log('No orders')
                 
-            }
             const orders:ordersArr[] = []
             if(payload == 'user'){
                 for(let one in data){
@@ -24,7 +22,9 @@ export const useOrderStore = defineStore('orders', {
                         positionId:data[one].positionId,
                         status:data[one].status,
                         positions:data[one].orderPositions,
-                        cafeId:data[one].cafeId
+                        cafeId:data[one].cafeId,
+                        userAvatar:data[one].userAvatar,
+                        cafeAvatar:data[one].cafeAvatar
     
                     }
                     orders.push(item)
@@ -38,6 +38,8 @@ export const useOrderStore = defineStore('orders', {
                         userId:data[one].userId,
                         userName:data[one].userName,
                         positionId:data[one].positionId,
+                        userAvatar:data[one].userAvatar,
+                        cafeAvatar:data[one].cafeAvatar
                     }
                     orders.push(item)
                 }
@@ -58,7 +60,9 @@ export const useOrderStore = defineStore('orders', {
                    userName:payload.name,
                    positionId: posId,
                    status:0,
-                   orderPositions:payload.positions 
+                   orderPositions:payload.positions ,
+                   cafeAvatar:payload.cafeAvatar,
+                   userAvatar:payload.userAvatar
                 })
             });
             const data = await responce.json()
@@ -74,7 +78,9 @@ export const useOrderStore = defineStore('orders', {
                 positionId: posId,
                 status:0,
                 orderPositions:payload.positions ,
-                cafeId:payload.id
+                cafeId:payload.id,
+                cafeAvatar:payload.cafeAvatar,
+                userAvatar:payload.userAvatar
                }) 
             });
             const data2 = await resp.json();
@@ -90,7 +96,6 @@ export const useOrderStore = defineStore('orders', {
                 
                 
                 if(data[one].positionId == payload.position){
-                    console.log(one)
                     const updatedData = {
                         ...data[one],
                         status:payload.status
@@ -102,10 +107,8 @@ export const useOrderStore = defineStore('orders', {
                     });
                     const newData = await resp.json();
                     if(!newData){
-                        throw new Error('Cant finis order')
-                    }
-                    
-                    
+                        throw new Error('Cant finish order')
+                    }  
                 }
             }
             let back:string = payload.type == 'users' ? 'shops':'users'

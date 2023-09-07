@@ -2,6 +2,7 @@
 import {resolve} from 'path'
 export default defineNuxtConfig({
   css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css'],
+  
   build: {
     transpile: ['vuetify'],
   },
@@ -20,8 +21,15 @@ export default defineNuxtConfig({
   dirs: ['stores'],
 },
 app:{
-  pageTransition:{name: "page", mode:"out-in"}
+  pageTransition:{name: "page", mode:"out-in"},
+  layoutTransition:{name:'alert', mode:'out-in'},
+  
 },
+
+
+
+
+
 
 
 

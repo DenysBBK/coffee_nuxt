@@ -1,25 +1,25 @@
 <template>
     <div>
         <v-container class="profile_container">
-            <h1 class="text-center pb-10" >Profile</h1>
+            <h1 class="text-center pb-10" >{{ langs.userProfile.title }}</h1>
             <div class="profile_block">
                 <div class="profile_info">
-                    <p class="profile_item"><b>Name:</b> {{ props.name }}</p>
-                    <p class="profile_item"><b>Phone:</b> {{ props.phone }}</p>
-                    <p class="profile_item"><b>Bank:</b> {{ props.bank }}</p>
-                    <p class="profile_item"><b>Card number:</b> {{ props.cardNumber == '' ? '': props.cardNumber.slice(0, -8) + "********"  }}</p>
+                    <p class="profile_item"><b>{{ langs.userProfile.name }}:</b> {{ props.name }}</p>
+                    <p class="profile_item"><b>{{ langs.userProfile.phone }}:</b> {{ props.phone }}</p>
+                    <p class="profile_item"><b>{{ langs.userProfile.bank }}:</b> {{ props.bank }}</p>
+                    <p class="profile_item"><b>{{ langs.userProfile.cardNumber }}:</b> {{ props.cardNumber == '' ? '': props.cardNumber.slice(0, -8) + "********"  }}</p>
                 </div>
                 <img :src=userAvatar(props.avatar) class="profile_img">
             </div>
             <div class="profile_update">
-                <v-btn variant="outlined" v-on:click="editProfile">Update profile</v-btn>
+                <v-btn variant="outlined" v-on:click="editProfile">{{ langs.userProfile.update }}</v-btn>
             </div>
             <div class="profile_btns">
                 <NuxtLink to="/active-orders">
                     <v-btn prepend-icon="mdi-arrow-left" class="profile_btn">Active orders</v-btn>
                 </NuxtLink>
                 <NuxtLink to="/order">
-                    <v-btn append-icon="mdi-arrow-right" class="profile_btn">Make order</v-btn>
+                    <v-btn append-icon="mdi-arrow-right" class="profile_btn">{{ langs.userProfile.makeOrder }}</v-btn>
                 </NuxtLink>
                 
 
@@ -28,7 +28,9 @@
     </div>
 </template>
 <script setup lang="ts">
+import{languageState} from '../../types/languageTypes'
 
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const props = defineProps({
     name:{
         type:String,
