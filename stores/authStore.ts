@@ -84,14 +84,28 @@ export const useAuthStore = defineStore('auth', {
             }else{
                 let avatarType:number = payload.type === 'users'? 0:7
                 const mode:string = payload.type;
-                const responce:any = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${mode}/${theId}.json`,{
-                method: "PUT",
-                body:JSON.stringify({
+                let regData;
+                if(payload.type === 'users'){
+                    regData = {
                     email:payload.email,
                     name:payload.name,
                     id:theId,
                     avatar:avatarType
-                })
+                    }
+                }else{
+                    regData = {
+                    email:payload.email,
+                    name:payload.name,
+                    id:theId,
+                    avatar:avatarType,
+                    city:payload.city
+                    }
+                }
+                console.log(regData)
+                
+                const responce:any = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${mode}/${theId}.json`,{
+                method: "PUT",
+                body:JSON.stringify(regData)
                 })
                 const data = await responce.json()
                 if(!responce.ok){

@@ -10,19 +10,22 @@
             <v-autocomplete
             label="Choose your city"
             variant="outlined"
-            :items="shopsCity"
+            :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
             v-model="choosenCity"
             v-on:update:model-value="changeCity"
             >
         </v-autocomplete>
         
-            <v-autocomplete v-if="choosenCity !== null"
+            <v-autocomplete v-if="choosenCity !== null && shopsAddresses.length !== 0"
             label="Choose the address"
             variant="outlined"
             :items="shopsAddresses"
             v-model="choosenAdress"
             v-on:update:model-value="changeAddress">
             </v-autocomplete>
+            <p class="order_text" v-if="choosenCity !== null &&  shopsAddresses.length === 0">
+                There are no coffee shops in this city
+            </p>
             <div class="order_cards">
                 <base-card
                 v-for="item in allShops"
@@ -43,6 +46,7 @@ import{languageState} from '../types/languageTypes'
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+
 
 
 const shopsCity:Ref<string[]> = ref([])
@@ -129,6 +133,12 @@ useHead({
         gap: 20px;
         flex-wrap: wrap;
         padding-top: 30px;
+    }
+    &_text{
+        text-align: center;
+        padding-top: 10px;
+        font-size: 20px;
+        
     }
 }
 </style>

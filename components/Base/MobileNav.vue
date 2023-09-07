@@ -45,7 +45,10 @@
                 <NuxtLink to="/history" v-if="auth.isAuthenticated">
                     <base-button :text="langs.header.history"></base-button>
                 </NuxtLink>
-                    <base-button :text="langs.header.logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
+                    <base-button :text="langs.header.logout" 
+                    v-on:click="auth.logout()" 
+                    v-if="auth.isAuthenticated"
+                    class="logout_btn"></base-button>
                 <BaseLanguage></BaseLanguage>
             </div>
         </v-navigation-drawer>
@@ -99,6 +102,9 @@ const type:ComputedRef<string> = computed(():string => {
 .nav_icon{
     display: flex;
     align-items: center;
+}
+.logout_btn{
+    max-width: 100px;
 }
 
 </style>

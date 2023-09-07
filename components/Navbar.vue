@@ -10,12 +10,12 @@
 </template>
 <style scoped lang="scss">
 .mobile_nav{
-    @media screen and (min-width: 1275px) {
+    @media screen and (min-width: 815px) {
         display: none;
     }
 }
 .base_nav{
-    @media  screen and (max-width: 1275px) {
+    @media  screen and (max-width: 814px) {
         display: none;
     }
 }

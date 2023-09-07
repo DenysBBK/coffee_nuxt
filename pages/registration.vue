@@ -39,6 +39,15 @@
                     class="login_input"
                     :rules="confirmationRules">
                 </v-text-field>
+                <v-combobox
+                v-if="!toUserAccount"
+                class="login_input"
+                :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
+                label="Choose you city"
+                v-model="city"
+                >
+
+                </v-combobox>
                 <v-checkbox v-model="checkbox">
                     <template v-slot:label>
                         <div>
@@ -86,6 +95,7 @@ const confirmationRules = [((value: string ) => value == password.value|| 'Field
 const name:Ref<string | null> = ref(null);
 const nameValidator = [((value:StringConstructor) => value?.length! >= 3 || 'At least 3 characters')]
 
+const city:Ref<string> = ref('')
 const toAccount:Ref<string> = ref('users');
 
 const checkbox:Ref<boolean> = ref(false)
@@ -93,14 +103,31 @@ const checkbox:Ref<boolean> = ref(false)
 function toShopAccout():void {toAccount.value = 'shops'; }
 function toUserAccout():void {toAccount.value = 'users'; }
 
+const toUserAccount:ComputedRef<boolean> = computed(():boolean => {
+    if(toAccount.value == 'users'){
+        return true
+    }else{
+        return false
+    }
+})
 
 async function submitForm(){
     if(email.value == '' || password.value == '' || passwordConfirmation.value == '' || toAccount.value == '' || checkbox.value == false) return
-    const actionPayload:signUpData = {
+    let actionPayload:signUpData;
+    if(toAccount.value == 'users'){
+        actionPayload = {
         email:email.value,
         password:password.value,
         name:name.value,
-        type:toAccount.value
+        type:toAccount.value}
+    }else{
+        actionPayload = {
+        email:email.value,
+        password:password.value,
+        name:name.value,
+        type:toAccount.value,
+        city:city.value 
+        }
     }
     try{
         await useAuthStore().signUp(actionPayload)

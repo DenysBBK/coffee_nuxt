@@ -1,5 +1,10 @@
 <template>
     <div>
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
        <v-container class="orders_container">
             <h1 class="text-center pb-10" v-if="userOrders.length" >Active orders</h1>
             <h1 class="text-center pb-10" v-if="!userOrders.length">There is no orders</h1>
@@ -35,6 +40,8 @@ import{languageState} from '../types/languageTypes'
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+
 const userOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3)
 })
@@ -63,6 +70,7 @@ async function finishOrder(index:number):Promise<void>{
     try{
         await useOrderStore().updateOrder(findOrder);
         await useOrderStore().getOrders('user')
+        show('success', 'Order is finished')
     }catch(error){
         console.log(error)
         

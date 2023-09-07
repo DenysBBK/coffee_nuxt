@@ -24,10 +24,12 @@
                     label="Caffe name"
                     v-model="name">
                     </v-text-field>
-                    <v-text-field
+                    <v-combobox
+                    :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
                     label="City"
-                    v-model="city">
-                    </v-text-field>
+                    v-model="city"
+                    >
+                    </v-combobox>
                     <v-text-field
                     label="Address"
                     v-model="address">

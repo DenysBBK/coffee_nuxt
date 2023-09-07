@@ -16,6 +16,7 @@
                 <NuxtLink to="/registration">
                     <base-button :text="langs.header.registration" v-if="!auth.isAuthenticated"></base-button>
                 </NuxtLink>
+            
                 <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
                     <base-button :text="langs.header.order"></base-button>
                 </NuxtLink>
@@ -25,16 +26,16 @@
                 <NuxtLink to="/orders" v-if="type === 'shops' && auth.isAuthenticated">
                     <base-button :text="langs.header.orders"></base-button>
                 </NuxtLink>
-                <NuxtLink to="/active-orders" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button :text="langs.header.activeOrders"></base-button>
-                </NuxtLink>
                 <NuxtLink to="/profile" v-if="type === 'users' && auth.isAuthenticated">
                     <base-button :text="langs.header.profile"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/history" v-if=" auth.isAuthenticated">
                     <base-button :text="langs.header.history"></base-button>
                 </NuxtLink>
-                <base-button :text="langs.header.logout" v-on:click="auth.logout()" v-if="auth.isAuthenticated"></base-button>
+                <base-button :text="langs.header.logout" 
+                v-on:click="auth.logout()" 
+                v-if="auth.isAuthenticated"
+                class="logout_btn"></base-button>
                 <BaseLanguage></BaseLanguage>
             </div>
         </nav>
@@ -74,11 +75,16 @@ const type:ComputedRef<string> = computed(():string => {
     align-items: center;
 }
 .main_btn{
-    color: #1d0502;
+    color: #7d4e08;
     text-align: center;
     margin: auto;
     font-size: large;
 }
+.list_btn{
+    color:#FEF2F1;
+    background-color: #7d4e08;
+}
+
 
 
 </style>

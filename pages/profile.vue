@@ -43,9 +43,13 @@ function profileIsUpdated(data:any){
     userCard.value = data.card
     userAvatar.value = data.avatar
 }
-
+const router = useRouter();
 
 onMounted(async () =>{
+  console.log(router)
+  
+    
+    
     try{
         await useProfileStore().getUserData();
 
@@ -53,8 +57,6 @@ onMounted(async () =>{
         console.log(error)
         
     }
-    console.log(userName)
-    
     userName.value = userData.name;
     userPhone.value = userData.phone;
     userBank.value = userData.bank;

@@ -1,5 +1,6 @@
 <template>
-<div class="text-center">
+  <div>
+<div >
     <v-menu
       open-on-hover
     >
@@ -34,6 +35,7 @@
       </v-list>
     </v-menu>
   </div>
+</div>
 </template>
 <script setup lang="ts">
 import {langItem} from '../../types/languageTypes'
