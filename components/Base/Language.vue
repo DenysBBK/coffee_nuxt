@@ -1,9 +1,7 @@
 <template>
   <div>
 <div >
-    <v-menu
-      open-on-hover
-    >
+    <v-menu>
       <template v-slot:activator="{ props }">
         <v-btn
           variant="text"

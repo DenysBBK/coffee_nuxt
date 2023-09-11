@@ -79,6 +79,38 @@ export const useLanguageStore = defineStore('language', {
             userProfile:'Profile',
             registration:'Registration',
             terms:'Terms of Services'
+        },
+        alerts:{
+            successReg:'Successful registration',
+            orderInWork:'Order preparing',
+            orderIsFinished:'Order is finished',
+            orderIsDone:'Order is done',
+            successOrder:'Success order'
+        },
+        history:{
+            title:'Orders history',
+            noItems:'You dont have items in history',
+            coffeeName:'Coffee-shop name',
+            userName:'User name',
+            positions:'Positions',
+            date:'Date'
+        },
+        order:{
+            title:'Make an order',
+            chooseSity:'Choose your sity',
+            chooseAddress:'Choose the address',
+            noShops:'There are no coffee shops in this city',
+            makeOrder:'Order',
+            positions:'Positions',
+            modalTitle:'Order your coffee',
+            modalSubtitle:'Choose your drink',
+            chooseDrink:'Choose drink',
+            add:'Add',
+            orderList:'Your order list',
+            confirmOrder:'Confirm order',
+            closeModal:'Close',
+            emptyList:'Order list is empty',
+            totalPrice:'Total price'
         }
     }),
     actions:{
@@ -161,6 +193,38 @@ export const useLanguageStore = defineStore('language', {
         this.$state.cafeProfile.item = data.cafeProfile.item;
         this.$state.cafeProfile.price = data.cafeProfile.price;
         this.$state.cafeProfile.update = data.cafeProfile.update
+
+        //ALERTS
+        this.$state.alerts.orderInWork = data.alerts.orderInWork;
+        this.$state.alerts.orderIsDone = data.alerts.orderIsDone;
+        this.$state.alerts.orderIsFinished = data.alerts.orderIsFinished;
+        this.$state.alerts.successOrder = data.alerts.successOrder;
+        this.$state.alerts.successReg = data.alerts.successReg;
+
+        //HISTORY
+        this.$state.history.coffeeName = data.history.coffeeName;
+        this.$state.history.date = data.history.date;
+        this.$state.history.noItems = data.history.noItems;
+        this.$state.history.positions = data.history.positions;
+        this.$state.history.title = data.history.title;
+        this.$state.history.userName = data.history.userName
+
+        //ORDER
+        this.$state.order.add = data.order.add;
+        this.$state.order.chooseAddress = data.order.chooseAddress;
+        this.$state.order.chooseDrink = data.order.chooseDrink;
+        this.$state.order.chooseSity = data.order.chooseSity;
+        this.$state.order.closeModal = data.order.closeModal;
+        this.$state.order.confirmOrder = data.order.confirmOrder;
+        this.$state.order.makeOrder = data.order.makeOrder;
+        this.$state.order.modalSubtitle = data.order.modalSubtitle;
+        this.$state.order.modalTitle = data.order.modalTitle;
+        this.$state.order.noShops = data.order.noShops;
+        this.$state.order.orderList = data.order.orderList;
+        this.$state.order.positions = data.order.positions;
+        this.$state.order.title = data.order.title;
+        this.$state.order.emptyList = data.order.emptyList;
+        this.$state.order.totalPrice = data.order.totalPrice
         }
     },
     getters:{

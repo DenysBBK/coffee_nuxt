@@ -131,7 +131,10 @@ async function submitForm(){
     }
     try{
         await useAuthStore().signUp(actionPayload)
-        useRouter().push('/login')
+        show('success', langs.value.alerts.successReg)
+        setTimeout(() => {
+            useRouter().push('/login')
+        }, 3000);
     }catch(Er:any){
         show("error", Er.message )
     }

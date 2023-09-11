@@ -22,7 +22,7 @@
         color="orange-lighten-1"
         variant="text"
       >
-        Positions
+        {{ langs.order.positions}}
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
@@ -51,6 +51,10 @@
 import { Positions } from 'types/profileTypes';
 import { shopsArr } from 'types/profileTypes';
 import { userOrderData } from 'types/orderTypes';
+import{languageState} from '../../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+
 const showP:Ref<boolean> = ref(false);
 
  

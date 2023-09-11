@@ -75,6 +75,38 @@ export interface languageState{
         userProfile:string,
         registration:string,
         terms:string
+    },
+    alerts:{
+        successReg:string,
+        orderInWork:string,
+        orderIsFinished:string,
+        orderIsDone:string,
+        successOrder:string
+    },
+    history:{
+        title:string,
+        noItems:string,
+        coffeeName:string,
+        userName:string,
+        positions:string,
+        date:string
+    },
+    order:{
+        title:string,
+        chooseSity:string,
+        chooseAddress:string,
+        noShops:string,
+        makeOrder:string,
+        positions:string,
+        modalTitle:string,
+        modalSubtitle:string,
+        chooseDrink:string,
+        add:string,
+        orderList:string,
+        confirmOrder:string,
+        closeModal:string,
+        emptyList:string,
+        totalPrice:string
     }
 
 }

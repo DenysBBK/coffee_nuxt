@@ -24,7 +24,9 @@
                         </tbody>
                     </table>
                 </div>
-                <img :src=userAvatar(props.avatar)>
+                <div class="profile_image">
+                    <img :src=userAvatar(props.avatar) class="profile_img">
+                </div>
             </div>
             <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="editProfile">{{ langs.cafeProfile.update }} </v-btn>
@@ -99,6 +101,19 @@ function editProfile(){
     justify-content: center;
     align-self: center;
 }
+    &_img{
+        max-width: 150px;
+        max-height: 150px;
+        justify-self: center;
+        @media screen and (min-width: 450px) {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+    &_image{
+        display: flex;
+        justify-content: center;
+    }
 
 }
 </style>

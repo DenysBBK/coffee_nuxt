@@ -16,13 +16,11 @@
             </div>
             <div class="profile_btns">
                 <NuxtLink to="/active-orders">
-                    <v-btn prepend-icon="mdi-arrow-left" class="profile_btn">Active orders</v-btn>
+                    <v-btn prepend-icon="mdi-arrow-left" class="profile_btn">{{ langs.header.activeOrders }}</v-btn>
                 </NuxtLink>
                 <NuxtLink to="/order">
                     <v-btn append-icon="mdi-arrow-right" class="profile_btn">{{ langs.userProfile.makeOrder }}</v-btn>
                 </NuxtLink>
-                
-
             </div>
         </v-container>
     </div>
@@ -101,6 +99,8 @@ function editProfile(){
     padding-top: 70px;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
     @media screen and (min-width: 450px) {
         flex-direction: row;
     }
@@ -109,6 +109,7 @@ function editProfile(){
     &_btn{
     background-color: blue;
     color: white;
+
 }
     &_update{
     padding-top: 70px;

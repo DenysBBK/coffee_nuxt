@@ -70,7 +70,7 @@ async function finishOrder(index:number):Promise<void>{
     try{
         await useOrderStore().updateOrder(findOrder);
         await useOrderStore().getOrders('user')
-        show('success', 'Order is finished')
+        show('success', langs.value.alerts.orderIsFinished)
     }catch(error){
         console.log(error)
         
@@ -120,6 +120,11 @@ useHead({
         padding: 10px;
         flex-wrap: wrap;
         gap: 20px;
+        flex-direction: column;
+        align-items: center;
+        @media screen and (min-width: 450px){
+            flex-direction: row;
+        }
         
     }
 }

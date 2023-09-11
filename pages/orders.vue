@@ -65,8 +65,8 @@ async function changeOrder(index:number, forType:number):Promise<void>{
         console.log(findOrder)
         await useOrderStore().updateOrder(findOrder);
         await useOrderStore().getOrders('shop')
-        if(forType == 1){show('success', 'Order in work')}
-        if(forType == 2){show('success', 'Order is finished')}
+        if(forType == 1){show('success', langs.value.alerts.orderInWork)}
+        if(forType == 2){show('success', langs.value.alerts.orderIsDone)}
     }catch(error){
         console.log(error)
         
@@ -116,6 +116,11 @@ useHead({
         padding: 10px;
         flex-wrap: wrap;
         gap: 20px;
+        flex-direction: column;
+        align-items: center;
+        @media screen and (min-width: 450px){
+            flex-direction: row;
+        }
         
     }
 }
