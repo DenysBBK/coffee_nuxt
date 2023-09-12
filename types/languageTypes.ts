@@ -81,7 +81,8 @@ export interface languageState{
         orderInWork:string,
         orderIsFinished:string,
         orderIsDone:string,
-        successOrder:string
+        successOrder:string,
+        profileUpdated:string
     },
     history:{
         title:string,
@@ -107,6 +108,17 @@ export interface languageState{
         closeModal:string,
         emptyList:string,
         totalPrice:string
+    },
+    mainPage:{
+        title:string,
+        card1:string,
+        card2:string,
+        card3:string,
+        card3First:string,
+        card3Second:string,
+        card3Third:string,
+        card3Four:string,
+        card4:string
     }
 
 }

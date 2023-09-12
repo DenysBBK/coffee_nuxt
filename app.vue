@@ -15,6 +15,10 @@
 const route = useRoute()
 console.log(route.name)
 
+onBeforeMount(() =>{
+  useAuthStore().loginFromStorage()
+  
+})
 </script>
 <style>
 html,

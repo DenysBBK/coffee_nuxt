@@ -9,7 +9,7 @@
         >
           <div class="lang_item">
             <img :src=langIcon(choosenLanguage.img) class="lang_icon">
-            <span>{{ choosenLanguage.name }}</span>
+            <span class="lang_name">{{ choosenLanguage.name }}</span>
           </div>
         </v-btn>
       </template>
@@ -24,7 +24,7 @@
                 <v-btn v-on:click="chooseLanguage(item)" variant="text">
                     <div class="lang_item">
                         <img :src=langIcon(item.img) class="lang_icon">
-                        <span>{{ item.name }}</span>
+                        <span >{{ item.name }}</span>
                     </div>
                 </v-btn>
             
@@ -86,6 +86,11 @@ function langIcon(item:number):string{
         flex-direction: row;
         align-items: center;
         gap: 5px;
+    }
+    &_name{
+      @media  screen and (max-width: 814px) {
+        display: none;
+    }
     }
 }
 </style>

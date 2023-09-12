@@ -85,7 +85,8 @@ export const useLanguageStore = defineStore('language', {
             orderInWork:'Order preparing',
             orderIsFinished:'Order is finished',
             orderIsDone:'Order is done',
-            successOrder:'Success order'
+            successOrder:'Success order',
+            profileUpdated:'Profile updated'
         },
         history:{
             title:'Orders history',
@@ -111,6 +112,17 @@ export const useLanguageStore = defineStore('language', {
             closeModal:'Close',
             emptyList:'Order list is empty',
             totalPrice:'Total price'
+        },
+        mainPage:{
+            title:'Take&Go philosophy',
+            card1:'Do you like to drink coffee very much, but are you already tired of constant queues?',
+            card2:'Would you like your coffee to be prepared as you walk to the coffee shop so that when you arrive, you can pick up your coffee and continue on your way?',
+            card3:'All you need to do is 4 simple things:',
+            card3First:'Register',
+            card3Second:'Find a coffee shop along the way',
+            card3Third:'Order coffee',
+            card3Four:'Pick up a drink on the way when it is ready',
+            card4:'Enjoy your favorite coffee that you now have without queuing!'
         }
     }),
     actions:{
@@ -200,6 +212,7 @@ export const useLanguageStore = defineStore('language', {
         this.$state.alerts.orderIsFinished = data.alerts.orderIsFinished;
         this.$state.alerts.successOrder = data.alerts.successOrder;
         this.$state.alerts.successReg = data.alerts.successReg;
+        this.$state.alerts.profileUpdated = data.alerts.profileUpdated
 
         //HISTORY
         this.$state.history.coffeeName = data.history.coffeeName;
@@ -225,6 +238,17 @@ export const useLanguageStore = defineStore('language', {
         this.$state.order.title = data.order.title;
         this.$state.order.emptyList = data.order.emptyList;
         this.$state.order.totalPrice = data.order.totalPrice
+
+        //MAIN PAGE
+        this.$state.mainPage.card1 = data.mainPage.card1;
+        this.$state.mainPage.card2 = data.mainPage.card2;
+        this.$state.mainPage.card3 = data.mainPage.card3;
+        this.$state.mainPage.card3First = data.mainPage.card3First;
+        this.$state.mainPage.card3Four = data.mainPage.card3Four;
+        this.$state.mainPage.card3Second = data.mainPage.card3Second;
+        this.$state.mainPage.card3Third = data.mainPage.card3Third;
+        this.$state.mainPage.card4 = data.mainPage.card4;
+        this.$state.mainPage.title = data.mainPage.title;
         }
     },
     getters:{

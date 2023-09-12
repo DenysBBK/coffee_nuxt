@@ -1,4 +1,4 @@
-import { stat } from "fs";
+
 import { defineStore } from "pinia";
 import { loginTypes, loginItem, authState } from "types/loginTypes";
 import { signUpData } from "types/regTypes";
@@ -52,12 +52,12 @@ export const useAuthStore = defineStore('auth', {
         }
         localStorage.setItem('token', data.idToken);
         localStorage.setItem('localId', data.localId);
-        localStorage.setItem('type', payload.type)
+        localStorage.setItem('type', payload.type);
         this.$state.token = data.idToken;
         this.$state.userId = data.localId;
         this.$state.uid = id;
         this.$state.type = payload.type
-        this.$state.isAuthenticated = true
+        this.$state.isAuthenticated = true     
         },
         async signUp(payload:signUpData):Promise<void>{
             const theId: number = new Date().getTime()
@@ -126,6 +126,12 @@ export const useAuthStore = defineStore('auth', {
                 this.$state.isAuthenticated = false
                 useRouter().push('/login')
                 
+            },
+           loginFromStorage(){
+                let userToken = localStorage.getItem('token')
+                if(userToken !== null){
+                    this.$state.isAuthenticated = true
+                }
             }
     
     },

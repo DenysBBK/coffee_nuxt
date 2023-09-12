@@ -4,16 +4,14 @@
       <v-layout>
         <v-app-bar class="mobile_bar">
           <v-toolbar-title>
-            <div class="nav_icon">
+                <NuxtLink to="/" class="nav_icon">
                 <img src="../../public/images/coffee-cup.png"
               height="50"
               width="50">
-              <NuxtLink to="/">
                     <v-btn variant="text" class="main_btn">Take & Go</v-btn>
                 </NuxtLink>
-            </div>
-            
           </v-toolbar-title>
+          <BaseLanguage></BaseLanguage>
           <v-app-bar-nav-icon
           variant="plain"
           @click.stop="drawer = !drawer"
@@ -49,7 +47,7 @@
                     v-on:click="auth.logout()" 
                     v-if="auth.isAuthenticated"
                     class="logout_btn"></base-button>
-                <BaseLanguage></BaseLanguage>
+                <!-- <BaseLanguage></BaseLanguage> -->
             </div>
         </v-navigation-drawer>
         <v-card-text>
@@ -79,7 +77,7 @@ const type:ComputedRef<string> = computed(():string => {
     padding-bottom: 5rem;   
 }
 .navigator{
-    z-index: 1;
+    z-index: 10;
     
 }
 .mobile_btn{
@@ -102,6 +100,7 @@ const type:ComputedRef<string> = computed(():string => {
 .nav_icon{
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 .logout_btn{
     max-width: 100px;

@@ -102,7 +102,7 @@ async function submitForm():Promise<void>{
 }
 
 useHead({
-    title:'Login'
+    title:lagns.value.pageTitles.login
 })
 
 </script>

@@ -1,5 +1,10 @@
 <template>
     <div>
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <v-container class="profile_container">
             <h1 class="text-center pb-10" >Update Profile</h1>
             <v-form @submit.prevent="edited">
@@ -54,7 +59,7 @@
                         <tbody>
                             <tr v-for="(item, index) in allPositions" :key="index">
                                 <td :id="'name'+index">{{ item.name }}</td>
-                                <td :id="'price'+index">{{ item.price }}</td>
+                                <td :id="'price'+index">{{ item.price }} UAH</td>
                                 <td><v-btn variant="tonal" size="x-small" v-on:click="deletePosition(index)">delete</v-btn></td>
                             </tr>
                         </tbody>
@@ -65,7 +70,7 @@
                         type="text"
                         v-model="newPosition.name"></v-text-field>
                         <v-text-field
-                        label="Price"
+                        label="Price UAH"
                         type="text"
                         v-model="newPosition.price"></v-text-field>
                         <v-btn icon="mdi-checkbox-marked-circle" class="approve_btn" v-on:click="pushPosition"></v-btn>
@@ -84,7 +89,10 @@
 <script setup lang="ts">
 
 import {Positions} from '../../types/profileTypes'
+import{languageState} from '../../types/languageTypes'
 
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 const props = defineProps<{
     name: string;
     address?: string; 
@@ -166,7 +174,10 @@ async function edited():Promise<void>{
     }
     try{
         await useProfileStore().postCafe(cafeUpdatedData);
-        emits('edited', cafeUpdatedData)
+        show('success', langs.value.alerts.profileUpdated)
+        setTimeout(() =>{
+            emits('edited', cafeUpdatedData)
+        },2000)
     }catch(error){
         console.log(error)
         
