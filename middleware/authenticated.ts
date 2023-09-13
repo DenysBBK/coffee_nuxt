@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware((to, from, ) => {
+const authenticated =  defineNuxtRouteMiddleware((to, from, ) => {
     const auth = useAuthStore()
     if(process.client){
     const token = localStorage.getItem('token');
@@ -16,3 +16,4 @@ export default defineNuxtRouteMiddleware((to, from, ) => {
 
     
 })
+export default authenticated

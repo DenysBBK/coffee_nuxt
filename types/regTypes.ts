@@ -3,5 +3,5 @@ export interface signUpData{
     password:string | null,
     name:string | null,
     type:string,
-    city?:string
+    city?:string | null
 }

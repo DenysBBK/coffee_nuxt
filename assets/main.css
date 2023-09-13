@@ -7,10 +7,10 @@
   transform: translateX(30px);
 }
 .page-enter-active{
-  transition: all 0.3s ease-out;
+  transition: all 0.3s out-in;
 }
 .page-leave-active{
-  transition: all 0.3s ease-in;
+  transition: all 0.3s out-in;
 }
 .page-enter-to,
 .page-leave-from{

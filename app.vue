@@ -7,24 +7,16 @@
     <div class="header">
       <Navbar/>
     </div>
+    <div>
       <NuxtPage/>
+
+    </div>
   </div>
   <TheFooter/>
 </template>
 <script setup lang="ts">
+console.log('Main')
 
-
-
-onBeforeMount(() => {
-  const theToken = localStorage.getItem('token')
-  if(theToken !== null){
-    useAuthStore().isAuthenticated = true;
-    console.log(theToken);
-    console.log(useAuthStore().isAuthenticated)
-    
-    
-  }
-})
 </script>
 <style>
 html,

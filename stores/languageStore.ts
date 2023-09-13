@@ -41,6 +41,7 @@ export const useLanguageStore = defineStore('language', {
             and:'and',
             register:'Registration',
             policy:'Privacy Policy',
+            city:'Choose your city'
         },
         userProfile:{
             title:'Profile',
@@ -123,6 +124,21 @@ export const useLanguageStore = defineStore('language', {
             card3Third:'Order coffee',
             card3Four:'Pick up a drink on the way when it is ready',
             card4:'Enjoy your favorite coffee that you now have without queuing!'
+        },
+        regValidators:{
+            emailNotEmpty:'Email must be not empty',
+            emailMoreLetters:'Need more than 3 letters',
+            invalidEmail:'Invalid email address',
+            passwordMoreLetters:'Password must include at least 6 characters',
+            confirmPassword:'Field should match Password',
+            nameValidator:'At least 3 characters',
+            cityValidator:'Need to choose the city',
+            termsValidator:'Need to agree with terms'
+        },
+        loginValidators:{
+            email:'Email must be not empty',
+            password:'Password must be not empty',
+            toAccount:'Need to choose one option'
         }
     }),
     actions:{
@@ -179,7 +195,8 @@ export const useLanguageStore = defineStore('language', {
         this.$state.registration.terms = data.registration.terms;
         this.$state.registration.and = data.registration.and;
         this.$state.registration.policy = data.registration.policy;
-        this.$state.registration.register = data.registration.register
+        this.$state.registration.register = data.registration.register;
+        this.$state.registration.city = data.registration.city
 
         //USER PROFILE
         this.$state.userProfile.title = data.userProfile.title;
@@ -249,7 +266,24 @@ export const useLanguageStore = defineStore('language', {
         this.$state.mainPage.card3Third = data.mainPage.card3Third;
         this.$state.mainPage.card4 = data.mainPage.card4;
         this.$state.mainPage.title = data.mainPage.title;
-        }
+
+         //REGISTRATION VALIDATION
+        this.$state.regValidators.cityValidator = data.regValidators.cityValidator;
+        this.$state.regValidators.confirmPassword = data.regValidators.confirmPassword;
+        this.$state.regValidators.emailMoreLetters = data.regValidators.emailMoreLetters;
+        this.$state.regValidators.emailNotEmpty = data.regValidators.emailNotEmpty;
+        this.$state.regValidators.invalidEmail = data.regValidators.invalidEmail;
+        this.$state.regValidators.nameValidator = data.regValidators.nameValidator;
+        this.$state.regValidators.passwordMoreLetters = data.regValidators.passwordMoreLetters;
+        this.$state.regValidators.termsValidator = data.regValidators.termsValidator;
+
+        //LOGIN VALIDATORS
+        this.$state.loginValidators.email = data.loginValidators.email;
+        this.$state.loginValidators.password = data.loginValidators.password;
+        this.$state.loginValidators.toAccount = data.loginValidators.toAccount
+        },
+
+       
     },
     getters:{
         lang:(state:languageState) => state

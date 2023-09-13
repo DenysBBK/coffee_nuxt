@@ -35,7 +35,8 @@ export interface languageState{
         terms:string,
         and:string,
         policy:string,
-        register:string
+        register:string,
+        city:string
     },
     userProfile:{
         title:string,
@@ -119,6 +120,21 @@ export interface languageState{
         card3Third:string,
         card3Four:string,
         card4:string
+    },
+    regValidators:{
+        emailNotEmpty:string,
+        emailMoreLetters:string,
+        invalidEmail:string,
+        passwordMoreLetters:string,
+        confirmPassword:string,
+        nameValidator:string,
+        cityValidator:string,
+        termsValidator:string
+    },
+    loginValidators:{
+        email:string,
+        password:string,
+        toAccount:string
     }
 
 }
