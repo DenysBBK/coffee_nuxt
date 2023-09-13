@@ -12,12 +12,18 @@
   <TheFooter/>
 </template>
 <script setup lang="ts">
-const route = useRoute()
-console.log(route.name)
 
-onBeforeMount(() =>{
-  useAuthStore().loginFromStorage()
-  
+
+
+onBeforeMount(() => {
+  const theToken = localStorage.getItem('token')
+  if(theToken !== null){
+    useAuthStore().isAuthenticated = true;
+    console.log(theToken);
+    console.log(useAuthStore().isAuthenticated)
+    
+    
+  }
 })
 </script>
 <style>

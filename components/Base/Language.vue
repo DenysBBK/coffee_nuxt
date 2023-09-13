@@ -1,5 +1,5 @@
 <template>
-  <div>
+  
 <div >
     <v-menu>
       <template v-slot:activator="{ props }">
@@ -33,7 +33,7 @@
       </v-list>
     </v-menu>
   </div>
-</div>
+
 </template>
 <script setup lang="ts">
 import {langItem} from '../../types/languageTypes'

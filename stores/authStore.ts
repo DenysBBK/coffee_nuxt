@@ -127,12 +127,14 @@ export const useAuthStore = defineStore('auth', {
                 useRouter().push('/login')
                 
             },
-           loginFromStorage(){
-                let userToken = localStorage.getItem('token')
-                if(userToken !== null){
-                    this.$state.isAuthenticated = true
-                }
-            }
+           loginFromStorage(token:string, type:string, uid:string, isAuth:boolean):void{
+                this.type = type;
+                this.token = token;
+                this.uid = uid;
+                this.isAuthenticated = isAuth
+              
+
+           }
     
     },
     getters:{

@@ -24,7 +24,7 @@ app:{
   pageTransition:{name: "page", mode:"out-in"},
   layoutTransition:{name:'alert', mode:'out-in'},
   
-}
+},
 
 
 

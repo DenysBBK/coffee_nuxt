@@ -47,7 +47,7 @@
                     v-on:click="auth.logout()" 
                     v-if="auth.isAuthenticated"
                     class="logout_btn"></base-button>
-                <!-- <BaseLanguage></BaseLanguage> -->
+               
             </div>
         </v-navigation-drawer>
         <v-card-text>

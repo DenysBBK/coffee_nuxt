@@ -33,8 +33,11 @@
                 <base-button :text="langs.header.logout" 
                 v-on:click="auth.logout()" 
                 v-if="auth.isAuthenticated"
-                class="logout_btn"></base-button>
-                <BaseLanguage></BaseLanguage>
+                class="logout_btn">
+            </base-button>
+            <ClientOnly>
+                <BaseLanguage ></BaseLanguage>
+            </ClientOnly>
             </div>
         </nav>
     </v-container>
