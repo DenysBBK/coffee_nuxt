@@ -6,15 +6,15 @@
             :aletrType="typeOfAlert">
         </base-alert>
         <v-container class="profile_container">
-            <h1 class="text-center pb-10" >Update Profile</h1>
+            <h1 class="text-center pb-10" >{{ langs.cafeProfile.updateTitle }}</h1>
             <v-form @submit.prevent="edited">
                 <div class="update_main">
-                    <p>Choose cafe avatar:</p>
+                    <p>{{ langs.cafeProfile.chooseAvatar }}:</p>
                     <div class="update_img">
                         <div class="update_avatar">
                             <img :src=mainAvatar(choosenImage) class="profile_img">
                             <button class="avatar_btn" @click.prevent="makeDefault" type="button">
-                                <span class="update_span">Make default</span>
+                                <span class="update_span">{{ langs.cafeProfile.default }}</span>
                             </button>
                         </div>
                         <div class="update_avatars" >
@@ -26,32 +26,35 @@
                         </div>
                     </div>
                     <v-text-field
-                    label="Caffe name"
-                    v-model="name">
+                    :label="langs.cafeProfile.name"
+                    v-model="name"
+                    :rules="nameValidator"
+                    >
                     </v-text-field>
                     <v-combobox
                     :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
-                    label="City"
+                    :label="langs.cafeProfile.city"
                     v-model="city"
+                    :rules="cityValidator"
                     >
                     </v-combobox>
                     <v-text-field
-                    label="Address"
+                    :label="langs.cafeProfile.address"
                     v-model="address">
                     </v-text-field>
                     <v-text-field
-                    label="Contact phone"
+                    :label="langs.cafeProfile.phone"
                     v-model="phone">
                     </v-text-field>
-                    <h3 class="text-center pb-10">Positions</h3>
+                    <h3 class="text-center pb-10">{{ langs.cafeProfile.updatePositions }}</h3>
                     <v-table>
                         <thead>
                             <tr>
                                 <th class="text-left">
-                                    Item
+                                    {{ langs.cafeProfile.item }}
                                 </th>
                                 <th class="text-left">
-                                    Price
+                                    {{ langs.cafeProfile.price }}
                                 </th>
                             
                             </tr>
@@ -60,28 +63,28 @@
                             <tr v-for="(item, index) in allPositions" :key="index">
                                 <td :id="'name'+index">{{ item.name }}</td>
                                 <td :id="'price'+index">{{ item.price }} UAH</td>
-                                <td><v-btn variant="tonal" size="x-small" v-on:click="deletePosition(index)">delete</v-btn></td>
+                                <td><v-btn variant="tonal" size="x-small" v-on:click="deletePosition(index)">{{ langs.cafeProfile.delete }}</v-btn></td>
                             </tr>
                         </tbody>
                     </v-table>
                     <div class="add_input" v-if="isNewPositionInput">
                         <v-text-field
-                        label="Position name"
+                        :label="langs.cafeProfile.posItem"
                         type="text"
                         v-model="newPosition.name"></v-text-field>
                         <v-text-field
-                        label="Price UAH"
+                        :label="langs.cafeProfile.posPrice"
                         type="text"
                         v-model="newPosition.price"></v-text-field>
                         <v-btn icon="mdi-checkbox-marked-circle" class="approve_btn" v-on:click="pushPosition"></v-btn>
                         <v-btn icon="mdi-cancel" class="disapprove_btn" v-on:click="addNewPosition"></v-btn>
                     </div>
-                    <v-btn v-if="!isNewPositionInput" variant="outlined" size="small" class="update_btn" v-on:click="addNewPosition">Add new position</v-btn>
+                    <v-btn v-if="!isNewPositionInput" variant="outlined" size="small" class="update_btn" v-on:click="addNewPosition">{{ langs.cafeProfile.addNew }}</v-btn>
                 </div>
             </v-form>
             <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="edited" class="edit_btn"
-                :loading="load">Update profile</v-btn>
+                :loading="load">{{ langs.cafeProfile.saveBtn }}</v-btn>
             </div>
         </v-container>
     </div>
@@ -137,9 +140,33 @@ if(props.positions){
 })
 }
 
+const isValidData:Ref<boolean> = ref(true)
 
 const name:Ref<string> = ref(props.name);
+const nameValidator = [
+    (value:string) => {
+        if(value.length < 3){
+            isValidData.value = false
+            return langs.value.regValidators.nameValidator
+        }
+        isValidData.value = true
+        return true
+    }
+]
+
+
 const city:Ref<string | undefined> = ref(props.city);
+const cityValidator = [
+    (value:string) => {
+        if(value.length < 3){
+            isValidData.value = false
+            return langs.value.regValidators.cityValidator
+        }
+        isValidData.value = true
+        return true
+    }
+]
+
 const address:Ref<string | undefined> = ref(props.address);
 const phone:Ref<string | undefined> = ref(props.phone)
 const load:Ref<boolean> = ref(false)
@@ -163,6 +190,11 @@ function changeAvatar(item:number):void{
 const emits = defineEmits(['edited']);
 
 async function edited():Promise<void>{
+    if(!isValidData.value){
+        console.log('It work');
+        return
+        
+    }
     load.value = true
     const cafeUpdatedData = {
         address:address.value,

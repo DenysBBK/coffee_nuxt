@@ -11,6 +11,11 @@
       <v-card-title>
         {{ props.name }}
       </v-card-title>
+      <v-card-text v-if="!props.positions" class="card-empty">
+        {{ langs.order.noItems }}
+      </v-card-text>
+      
+      <div v-if="props.positions">
         <base-order-modal 
           :data="props.fullData"
           @order="orderRequest"
@@ -44,6 +49,7 @@
         </v-card-text>
       </div>
     </v-expand-transition>
+  </div>
   </v-card>
 </template>
 
@@ -91,7 +97,7 @@ async function orderRequest(data:Positions[]):Promise<void>{
 
 const props = defineProps<{
   name?:string,
-  positions?:Positions[],
+  positions:Positions[],
   fullData: shopsArr
   avatar:number
 }>()
@@ -99,6 +105,8 @@ const props = defineProps<{
 function userAvatar(item:number):string{
     return `/images/${item}.png`
 }
+
+
 </script>
 <style scoped lang="scss">
 .card-img{
@@ -112,5 +120,12 @@ function userAvatar(item:number):string{
 }
 .card-positions{
   list-style-type: none;
+}
+.card-empty{
+  font-weight: 700;
+  font-size: 20px;
+  max-width: 75%;
+  margin: auto;
+  text-align: center;
 }
 </style>

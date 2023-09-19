@@ -66,7 +66,16 @@ export const useLanguageStore = defineStore('language', {
             positions:'Available positions',
             item:'Item',
             price:'Price',
-            update:'Update profile'
+            update:'Update profile',
+            updateTitle:'Update profile',
+            chooseAvatar:'Choose cafe avatar',
+            default:'Default',
+            updatePositions:'Positions',
+            delete:'Delete',
+            addNew:'Add new positions',
+            saveBtn:'Save',
+            posItem:'Position name',
+            posPrice:'Price UAH'
         },
         pageTitles:{
             acitveOrders:'Active orders',
@@ -112,7 +121,8 @@ export const useLanguageStore = defineStore('language', {
             confirmOrder:'Confirm order',
             closeModal:'Close',
             emptyList:'Order list is empty',
-            totalPrice:'Total price'
+            totalPrice:'Total price',
+            noItems:'No item to order'
         },
         mainPage:{
             title:'Take&Go philosophy',
@@ -221,7 +231,16 @@ export const useLanguageStore = defineStore('language', {
         this.$state.cafeProfile.positions = data.cafeProfile.positions;
         this.$state.cafeProfile.item = data.cafeProfile.item;
         this.$state.cafeProfile.price = data.cafeProfile.price;
-        this.$state.cafeProfile.update = data.cafeProfile.update
+        this.$state.cafeProfile.update = data.cafeProfile.update;
+        this.$state.cafeProfile.updateTitle = data.cafeProfile.updateTitle;
+        this.$state.cafeProfile.chooseAvatar = data.cafeProfile.chooseAvatar;
+        this.$state.cafeProfile.default = data.cafeProfile.default;
+        this.$state.cafeProfile.updatePositions = data.cafeProfile.updatePositions;
+        this.$state.cafeProfile.delete = data.cafeProfile.delete;
+        this.$state.cafeProfile.addNew = data.cafeProfile.addNew;
+        this.$state.cafeProfile.saveBtn = data.cafeProfile.saveBtn;
+        this.$state.cafeProfile.posItem = data.cafeProfile.posItem;
+        this.$state.cafeProfile.posPrice = data.cafeProfile.posPrice
 
         //ALERTS
         this.$state.alerts.orderInWork = data.alerts.orderInWork;
@@ -254,7 +273,8 @@ export const useLanguageStore = defineStore('language', {
         this.$state.order.positions = data.order.positions;
         this.$state.order.title = data.order.title;
         this.$state.order.emptyList = data.order.emptyList;
-        this.$state.order.totalPrice = data.order.totalPrice
+        this.$state.order.totalPrice = data.order.totalPrice;
+        this.$state.order.noItems = data.order.noItems
 
         //MAIN PAGE
         this.$state.mainPage.card1 = data.mainPage.card1;

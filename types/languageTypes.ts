@@ -62,7 +62,16 @@ export interface languageState{
         positions:string,
         item:string,
         price:string,
-        update:string
+        update:string,
+        updateTitle:string,
+        chooseAvatar:string,
+        default:string,
+        updatePositions:string,
+        delete:string,
+        addNew:string,
+        saveBtn:string,
+        posItem:string,
+        posPrice:string
     },
     pageTitles:{
         acitveOrders:string,
@@ -108,7 +117,8 @@ export interface languageState{
         confirmOrder:string,
         closeModal:string,
         emptyList:string,
-        totalPrice:string
+        totalPrice:string,
+        noItems:string,
     },
     mainPage:{
         title:string,

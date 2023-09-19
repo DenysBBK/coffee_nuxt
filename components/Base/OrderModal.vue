@@ -199,8 +199,29 @@ choosenPosition.value = ''
 .order_drop{
   display: flex;
   align-items: center;
-  gap: 30px;
-  // padding: 30px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  @media screen and (min-width: 500px) {
+    flex-direction: row;
+    gap: 30px;
+    }
+    @media screen and (min-width: 750px) {
+      gap: 0;
+      flex-direction: column;
+    }
+    @media screen and (min-width: 1050px) {
+    flex-direction: row;
+    gap: 30px;
+    }
+    @media screen and (min-width: 1450px) {
+      gap: 0;
+      flex-direction: column;
+    }
+    @media screen and (min-width: 1600px) {
+      flex-direction: row;
+    gap: 30px;
+    }
 }
 .order_validator{
   color: red;
