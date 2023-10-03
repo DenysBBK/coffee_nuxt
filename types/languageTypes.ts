@@ -92,7 +92,10 @@ export interface languageState{
         orderIsFinished:string,
         orderIsDone:string,
         successOrder:string,
-        profileUpdated:string
+        profileUpdated:string,
+        user:string,
+        cafe:string,
+        notFound:string
     },
     history:{
         title:string,

@@ -129,10 +129,7 @@ function addNewPosition():void{
 }
 
 function deletePosition(index:number):void{
-    console.log('hello')
-    allPositions.splice(index, 1)
-    console.log(allPositions)
-    
+    allPositions.splice(index, 1)   
 }
 if(props.positions){
     props.positions.forEach(one => {
@@ -191,9 +188,7 @@ const emits = defineEmits(['edited']);
 
 async function edited():Promise<void>{
     if(!isValidData.value){
-        console.log('It work');
-        return
-        
+        return   
     }
     load.value = true
     const cafeUpdatedData = {

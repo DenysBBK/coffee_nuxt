@@ -15,7 +15,6 @@
   <TheFooter/>
 </template>
 <script setup lang="ts">
-console.log('Main')
 
 </script>
 <style>

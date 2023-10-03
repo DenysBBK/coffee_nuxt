@@ -96,7 +96,10 @@ export const useLanguageStore = defineStore('language', {
             orderIsFinished:'Order is finished',
             orderIsDone:'Order is done',
             successOrder:'Success order',
-            profileUpdated:'Profile updated'
+            profileUpdated:'Profile updated',
+            user:'User',
+            cafe:'Caffe',
+            notFound:'is not found'
         },
         history:{
             title:'Orders history',
@@ -248,7 +251,10 @@ export const useLanguageStore = defineStore('language', {
         this.$state.alerts.orderIsFinished = data.alerts.orderIsFinished;
         this.$state.alerts.successOrder = data.alerts.successOrder;
         this.$state.alerts.successReg = data.alerts.successReg;
-        this.$state.alerts.profileUpdated = data.alerts.profileUpdated
+        this.$state.alerts.profileUpdated = data.alerts.profileUpdated;
+        this.$state.alerts.user = data.alerts.user;
+        this.$state.alerts.cafe = data.alerts.cafe;
+        this.$state.alerts.notFound = data.alerts.notFound;
 
         //HISTORY
         this.$state.history.coffeeName = data.history.coffeeName;

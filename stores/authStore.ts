@@ -2,6 +2,7 @@
 import { defineStore } from "pinia";
 import { loginTypes, loginItem, authState } from "types/loginTypes";
 import { signUpData } from "types/regTypes";
+import axios from "axios";
 
 export const useAuthStore = defineStore('auth', {
     state:():authState =>({
@@ -24,10 +25,10 @@ export const useAuthStore = defineStore('auth', {
             }
             dataResult.push(oneItem)
         };
-        const theType:string = payload.type === 'users'? 'User':'Cafe'
+        const theType:string = payload.type === 'users'? useLanguageStore().alerts.user :useLanguageStore().alerts.cafe
         const isAnyFound:boolean = dataResult.some(one => one.email === payload.email);
         if(!isAnyFound){
-            throw new Error(`${theType} is not found`)
+            throw new Error(`${theType} ${useLanguageStore().alerts.notFound}`)
         };
         let id:string|undefined;
         dataResult.map(one => {
@@ -57,7 +58,18 @@ export const useAuthStore = defineStore('auth', {
         this.$state.userId = data.localId;
         this.$state.uid = id;
         this.$state.type = payload.type
-        this.$state.isAuthenticated = true     
+        this.$state.isAuthenticated = true;
+        
+        const api = await axios.get('https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops.json');
+        console.log(api.data);
+        console.log(api.status);
+        if(api.status == 200)console.log('It is success!')
+        
+        
+        
+   
+       
+
         },
         async signUp(payload:signUpData):Promise<void>{
             const theId: number = new Date().getTime()
@@ -134,7 +146,8 @@ export const useAuthStore = defineStore('auth', {
                 this.isAuthenticated = isAuth
               
 
-           }
+           },
+           
     
     },
     getters:{

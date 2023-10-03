@@ -15,11 +15,15 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore', 'acceptHMRUpdate'],
     },
+    
   ],
 ],
+
+
  imports: {
   dirs: ['stores'],
 },
+
 app:{
   pageTransition:{name: "page", mode:"out-in"},  
 },

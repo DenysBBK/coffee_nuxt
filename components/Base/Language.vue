@@ -57,7 +57,6 @@ const choosenLanguage:Ref<langItem> = ref({
 })
 
 async function chooseLanguage(item:langItem):Promise<void>{
-    console.log(`I choose ${item.name} language`);
     choosenLanguage.value.img = item.img;
     choosenLanguage.value.name = item.name;
     choosenLanguage.value.type = item.type

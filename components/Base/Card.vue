@@ -63,9 +63,7 @@ const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const showP:Ref<boolean> = ref(false);
 
- 
-
-  const emit = defineEmits(['makeOrder'])
+const emit = defineEmits(['makeOrder'])
 function successAlert(data:string):void{
   emit('makeOrder', data)
 }
@@ -83,16 +81,11 @@ async function orderRequest(data:Positions[]):Promise<void>{
     }
   try{
     await useProfileStore().getUserData()
-    console.log(orderData)
     await useOrderStore().postOrder(orderData);
-    
-    
+  
   }catch(error){
     console.log(error)
-    
-  }
-  
-  
+  }  
 }
 
 const props = defineProps<{

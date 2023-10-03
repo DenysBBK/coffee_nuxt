@@ -112,7 +112,6 @@ const emailValidator = [
     
 
 ]
-
 const password:Ref<string | null> = ref(null)
 const passwordValidator = [((value: string ) => value?.length! >= 6 || langs.value.regValidators.passwordMoreLetters)]
 
@@ -145,11 +144,9 @@ const checkBoxValidator = [
 
 
 function toShopAccout():void {
-    
     toAccount.value = 'shops'; 
 }
-function toUserAccout():void {
-    
+function toUserAccout():void { 
     toAccount.value = 'users'; 
 }
 

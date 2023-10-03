@@ -57,7 +57,6 @@ const shops:ComputedRef<shopsArr[]> = computed(() => {
 
 function triggerAlert(data:string):void{
     show('success', data);
-    console.log('From Order')
 };
 
 
@@ -100,12 +99,9 @@ const allShops:ComputedRef<shopsArr[] | undefined> = computed(() =>{
 onBeforeMount(async() => {
     try{
         await useProfileStore().getCoffeeShops()
-        console.log(useProfileStore().shopsInfo)
-        
         shops.value.forEach(item => {
-    shopsCity.value.push(item.city)
-    })
-        console.log(shopsCity)
+        shopsCity.value.push(item.city)
+    });
         
     }catch(error){
         console.log(error)

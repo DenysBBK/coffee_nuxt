@@ -62,7 +62,6 @@ async function changeOrder(index:number, forType:number):Promise<void>{
                 type:'shops'
             } 
     try{
-        console.log(findOrder)
         await useOrderStore().updateOrder(findOrder);
         await useOrderStore().getOrders('shop')
         if(forType == 1){show('success', langs.value.alerts.orderInWork)}

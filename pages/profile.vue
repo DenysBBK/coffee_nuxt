@@ -46,10 +46,6 @@ function profileIsUpdated(data:any){
 const router = useRouter();
 
 onMounted(async () =>{
-  console.log(router)
-  
-    
-    
     try{
         await useProfileStore().getUserData();
 
@@ -62,8 +58,7 @@ onMounted(async () =>{
     userBank.value = userData.bank;
     userCard.value = userData.card;
     userAvatar.value = userData.avatar
- 
-    
+  
 })
 definePageMeta({
     middleware:'authenticated'

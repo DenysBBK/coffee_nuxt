@@ -121,9 +121,7 @@ function makeDefault():void{
 const emits = defineEmits(['edited']);
 async function edited(){
     if(!isValidData.value){
-        console.log('It work');
-        return
-        
+        return     
     }
     load.value = true
     const userUpdatedData = {
@@ -140,8 +138,7 @@ async function edited(){
         console.log(error)
         
     }
-    load.value = false
-    
+    load.value = false  
     
 }
 
