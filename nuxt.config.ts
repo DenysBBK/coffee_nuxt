@@ -29,10 +29,6 @@ app:{
 },
 ssr:false,
 spaLoadingTemplate:'spa-loading-template.html',
-nitro:{
-  prerender:{
-    routes:['/400.html']
-  }
-}
+
 
 })
