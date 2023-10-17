@@ -1,7 +1,7 @@
 <template>
   
   <Link to="/">
-  <img src="/public/images/cup.png"> 
+  <img src="/public/images/coffee-cup.png"> 
   </Link>
   <div class="main_content">
     <div class="header">
