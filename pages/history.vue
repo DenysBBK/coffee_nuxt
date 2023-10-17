@@ -31,7 +31,7 @@ import{languageState} from '../types/languageTypes'
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const ordersItems:ComputedRef<ordersArr[]> = computed(() => {
-    return useOrderStore().getAllOrders.filter(one => one.status === 3)
+    return useOrderStore().getAllOrders.filter(one => one.status === 3).reverse()
 })
 
 function date(date:number):string{

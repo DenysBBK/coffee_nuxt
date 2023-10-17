@@ -99,7 +99,8 @@ export const useLanguageStore = defineStore('language', {
             profileUpdated:'Profile updated',
             user:'User',
             cafe:'Caffe',
-            notFound:'is not found'
+            notFound:'is not found',
+            alreadyExist:'is already exist'
         },
         history:{
             title:'Orders history',
@@ -127,6 +128,24 @@ export const useLanguageStore = defineStore('language', {
             totalPrice:'Total price',
             noItems:'No item to order'
         },
+        activeOrders:{
+            title:'Active orders',
+            noOrders:'There is no orders',
+            finish:'Finish',
+            pending:'Pending',
+            preparing:'Preparing',
+            ready:'Ready',
+            finished:'Finished'
+        },
+        orders:{
+            title:'Orders',
+            noOrders:'There is no orders',
+            takeInWork:'Take in work',
+            finish:'Finish',
+            pending:'Pending',
+            preparing:'Preparing',
+            ready:'Ready'
+        },
         mainPage:{
             title:'Take&Go philosophy',
             card1:'Do you like to drink coffee very much, but are you already tired of constant queues?',
@@ -152,13 +171,18 @@ export const useLanguageStore = defineStore('language', {
             email:'Email must be not empty',
             password:'Password must be not empty',
             toAccount:'Need to choose one option'
+        },
+        footer:{
+            terms:'Terms',
+            privacy:'Privacy'
         }
     }),
     actions:{
-       async getLanguage(type:string):Promise<void>{
+       async getLanguage(type:string | null):Promise<void>{
         const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/languages/${type}.json`);
         const data = await responce.json();
-        console.log(data)
+      
+        
         //PAGE TITLES
         this.$state.pageTitles.acitveOrders = data.pageTitles.activeOrders;
         this.$state.pageTitles.cafeProfile = data.pageTitles.cafeProfile;
@@ -255,6 +279,7 @@ export const useLanguageStore = defineStore('language', {
         this.$state.alerts.user = data.alerts.user;
         this.$state.alerts.cafe = data.alerts.cafe;
         this.$state.alerts.notFound = data.alerts.notFound;
+        this.$state.alerts.alreadyExist = data.alerts.alreadyExist
 
         //HISTORY
         this.$state.history.coffeeName = data.history.coffeeName;
@@ -280,7 +305,25 @@ export const useLanguageStore = defineStore('language', {
         this.$state.order.title = data.order.title;
         this.$state.order.emptyList = data.order.emptyList;
         this.$state.order.totalPrice = data.order.totalPrice;
-        this.$state.order.noItems = data.order.noItems
+        this.$state.order.noItems = data.order.noItems;
+
+        //ACTIVE ORDERS
+        this.$state.activeOrders.finish = data.activeOrders.finish;
+        this.$state.activeOrders.finished = data.activeOrders.finished;
+        this.$state.activeOrders.noOrders = data.activeOrders.noOrders;
+        this.$state.activeOrders.pending = data.activeOrders.pending;
+        this.$state.activeOrders.preparing = data.activeOrders.preparing;
+        this.$state.activeOrders.ready = data.activeOrders.ready;
+        this.$state.activeOrders.title = data.activeOrders.title;
+
+        //ORDERS
+        this.$state.orders.finish = data.orders.finish;
+        this.$state.orders.noOrders = data.orders.noOrders;
+        this.$state.orders.pending = data.orders.pending;
+        this.$state.orders.preparing = data.orders.preparing;
+        this.$state.orders.ready = data.orders.preparing;
+        this.$state.orders.takeInWork = data.orders.preparing;
+        this.$state.orders.title = data.orders.title;
 
         //MAIN PAGE
         this.$state.mainPage.card1 = data.mainPage.card1;
@@ -306,7 +349,13 @@ export const useLanguageStore = defineStore('language', {
         //LOGIN VALIDATORS
         this.$state.loginValidators.email = data.loginValidators.email;
         this.$state.loginValidators.password = data.loginValidators.password;
-        this.$state.loginValidators.toAccount = data.loginValidators.toAccount
+        this.$state.loginValidators.toAccount = data.loginValidators.toAccount;
+
+        //FOOTER
+        this.$state.footer.privacy = data.footer.privacy;
+        this.$state.footer.terms = data.footer.terms;
+        
+
         },
 
        

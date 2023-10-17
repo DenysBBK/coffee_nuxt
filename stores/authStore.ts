@@ -86,12 +86,12 @@ export const useAuthStore = defineStore('auth', {
             const dataTable = await respTable.json()
             if(!respTable.ok){
                 let userOrCafe;
-                    if(payload.type === 'users') userOrCafe = 'User';
-                    if(payload.type === 'shops') userOrCafe = 'Cafe';
+                    if(payload.type === 'users') userOrCafe = useLanguageStore().alerts.user;
+                    if(payload.type === 'shops') userOrCafe = useLanguageStore().alerts.cafe;
                 
                 let errorKey;
                     if(dataTable.error.message === 'INVALID_EMAIL') errorKey = 'Invalid email'
-                const error = new Error(dataTable.error.message === "EMAIL_EXISTS" ? `${userOrCafe} is already exsist` : errorKey)
+                const error = new Error(dataTable.error.message === "EMAIL_EXISTS" ? `${userOrCafe} ${useLanguageStore().alerts.alreadyExist}` : errorKey)
             throw error
             }else{
                 let avatarType:number = payload.type === 'users'? 0:7

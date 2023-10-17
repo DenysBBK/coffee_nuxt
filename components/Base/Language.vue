@@ -59,7 +59,8 @@ const choosenLanguage:Ref<langItem> = ref({
 async function chooseLanguage(item:langItem):Promise<void>{
     choosenLanguage.value.img = item.img;
     choosenLanguage.value.name = item.name;
-    choosenLanguage.value.type = item.type
+    choosenLanguage.value.type = item.type;
+    localStorage.setItem('lang', item.type);
     try{
         await useLanguageStore().getLanguage(item.type)
     }catch(error){
@@ -71,7 +72,18 @@ async function chooseLanguage(item:langItem):Promise<void>{
 function langIcon(item:number):string{
     return `/images/lang-${item}.png`
 }
-
+onBeforeMount(() => {
+  let lang = localStorage.getItem('lang');
+  if(lang == 'ukr'){
+    choosenLanguage.value.name = 'Українська';
+    choosenLanguage.value.img = 1;
+    choosenLanguage.value.type = 'ukr'
+  }else{
+    choosenLanguage.value.name = 'English';
+    choosenLanguage.value.img = 2;
+    choosenLanguage.value.type = 'eng'
+  }
+})
 </script>
 <style scoped lang="scss">
 .lang{

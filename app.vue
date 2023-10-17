@@ -16,6 +16,11 @@
 </template>
 <script setup lang="ts">
 
+onBeforeMount(() => {
+  let lang:string|null = localStorage.getItem('lang');
+  useLanguageStore().getLanguage(lang)
+})
+
 </script>
 <style>
 html,

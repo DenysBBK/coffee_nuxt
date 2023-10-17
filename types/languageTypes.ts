@@ -95,7 +95,8 @@ export interface languageState{
         profileUpdated:string,
         user:string,
         cafe:string,
-        notFound:string
+        notFound:string,
+        alreadyExist:string,
     },
     history:{
         title:string,
@@ -123,6 +124,24 @@ export interface languageState{
         totalPrice:string,
         noItems:string,
     },
+    activeOrders:{
+        title:string,
+        noOrders:string,
+        finish:string,
+        pending:string,
+        preparing:string,
+        ready:string,
+        finished:string,
+    },
+    orders:{
+        title:string,
+        noOrders:string,
+        takeInWork:string,
+        finish:string,
+        pending:string,
+        preparing:string,
+        ready:string,
+    },
     mainPage:{
         title:string,
         card1:string,
@@ -148,6 +167,10 @@ export interface languageState{
         email:string,
         password:string,
         toAccount:string
+    },
+    footer:{
+        terms:string,
+        privacy:string
     }
 
 }

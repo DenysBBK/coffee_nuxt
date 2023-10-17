@@ -6,8 +6,8 @@
             :aletrType="typeOfAlert">
         </base-alert>
         <v-container class="orders_container">
-            <h1 class="text-center pb-10" v-if="shopOrders.length" >Orders</h1>
-            <h1 class="text-center pb-10" v-if="!shopOrders.length">There is no orders</h1>
+            <h1 class="text-center pb-10" v-if="shopOrders.length" >{{ langs.orders.title }}</h1>
+            <h1 class="text-center pb-10" v-if="!shopOrders.length">{{ langs.orders.noOrders }}</h1>
             <div class="orders_main">
                 <div class="orders_item" v-for="(item, index) in shopOrders" :key="index">
                     <div class="order_avatar">
@@ -21,8 +21,8 @@
                     </div>
                     <div>
                         <p class="order_status">{{ status(item.status) }}</p>
-                        <v-btn v-if="item.status === 0" class="order_btn" v-on:click="changeOrder(index, 1)">Take in work</v-btn>
-                        <v-btn v-if="item.status === 1" class="order_btn" v-on:click="changeOrder(index, 2)">Finish</v-btn>
+                        <v-btn v-if="item.status === 0" class="order_btn" v-on:click="changeOrder(index, 1)">{{ langs.orders.takeInWork }}</v-btn>
+                        <v-btn v-if="item.status === 1" class="order_btn" v-on:click="changeOrder(index, 2)">{{ langs.orders.finish }}</v-btn>
                     </div>
                 </div>
             </div>
@@ -38,15 +38,15 @@ const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 const shopOrders:ComputedRef<ordersArr[]> = computed(() => {
-    return useOrderStore().getAllOrders.filter(one => one.status !== 3)
+    return useOrderStore().getAllOrders.filter(one => one.status !== 3).reverse()
 })
 
 function status(item:number):string{
-            if(item === 0)return 'Pending';
+            if(item === 0)return langs.value.orders.pending
             if(item === 1){
-                return 'Preparing'
+                return langs.value.orders.preparing
             }else{
-                return 'Ready'
+                return langs.value.orders.ready
             }
 };
 function userAvatar(item:number):string{
