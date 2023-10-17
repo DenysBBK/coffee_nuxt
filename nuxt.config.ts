@@ -29,6 +29,10 @@ app:{
 },
 ssr:false,
 spaLoadingTemplate:'spa-loading-template.html',
-Generate:{ fallback:true}
+nitro:{
+  prerender:{
+    routes:['/400.html']
+  }
+}
 
 })
