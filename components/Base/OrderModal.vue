@@ -9,13 +9,13 @@
             <v-btn
               class="modal_btn"
               v-bind="props"
-            >ORDER</v-btn>
+            >{{ langs.order.makeOrder }}</v-btn>
           </template>
           <template v-slot:default=" {isActive} ">
             <v-card>
               <v-toolbar
                 color="primary"
-                title="Order you coffee"
+                :title="langs.order.modalTitle"
               ></v-toolbar>
               <v-card-text class="pa-12">
                
@@ -23,14 +23,14 @@
                         {{ props.data.name }}
                     </h1>
                     <h3>
-                        Choose you drink
+                        {{ langs.order.modalSubtitle }}
                     </h3>
                     <div class="order_drop"
                     >
                     <v-combobox 
                       
                     class="modal_input"
-                    label="Choose drink"
+                    :label="langs.order.chooseDrink"
                     variant="outlined"
                     :items="thePositions.map(item => item.text)"
                     v-model="choosenPosition"
@@ -38,7 +38,7 @@
                   </v-combobox>
                         <v-btn
                         @click="addToOrderList"
-                        >Add
+                        >{{ langs.order.add }}
                             <v-icon
                             end
                             icon="mdi-checkbox-marked-circle"
@@ -46,7 +46,7 @@
                             </v-icon>
                         </v-btn>
                     </div>
-                <p class="modal_subtitle">Your order list:</p>
+                <p class="modal_subtitle">{{ langs.order.orderList }}</p>
                 <p v-if="isOrderListEmpty">-</p>
                 <ul v-if="!isOrderListEmpty" class="modal_list">
                   <li v-for="(item, index) in orderList" :key="index">
@@ -54,11 +54,11 @@
                   <v-btn icon="mdi-cancel" size="20px" class="modal_disaprove" @click="removeFromOrderList(index)"></v-btn>
                 </li>
                 </ul>
-                <p class="pt-6" v-if="!isOrderListEmpty">Total price: {{ totalPrice }} UAH</p>
-                <span v-if="orderListValidator" class="order_validator">Order list is empty</span>
+                <p class="pt-6" v-if="!isOrderListEmpty">{{ langs.order.totalPrice }}: {{ totalPrice }} UAH</p>
+                <span v-if="orderListValidator" class="order_validator">{{ langs.order.emptyList }}</span>
               </v-card-text>
               <div class="modal_confirm">
-                <base-button text="Confirm order" @click="() => {
+                <base-button :text="langs.order.confirmOrder" @click="() => {
                   if(orderList.length == 0){
                   orderListValidator = true;
                   return
@@ -72,7 +72,7 @@
                 <v-btn
                   variant="text"
                   @click="isActive.value = false"
-                >Close</v-btn>
+                >{{ langs.order.closeModal }}</v-btn>
               </v-card-actions>
             </v-card>
           </template>
@@ -84,7 +84,9 @@
 
 import { shopsArr, Positions} from 'types/profileTypes';
 
+import{languageState} from '../../types/languageTypes'
 
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const props = defineProps<{
   data:shopsArr
@@ -132,7 +134,7 @@ const emit = defineEmits(['order','makeAlert']);
 
 function confirmOrder():void{
 emit('order', orderList.value);
-emit('makeAlert', 'Success order!')
+emit('makeAlert', langs.value.alerts.successOrder)
 orderList.value = [];
 totalPrice.value = 0;
 isOrderListEmpty.value = true;
@@ -197,8 +199,29 @@ choosenPosition.value = ''
 .order_drop{
   display: flex;
   align-items: center;
-  gap: 30px;
-  // padding: 30px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  @media screen and (min-width: 500px) {
+    flex-direction: row;
+    gap: 30px;
+    }
+    @media screen and (min-width: 750px) {
+      gap: 0;
+      flex-direction: column;
+    }
+    @media screen and (min-width: 1050px) {
+    flex-direction: row;
+    gap: 30px;
+    }
+    @media screen and (min-width: 1450px) {
+      gap: 0;
+      flex-direction: column;
+    }
+    @media screen and (min-width: 1600px) {
+      flex-direction: row;
+    gap: 30px;
+    }
 }
 .order_validator{
   color: red;

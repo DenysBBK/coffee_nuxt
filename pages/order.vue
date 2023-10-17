@@ -6,9 +6,9 @@
             :aletrType="typeOfAlert">
         </base-alert>
         <v-container class="order_container">
-            <h1 class="text-center pb-10" >Make an order</h1>
+            <h1 class="text-center pb-10" >{{ langs.order.title }}</h1>
             <v-autocomplete
-            label="Choose your city"
+            :label="langs.order.chooseSity"
             variant="outlined"
             :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
             v-model="choosenCity"
@@ -17,14 +17,14 @@
         </v-autocomplete>
         
             <v-autocomplete v-if="choosenCity !== null && shopsAddresses.length !== 0"
-            label="Choose the address"
+            :label="langs.order.chooseAddress"
             variant="outlined"
             :items="shopsAddresses"
             v-model="choosenAdress"
             v-on:update:model-value="changeAddress">
             </v-autocomplete>
             <p class="order_text" v-if="choosenCity !== null &&  shopsAddresses.length === 0">
-                There are no coffee shops in this city
+                {{ langs.order.noShops }}
             </p>
             <div class="order_cards">
                 <base-card
@@ -57,7 +57,6 @@ const shops:ComputedRef<shopsArr[]> = computed(() => {
 
 function triggerAlert(data:string):void{
     show('success', data);
-    console.log('From Order')
 };
 
 
@@ -100,12 +99,9 @@ const allShops:ComputedRef<shopsArr[] | undefined> = computed(() =>{
 onBeforeMount(async() => {
     try{
         await useProfileStore().getCoffeeShops()
-        console.log(useProfileStore().shopsInfo)
-        
         shops.value.forEach(item => {
-    shopsCity.value.push(item.city)
-    })
-        console.log(shopsCity)
+        shopsCity.value.push(item.city)
+    });
         
     }catch(error){
         console.log(error)

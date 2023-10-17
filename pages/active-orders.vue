@@ -6,8 +6,8 @@
             :aletrType="typeOfAlert">
         </base-alert>
        <v-container class="orders_container">
-            <h1 class="text-center pb-10" v-if="userOrders.length" >Active orders</h1>
-            <h1 class="text-center pb-10" v-if="!userOrders.length">There is no orders</h1>
+            <h1 class="text-center pb-10" v-if="userOrders.length" >{{ langs.activeOrders.title }}</h1>
+            <h1 class="text-center pb-10" v-if="!userOrders.length">{{ langs.activeOrders.noOrders }}</h1>
             
             <div class="orders_main">
                 <div class="orders_item" v-for="(item, index) in userOrders" :key="index">
@@ -25,7 +25,7 @@
                 
                     <div>
                         <p class="order_status">{{ status(item.status) }}</p>
-                        <v-btn @click="finishOrder(index)" class="order_btn" v-if="item.status === 2" >Finish</v-btn>
+                        <v-btn @click="finishOrder(index)" class="order_btn" v-if="item.status === 2" >{{ langs.activeOrders.finish }}</v-btn>
                     </div>
                 </div>
             </div>
@@ -43,15 +43,15 @@ const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 const userOrders:ComputedRef<ordersArr[]> = computed(() => {
-    return useOrderStore().getAllOrders.filter(one => one.status !== 3)
+    return useOrderStore().getAllOrders.filter(one => one.status !== 3).reverse()
 })
 function status(item:number):string{
-            if(item === 0)return 'Pending';
-            if(item === 1)return 'Preparing';
+            if(item === 0)return langs.value.activeOrders.pending;
+            if(item === 1)return langs.value.activeOrders.preparing;
             if(item === 2){
-                return 'Ready'
+                return langs.value.activeOrders.ready
             }else{
-                return 'Finished'
+                return langs.value.activeOrders.finished
             };
             
 }
@@ -70,7 +70,7 @@ async function finishOrder(index:number):Promise<void>{
     try{
         await useOrderStore().updateOrder(findOrder);
         await useOrderStore().getOrders('user')
-        show('success', 'Order is finished')
+        show('success', langs.value.alerts.orderIsFinished)
     }catch(error){
         console.log(error)
         
@@ -79,8 +79,9 @@ async function finishOrder(index:number):Promise<void>{
 
 onBeforeMount(async() => {
     try{
-    await useOrderStore().getOrders('user')
-    console.log(userOrders.value)
+    await useOrderStore().getOrders('user');
+    console.log(langs.value.activeOrders)
+    
     
     }catch(error){
         console.log(error)
@@ -120,6 +121,11 @@ useHead({
         padding: 10px;
         flex-wrap: wrap;
         gap: 20px;
+        flex-direction: column;
+        align-items: center;
+        @media screen and (min-width: 450px){
+            flex-direction: row;
+        }
         
     }
 }

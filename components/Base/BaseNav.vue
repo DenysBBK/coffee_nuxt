@@ -1,14 +1,12 @@
 <template>
     <v-container class="nav_container">
         <nav class="navigation">
-            <div class="navigation_routes">
+                <NuxtLink to="/" class="navigation_routes">
                 <img src="../../public/images/coffee-cup.png"
                 height="50"
                 width="50">
-                <NuxtLink to="/">
                     <v-btn variant="text" class="main_btn">Take & Go</v-btn>
                 </NuxtLink>
-            </div>
             <div class="navigation_routes">
                 <NuxtLink to="/login" v-if="!auth.isAuthenticated">
                     <base-button :text="langs.header.login"></base-button>
@@ -35,8 +33,11 @@
                 <base-button :text="langs.header.logout" 
                 v-on:click="auth.logout()" 
                 v-if="auth.isAuthenticated"
-                class="logout_btn"></base-button>
-                <BaseLanguage></BaseLanguage>
+                class="logout_btn">
+            </base-button>
+            <ClientOnly>
+                <BaseLanguage ></BaseLanguage>
+            </ClientOnly>
             </div>
         </nav>
     </v-container>
@@ -73,6 +74,7 @@ const type:ComputedRef<string> = computed(():string => {
     justify-content: space-between;
     gap: 10px;
     align-items: center;
+    text-decoration: none;
 }
 .main_btn{
     color: #7d4e08;

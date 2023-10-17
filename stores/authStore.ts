@@ -1,7 +1,8 @@
-import { stat } from "fs";
+
 import { defineStore } from "pinia";
 import { loginTypes, loginItem, authState } from "types/loginTypes";
 import { signUpData } from "types/regTypes";
+import axios from "axios";
 
 export const useAuthStore = defineStore('auth', {
     state:():authState =>({
@@ -24,10 +25,10 @@ export const useAuthStore = defineStore('auth', {
             }
             dataResult.push(oneItem)
         };
-        const theType:string = payload.type === 'users'? 'User':'Cafe'
+        const theType:string = payload.type === 'users'? useLanguageStore().alerts.user :useLanguageStore().alerts.cafe
         const isAnyFound:boolean = dataResult.some(one => one.email === payload.email);
         if(!isAnyFound){
-            throw new Error(`${theType} is not found`)
+            throw new Error(`${theType} ${useLanguageStore().alerts.notFound}`)
         };
         let id:string|undefined;
         dataResult.map(one => {
@@ -52,12 +53,23 @@ export const useAuthStore = defineStore('auth', {
         }
         localStorage.setItem('token', data.idToken);
         localStorage.setItem('localId', data.localId);
-        localStorage.setItem('type', payload.type)
+        localStorage.setItem('type', payload.type);
         this.$state.token = data.idToken;
         this.$state.userId = data.localId;
         this.$state.uid = id;
         this.$state.type = payload.type
-        this.$state.isAuthenticated = true
+        this.$state.isAuthenticated = true;
+        
+        const api = await axios.get('https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops.json');
+        console.log(api.data);
+        console.log(api.status);
+        if(api.status == 200)console.log('It is success!')
+        
+        
+        
+   
+       
+
         },
         async signUp(payload:signUpData):Promise<void>{
             const theId: number = new Date().getTime()
@@ -74,12 +86,12 @@ export const useAuthStore = defineStore('auth', {
             const dataTable = await respTable.json()
             if(!respTable.ok){
                 let userOrCafe;
-                    if(payload.type === 'users') userOrCafe = 'User';
-                    if(payload.type === 'shops') userOrCafe = 'Cafe';
+                    if(payload.type === 'users') userOrCafe = useLanguageStore().alerts.user;
+                    if(payload.type === 'shops') userOrCafe = useLanguageStore().alerts.cafe;
                 
                 let errorKey;
                     if(dataTable.error.message === 'INVALID_EMAIL') errorKey = 'Invalid email'
-                const error = new Error(dataTable.error.message === "EMAIL_EXISTS" ? `${userOrCafe} is already exsist` : errorKey)
+                const error = new Error(dataTable.error.message === "EMAIL_EXISTS" ? `${userOrCafe} ${useLanguageStore().alerts.alreadyExist}` : errorKey)
             throw error
             }else{
                 let avatarType:number = payload.type === 'users'? 0:7
@@ -126,7 +138,16 @@ export const useAuthStore = defineStore('auth', {
                 this.$state.isAuthenticated = false
                 useRouter().push('/login')
                 
-            }
+            },
+           loginFromStorage(token:string, type:string, uid:string, isAuth:boolean):void{
+                this.type = type;
+                this.token = token;
+                this.uid = uid;
+                this.isAuthenticated = isAuth
+              
+
+           },
+           
     
     },
     getters:{

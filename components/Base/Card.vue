@@ -11,6 +11,11 @@
       <v-card-title>
         {{ props.name }}
       </v-card-title>
+      <v-card-text v-if="!props.positions" class="card-empty">
+        {{ langs.order.noItems }}
+      </v-card-text>
+      
+      <div v-if="props.positions">
         <base-order-modal 
           :data="props.fullData"
           @order="orderRequest"
@@ -22,7 +27,7 @@
         color="orange-lighten-1"
         variant="text"
       >
-        Positions
+        {{ langs.order.positions}}
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
@@ -44,6 +49,7 @@
         </v-card-text>
       </div>
     </v-expand-transition>
+  </div>
   </v-card>
 </template>
 
@@ -51,11 +57,13 @@
 import { Positions } from 'types/profileTypes';
 import { shopsArr } from 'types/profileTypes';
 import { userOrderData } from 'types/orderTypes';
+import{languageState} from '../../types/languageTypes'
+
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+
 const showP:Ref<boolean> = ref(false);
 
- 
-
-  const emit = defineEmits(['makeOrder'])
+const emit = defineEmits(['makeOrder'])
 function successAlert(data:string):void{
   emit('makeOrder', data)
 }
@@ -73,21 +81,16 @@ async function orderRequest(data:Positions[]):Promise<void>{
     }
   try{
     await useProfileStore().getUserData()
-    console.log(orderData)
     await useOrderStore().postOrder(orderData);
-    
-    
+  
   }catch(error){
     console.log(error)
-    
-  }
-  
-  
+  }  
 }
 
 const props = defineProps<{
   name?:string,
-  positions?:Positions[],
+  positions:Positions[],
   fullData: shopsArr
   avatar:number
 }>()
@@ -95,6 +98,8 @@ const props = defineProps<{
 function userAvatar(item:number):string{
     return `/images/${item}.png`
 }
+
+
 </script>
 <style scoped lang="scss">
 .card-img{
@@ -108,5 +113,12 @@ function userAvatar(item:number):string{
 }
 .card-positions{
   list-style-type: none;
+}
+.card-empty{
+  font-weight: 700;
+  font-size: 20px;
+  max-width: 75%;
+  margin: auto;
+  text-align: center;
 }
 </style>

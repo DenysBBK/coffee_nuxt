@@ -1,13 +1,13 @@
 <template>
     <div>
         <v-container class="history_container">
-            <h1 class="text-center pb-10" v-if="ordersItems.length" >Orders History</h1>
-            <h1 class="text-center pb-10" v-if="!ordersItems.length" >You dont have items in history</h1>
+            <h1 class="text-center pb-10" v-if="ordersItems.length" >{{ langs.history.title }}</h1>
+            <h1 class="text-center pb-10" v-if="!ordersItems.length" >{{ langs.history.noItems }}</h1>
             <div class="history_main">
                 <div class="history_table" v-if="ordersItems.length">
-                    <span >{{ type == 'user'?'Coffe Shop Name':'User Name' }}</span>
-                    <span>Positions</span>
-                    <span>Date</span>
+                    <span >{{ type == 'user'?langs.history.coffeeName:langs.history.userName }}</span>
+                    <span>{{ langs.history.positions }}</span>
+                    <span>{{ langs.history.date }}</span>
                 </div>
                 <div class="history_item" v-for="(item, index) in ordersItems" :key="index">
                     <div class="history_avatar">
@@ -31,7 +31,7 @@ import{languageState} from '../types/languageTypes'
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const ordersItems:ComputedRef<ordersArr[]> = computed(() => {
-    return useOrderStore().getAllOrders.filter(one => one.status === 3)
+    return useOrderStore().getAllOrders.filter(one => one.status === 3).reverse()
 })
 
 function date(date:number):string{
@@ -100,6 +100,11 @@ useHead({
         padding: 10px;
         flex-wrap: wrap;
         gap: 20px;
+        flex-direction: column;
+        align-items: center;
+        @media screen and (min-width: 450px){
+            flex-direction: row;
+        }
     }
     &_table{
         display: flex;
@@ -107,7 +112,7 @@ useHead({
         padding-left: 10px;
         padding-right: 10px;
         visibility: hidden;
-        @media screen and (min-width: 400px){
+        @media screen and (min-width: 450px){
             visibility: visible;
         }
     }

@@ -1,9 +1,7 @@
 <template>
-  <div>
+  
 <div >
-    <v-menu
-      open-on-hover
-    >
+    <v-menu>
       <template v-slot:activator="{ props }">
         <v-btn
           variant="text"
@@ -11,7 +9,7 @@
         >
           <div class="lang_item">
             <img :src=langIcon(choosenLanguage.img) class="lang_icon">
-            <span>{{ choosenLanguage.name }}</span>
+            <span class="lang_name">{{ choosenLanguage.name }}</span>
           </div>
         </v-btn>
       </template>
@@ -26,7 +24,7 @@
                 <v-btn v-on:click="chooseLanguage(item)" variant="text">
                     <div class="lang_item">
                         <img :src=langIcon(item.img) class="lang_icon">
-                        <span>{{ item.name }}</span>
+                        <span >{{ item.name }}</span>
                     </div>
                 </v-btn>
             
@@ -35,7 +33,7 @@
       </v-list>
     </v-menu>
   </div>
-</div>
+
 </template>
 <script setup lang="ts">
 import {langItem} from '../../types/languageTypes'
@@ -59,10 +57,10 @@ const choosenLanguage:Ref<langItem> = ref({
 })
 
 async function chooseLanguage(item:langItem):Promise<void>{
-    console.log(`I choose ${item.name} language`);
     choosenLanguage.value.img = item.img;
     choosenLanguage.value.name = item.name;
-    choosenLanguage.value.type = item.type
+    choosenLanguage.value.type = item.type;
+    localStorage.setItem('lang', item.type);
     try{
         await useLanguageStore().getLanguage(item.type)
     }catch(error){
@@ -74,7 +72,18 @@ async function chooseLanguage(item:langItem):Promise<void>{
 function langIcon(item:number):string{
     return `/images/lang-${item}.png`
 }
-
+onBeforeMount(() => {
+  let lang = localStorage.getItem('lang');
+  if(lang == 'ukr'){
+    choosenLanguage.value.name = 'Українська';
+    choosenLanguage.value.img = 1;
+    choosenLanguage.value.type = 'ukr'
+  }else{
+    choosenLanguage.value.name = 'English';
+    choosenLanguage.value.img = 2;
+    choosenLanguage.value.type = 'eng'
+  }
+})
 </script>
 <style scoped lang="scss">
 .lang{
@@ -88,6 +97,11 @@ function langIcon(item:number):string{
         flex-direction: row;
         align-items: center;
         gap: 5px;
+    }
+    &_name{
+      @media  screen and (max-width: 814px) {
+        display: none;
+    }
     }
 }
 </style>

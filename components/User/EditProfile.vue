@@ -25,6 +25,7 @@
                     :label="langs.userProfile.name"
                     type="text"
                     v-model="name"
+                    :rules="nameValidator"
                     ></v-text-field>
                     <v-text-field
                     class="update_input"
@@ -79,10 +80,22 @@ const props = defineProps({
         type:Number,
         required:true
     }
-})
+});
+
+const isValidData:Ref<boolean> = ref(true)
 
 const load:Ref<boolean> = ref(false)
 const name:Ref<string> = ref(props.name);
+const nameValidator = [
+    (value:string) => {
+        if(value.length < 3){
+            isValidData.value = false
+            return langs.value.regValidators.nameValidator
+        }
+        isValidData.value = true
+        return true
+    }
+]
 const phone:Ref<string | undefined> = ref(props.phone);
 const card:Ref<string | undefined> = ref(props.cardNumber);
 const cardValidator = [((value: string | null) => value?.length! == 16 || 'Card need to have 16 numbers ')]
@@ -107,6 +120,9 @@ function makeDefault():void{
 
 const emits = defineEmits(['edited']);
 async function edited(){
+    if(!isValidData.value){
+        return     
+    }
     load.value = true
     const userUpdatedData = {
         name:name.value,
@@ -122,8 +138,7 @@ async function edited(){
         console.log(error)
         
     }
-    load.value = false
-    
+    load.value = false  
     
 }
 

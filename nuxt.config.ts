@@ -15,22 +15,20 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore', 'acceptHMRUpdate'],
     },
+    
   ],
 ],
+
+
  imports: {
   dirs: ['stores'],
 },
+
 app:{
-  pageTransition:{name: "page", mode:"out-in"},
-  layoutTransition:{name:'alert', mode:'out-in'},
-  
+  pageTransition:{name: "page", mode:"out-in"},  
 },
-
-
-
-
-
-
+ssr:false,
+spaLoadingTemplate:'spa-loading-template.html',
 
 
 })

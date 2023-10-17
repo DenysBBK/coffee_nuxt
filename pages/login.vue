@@ -7,12 +7,12 @@
         </base-alert>
         <v-container class="login_container">
             
-            <h1 class="text-center pb-3" >{{ lagns.login.main }}</h1>
-            <h4>{{ lagns.login.haveAccount }} <NuxtLink to="/registration" class="signup">{{ lagns.login.toRegistration }}</NuxtLink> </h4>
+            <h1 class="text-center pb-3" >{{ langs.login.main }}</h1>
+            <h4>{{ langs.login.haveAccount }} <NuxtLink to="/registration" class="signup">{{ langs.login.toRegistration }}</NuxtLink> </h4>
             <v-form @submit.prevent="submitForm">
                 <v-text-field
                     v-model="email"
-                    :label="lagns.login.email"
+                    :label="langs.login.email"
                     class="login_input"
                     :rules="emailValidator"
                     >
@@ -20,17 +20,17 @@
                 <v-text-field
                     v-model="password"
                     type="password"
-                    :label="lagns.login.password"
+                    :label="langs.login.password"
                     class="login_input"
                     :rules="passwordValidator">
                 </v-text-field>
                 <div class="login_data">
-                <v-radio-group v-model="toAccount.value">
-                <v-radio :label="lagns.login.toCafeAccount" value="shops"></v-radio>
-                <v-radio :label="lagns.login.toUserAccount" value="users"></v-radio>
-                <p class="text-center text-red" v-if="!toAccount.isValid">Need to choose one option</p>
+                <v-radio-group v-model="toAccount.value"
+                :rules="toAccountValidator">
+                <v-radio :label="langs.login.toCafeAccount" value="shops"></v-radio>
+                <v-radio :label="langs.login.toUserAccount" value="users"></v-radio>
                 </v-radio-group>
-                <v-btn class="login_btn" type="submit" :loading="load">{{ lagns.login.btn }}</v-btn>
+                <v-btn class="login_btn" type="submit" :loading="load">{{ langs.login.btn }}</v-btn>
                 
             </div>
             </v-form>
@@ -41,34 +41,34 @@
 import {loginTypes, dataType } from '../types/loginTypes';
 import{languageState} from '../types/languageTypes'
 
-const lagns:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
+const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 
 const email:Ref<string|null> = ref(null)
-const emailValidator = [(value: string ) => value?.length! > 0 || 'Email must be not empty']
+const emailValidator = [(value: string ) => value?.length! > 0 || langs.value.loginValidators.email]
 
 const password:Ref<string|null> = ref(null)
-const passwordValidator = [((value: string ) => value?.length! > 0 || 'Password must be not empty'),
-((value: string) => value?.length! > 3 || 'Need more than 3 letters') ]
+const passwordValidator = [((value: string ) => value?.length! > 0 || langs.value.loginValidators.password)]
 
 const toAccount: dataType = reactive({
     value:'',
     isValid:true,
 })
-// watch(toAccount, ():void => {
-//     if(toAccount.value == ''){
-//         toAccount.isValid = false 
-//     }else{
-//         toAccount.isValid = true
-//     }
-// })
+const toAccountValidator = [
+    (value:string)=>{
+        if(value == ''){
+            return langs.value.loginValidators.toAccount
+        }
+        return true
+    }
+]
 
 const load:Ref<boolean> = ref(false)
 
 async function submitForm():Promise<void>{
-    if(email.value == '' || password.value == '')return
+    if(email.value == '' || password.value == '' || email.value == null || password.value == null)return
     if(toAccount.value == ''){
         toAccount.isValid = false
         return
@@ -84,7 +84,6 @@ async function submitForm():Promise<void>{
        await useAuthStore().signIn(actionPayload)
        load.value = false
        toAccount.value == 'users' ? useRouter().push('/profile') : useRouter().push('/cafe-profile')
-    //    useRouter().push('/profile')
        
     }catch(Er:any){
         load.value = false
@@ -94,15 +93,12 @@ async function submitForm():Promise<void>{
         password.value = null;
         toAccount.value = '';
         toAccount.isValid = true
-        
-        
+
     
-    
-    
-}
+};
 
 useHead({
-    title:'Login'
+    title:langs.value.pageTitles.login
 })
 
 </script>
@@ -110,6 +106,7 @@ useHead({
 .login_btn{
     color: white;
     background-color: #08377d;
+    margin-top: 20px;
 }
 .login_input{
    background-color: #cff7fc;

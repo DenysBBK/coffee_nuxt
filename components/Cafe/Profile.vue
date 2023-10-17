@@ -8,7 +8,14 @@
                     <p class="profile_item"><b>{{ langs.cafeProfile.city }}:</b> {{ props.city }}</p>
                     <p class="profile_item"><b>{{ langs.cafeProfile.address }}:</b> {{ props.address }}</p>
                     <p class="profile_item"><b>{{ langs.cafeProfile.phone }}:</b> {{ props.phone }}</p>
-                    <p class="profile_item"><b>{{ langs.cafeProfile.positions }}:</b></p>
+                </div>
+               
+                <div class="profile_image">
+                    <img :src=userAvatar(props.avatar) class="profile_img">
+                </div>
+            </div>
+            <div class="profile_positions">
+                    <p ><b>{{ langs.cafeProfile.positions }}:</b></p>
                     <table>
                         <thead>
                             <tr>
@@ -19,13 +26,11 @@
                         <tbody>
                         <tr v-for="(item, index) in props.positions" :key="index">
                             <td>{{ item.name }}</td>
-                            <td>{{ item.price }}</td>
+                            <td>{{ item.price }} UAH</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <img :src=userAvatar(props.avatar)>
-            </div>
             <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="editProfile">{{ langs.cafeProfile.update }} </v-btn>
             </div>
@@ -99,6 +104,45 @@ function editProfile(){
     justify-content: center;
     align-self: center;
 }
+    &_img{
+        max-width: 150px;
+        max-height: 150px;
+        justify-self: center;
+        @media screen and (min-width: 450px) {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+    &_image{
+        display: flex;
+        justify-content: center;
+    }
+    &_positions{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        background-color: white;
+        border-radius: 10%;
+        border: 1px solid #000;
+        gap: 20px;
+        max-width: 100%;
+        margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+ 
+        @media screen and (min-width: 815px) {
+            max-width: 70%;
+        }
+    }
 
+}
+table {
+  width: 100%;
+}
+
+th, td {
+  width: 50%; 
 }
 </style>

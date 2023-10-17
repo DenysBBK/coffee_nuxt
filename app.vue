@@ -7,13 +7,19 @@
     <div class="header">
       <Navbar/>
     </div>
+    <div>
       <NuxtPage/>
+
+    </div>
   </div>
   <TheFooter/>
 </template>
 <script setup lang="ts">
-const route = useRoute()
-console.log(route.name)
+
+onBeforeMount(() => {
+  let lang:string|null = localStorage.getItem('lang');
+  useLanguageStore().getLanguage(lang)
+})
 
 </script>
 <style>

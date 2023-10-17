@@ -35,7 +35,8 @@ export interface languageState{
         terms:string,
         and:string,
         policy:string,
-        register:string
+        register:string,
+        city:string
     },
     userProfile:{
         title:string,
@@ -61,7 +62,16 @@ export interface languageState{
         positions:string,
         item:string,
         price:string,
-        update:string
+        update:string,
+        updateTitle:string,
+        chooseAvatar:string,
+        default:string,
+        updatePositions:string,
+        delete:string,
+        addNew:string,
+        saveBtn:string,
+        posItem:string,
+        posPrice:string
     },
     pageTitles:{
         acitveOrders:string,
@@ -75,6 +85,92 @@ export interface languageState{
         userProfile:string,
         registration:string,
         terms:string
+    },
+    alerts:{
+        successReg:string,
+        orderInWork:string,
+        orderIsFinished:string,
+        orderIsDone:string,
+        successOrder:string,
+        profileUpdated:string,
+        user:string,
+        cafe:string,
+        notFound:string,
+        alreadyExist:string,
+    },
+    history:{
+        title:string,
+        noItems:string,
+        coffeeName:string,
+        userName:string,
+        positions:string,
+        date:string
+    },
+    order:{
+        title:string,
+        chooseSity:string,
+        chooseAddress:string,
+        noShops:string,
+        makeOrder:string,
+        positions:string,
+        modalTitle:string,
+        modalSubtitle:string,
+        chooseDrink:string,
+        add:string,
+        orderList:string,
+        confirmOrder:string,
+        closeModal:string,
+        emptyList:string,
+        totalPrice:string,
+        noItems:string,
+    },
+    activeOrders:{
+        title:string,
+        noOrders:string,
+        finish:string,
+        pending:string,
+        preparing:string,
+        ready:string,
+        finished:string,
+    },
+    orders:{
+        title:string,
+        noOrders:string,
+        takeInWork:string,
+        finish:string,
+        pending:string,
+        preparing:string,
+        ready:string,
+    },
+    mainPage:{
+        title:string,
+        card1:string,
+        card2:string,
+        card3:string,
+        card3First:string,
+        card3Second:string,
+        card3Third:string,
+        card3Four:string,
+        card4:string
+    },
+    regValidators:{
+        emailNotEmpty:string,
+        emailMoreLetters:string,
+        invalidEmail:string,
+        passwordMoreLetters:string,
+        confirmPassword:string,
+        nameValidator:string,
+        cityValidator:string,
+        termsValidator:string
+    },
+    loginValidators:{
+        email:string,
+        password:string,
+        toAccount:string
+    },
+    footer:{
+        terms:string,
+        privacy:string
     }
 
 }

@@ -1,0 +1,52 @@
+<div class="preloader-container">
+    <div class="spinner"></div>
+</div>
+
+<style scoped>
+.preloader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FEF2F1; /* Белый фон */
+    height: 100vh; /* Занимаем всю высоту видимой области */
+}
+
+
+.spinner {
+    /* Size */
+    height: 4rem;
+    width: 4rem;
+
+    /* Create a curve at the top */
+    border: 4px solid #d1d5db;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    
+
+    animation: spinner 800ms linear infinite;
+
+    /* Убираем отступы по краям */
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+img {
+    /* Убираем отступы */
+    margin: 0;
+}
+
+.preloader-container {
+    justify-content: center;
+}
+ 
+</style>

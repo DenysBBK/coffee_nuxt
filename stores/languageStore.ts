@@ -41,6 +41,7 @@ export const useLanguageStore = defineStore('language', {
             and:'and',
             register:'Registration',
             policy:'Privacy Policy',
+            city:'Choose your city'
         },
         userProfile:{
             title:'Profile',
@@ -65,7 +66,16 @@ export const useLanguageStore = defineStore('language', {
             positions:'Available positions',
             item:'Item',
             price:'Price',
-            update:'Update profile'
+            update:'Update profile',
+            updateTitle:'Update profile',
+            chooseAvatar:'Choose cafe avatar',
+            default:'Default',
+            updatePositions:'Positions',
+            delete:'Delete',
+            addNew:'Add new positions',
+            saveBtn:'Save',
+            posItem:'Position name',
+            posPrice:'Price UAH'
         },
         pageTitles:{
             acitveOrders:'Active orders',
@@ -79,13 +89,100 @@ export const useLanguageStore = defineStore('language', {
             userProfile:'Profile',
             registration:'Registration',
             terms:'Terms of Services'
+        },
+        alerts:{
+            successReg:'Successful registration',
+            orderInWork:'Order preparing',
+            orderIsFinished:'Order is finished',
+            orderIsDone:'Order is done',
+            successOrder:'Success order',
+            profileUpdated:'Profile updated',
+            user:'User',
+            cafe:'Caffe',
+            notFound:'is not found',
+            alreadyExist:'is already exist'
+        },
+        history:{
+            title:'Orders history',
+            noItems:'You dont have items in history',
+            coffeeName:'Coffee-shop name',
+            userName:'User name',
+            positions:'Positions',
+            date:'Date'
+        },
+        order:{
+            title:'Make an order',
+            chooseSity:'Choose your sity',
+            chooseAddress:'Choose the address',
+            noShops:'There are no coffee shops in this city',
+            makeOrder:'Order',
+            positions:'Positions',
+            modalTitle:'Order your coffee',
+            modalSubtitle:'Choose your drink',
+            chooseDrink:'Choose drink',
+            add:'Add',
+            orderList:'Your order list',
+            confirmOrder:'Confirm order',
+            closeModal:'Close',
+            emptyList:'Order list is empty',
+            totalPrice:'Total price',
+            noItems:'No item to order'
+        },
+        activeOrders:{
+            title:'Active orders',
+            noOrders:'There is no orders',
+            finish:'Finish',
+            pending:'Pending',
+            preparing:'Preparing',
+            ready:'Ready',
+            finished:'Finished'
+        },
+        orders:{
+            title:'Orders',
+            noOrders:'There is no orders',
+            takeInWork:'Take in work',
+            finish:'Finish',
+            pending:'Pending',
+            preparing:'Preparing',
+            ready:'Ready'
+        },
+        mainPage:{
+            title:'Take&Go philosophy',
+            card1:'Do you like to drink coffee very much, but are you already tired of constant queues?',
+            card2:'Would you like your coffee to be prepared as you walk to the coffee shop so that when you arrive, you can pick up your coffee and continue on your way?',
+            card3:'All you need to do is 4 simple things:',
+            card3First:'Register',
+            card3Second:'Find a coffee shop along the way',
+            card3Third:'Order coffee',
+            card3Four:'Pick up a drink on the way when it is ready',
+            card4:'Enjoy your favorite coffee that you now have without queuing!'
+        },
+        regValidators:{
+            emailNotEmpty:'Email must be not empty',
+            emailMoreLetters:'Need more than 3 letters',
+            invalidEmail:'Invalid email address',
+            passwordMoreLetters:'Password must include at least 6 characters',
+            confirmPassword:'Field should match Password',
+            nameValidator:'At least 3 characters',
+            cityValidator:'Need to choose the city',
+            termsValidator:'Need to agree with terms'
+        },
+        loginValidators:{
+            email:'Email must be not empty',
+            password:'Password must be not empty',
+            toAccount:'Need to choose one option'
+        },
+        footer:{
+            terms:'Terms',
+            privacy:'Privacy'
         }
     }),
     actions:{
-       async getLanguage(type:string):Promise<void>{
+       async getLanguage(type:string | null):Promise<void>{
         const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/languages/${type}.json`);
         const data = await responce.json();
-        console.log(data)
+      
+        
         //PAGE TITLES
         this.$state.pageTitles.acitveOrders = data.pageTitles.activeOrders;
         this.$state.pageTitles.cafeProfile = data.pageTitles.cafeProfile;
@@ -135,7 +232,8 @@ export const useLanguageStore = defineStore('language', {
         this.$state.registration.terms = data.registration.terms;
         this.$state.registration.and = data.registration.and;
         this.$state.registration.policy = data.registration.policy;
-        this.$state.registration.register = data.registration.register
+        this.$state.registration.register = data.registration.register;
+        this.$state.registration.city = data.registration.city
 
         //USER PROFILE
         this.$state.userProfile.title = data.userProfile.title;
@@ -160,8 +258,107 @@ export const useLanguageStore = defineStore('language', {
         this.$state.cafeProfile.positions = data.cafeProfile.positions;
         this.$state.cafeProfile.item = data.cafeProfile.item;
         this.$state.cafeProfile.price = data.cafeProfile.price;
-        this.$state.cafeProfile.update = data.cafeProfile.update
-        }
+        this.$state.cafeProfile.update = data.cafeProfile.update;
+        this.$state.cafeProfile.updateTitle = data.cafeProfile.updateTitle;
+        this.$state.cafeProfile.chooseAvatar = data.cafeProfile.chooseAvatar;
+        this.$state.cafeProfile.default = data.cafeProfile.default;
+        this.$state.cafeProfile.updatePositions = data.cafeProfile.updatePositions;
+        this.$state.cafeProfile.delete = data.cafeProfile.delete;
+        this.$state.cafeProfile.addNew = data.cafeProfile.addNew;
+        this.$state.cafeProfile.saveBtn = data.cafeProfile.saveBtn;
+        this.$state.cafeProfile.posItem = data.cafeProfile.posItem;
+        this.$state.cafeProfile.posPrice = data.cafeProfile.posPrice
+
+        //ALERTS
+        this.$state.alerts.orderInWork = data.alerts.orderInWork;
+        this.$state.alerts.orderIsDone = data.alerts.orderIsDone;
+        this.$state.alerts.orderIsFinished = data.alerts.orderIsFinished;
+        this.$state.alerts.successOrder = data.alerts.successOrder;
+        this.$state.alerts.successReg = data.alerts.successReg;
+        this.$state.alerts.profileUpdated = data.alerts.profileUpdated;
+        this.$state.alerts.user = data.alerts.user;
+        this.$state.alerts.cafe = data.alerts.cafe;
+        this.$state.alerts.notFound = data.alerts.notFound;
+        this.$state.alerts.alreadyExist = data.alerts.alreadyExist
+
+        //HISTORY
+        this.$state.history.coffeeName = data.history.coffeeName;
+        this.$state.history.date = data.history.date;
+        this.$state.history.noItems = data.history.noItems;
+        this.$state.history.positions = data.history.positions;
+        this.$state.history.title = data.history.title;
+        this.$state.history.userName = data.history.userName
+
+        //ORDER
+        this.$state.order.add = data.order.add;
+        this.$state.order.chooseAddress = data.order.chooseAddress;
+        this.$state.order.chooseDrink = data.order.chooseDrink;
+        this.$state.order.chooseSity = data.order.chooseSity;
+        this.$state.order.closeModal = data.order.closeModal;
+        this.$state.order.confirmOrder = data.order.confirmOrder;
+        this.$state.order.makeOrder = data.order.makeOrder;
+        this.$state.order.modalSubtitle = data.order.modalSubtitle;
+        this.$state.order.modalTitle = data.order.modalTitle;
+        this.$state.order.noShops = data.order.noShops;
+        this.$state.order.orderList = data.order.orderList;
+        this.$state.order.positions = data.order.positions;
+        this.$state.order.title = data.order.title;
+        this.$state.order.emptyList = data.order.emptyList;
+        this.$state.order.totalPrice = data.order.totalPrice;
+        this.$state.order.noItems = data.order.noItems;
+
+        //ACTIVE ORDERS
+        this.$state.activeOrders.finish = data.activeOrders.finish;
+        this.$state.activeOrders.finished = data.activeOrders.finished;
+        this.$state.activeOrders.noOrders = data.activeOrders.noOrders;
+        this.$state.activeOrders.pending = data.activeOrders.pending;
+        this.$state.activeOrders.preparing = data.activeOrders.preparing;
+        this.$state.activeOrders.ready = data.activeOrders.ready;
+        this.$state.activeOrders.title = data.activeOrders.title;
+
+        //ORDERS
+        this.$state.orders.finish = data.orders.finish;
+        this.$state.orders.noOrders = data.orders.noOrders;
+        this.$state.orders.pending = data.orders.pending;
+        this.$state.orders.preparing = data.orders.preparing;
+        this.$state.orders.ready = data.orders.preparing;
+        this.$state.orders.takeInWork = data.orders.preparing;
+        this.$state.orders.title = data.orders.title;
+
+        //MAIN PAGE
+        this.$state.mainPage.card1 = data.mainPage.card1;
+        this.$state.mainPage.card2 = data.mainPage.card2;
+        this.$state.mainPage.card3 = data.mainPage.card3;
+        this.$state.mainPage.card3First = data.mainPage.card3First;
+        this.$state.mainPage.card3Four = data.mainPage.card3Four;
+        this.$state.mainPage.card3Second = data.mainPage.card3Second;
+        this.$state.mainPage.card3Third = data.mainPage.card3Third;
+        this.$state.mainPage.card4 = data.mainPage.card4;
+        this.$state.mainPage.title = data.mainPage.title;
+
+         //REGISTRATION VALIDATION
+        this.$state.regValidators.cityValidator = data.regValidators.cityValidator;
+        this.$state.regValidators.confirmPassword = data.regValidators.confirmPassword;
+        this.$state.regValidators.emailMoreLetters = data.regValidators.emailMoreLetters;
+        this.$state.regValidators.emailNotEmpty = data.regValidators.emailNotEmpty;
+        this.$state.regValidators.invalidEmail = data.regValidators.invalidEmail;
+        this.$state.regValidators.nameValidator = data.regValidators.nameValidator;
+        this.$state.regValidators.passwordMoreLetters = data.regValidators.passwordMoreLetters;
+        this.$state.regValidators.termsValidator = data.regValidators.termsValidator;
+
+        //LOGIN VALIDATORS
+        this.$state.loginValidators.email = data.loginValidators.email;
+        this.$state.loginValidators.password = data.loginValidators.password;
+        this.$state.loginValidators.toAccount = data.loginValidators.toAccount;
+
+        //FOOTER
+        this.$state.footer.privacy = data.footer.privacy;
+        this.$state.footer.terms = data.footer.terms;
+        
+
+        },
+
+       
     },
     getters:{
         lang:(state:languageState) => state
