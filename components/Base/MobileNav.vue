@@ -5,9 +5,6 @@
         <v-app-bar class="mobile_bar">
           <v-toolbar-title>
                 <NuxtLink to="/" class="nav_icon">
-                <img src="../../public/images/coffee-cup.png"
-              height="50"
-              width="50">
                     <v-btn variant="text" class="main_btn">Take & Go</v-btn>
                 </NuxtLink>
           </v-toolbar-title>
@@ -19,30 +16,38 @@
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" location="right" temporary class="nav_btns">
             <div class="mobile_btn">
-                <NuxtLink to="/login" v-if="!auth.isAuthenticated">
-                    <base-button :text="langs.header.login"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/registration" v-if="!auth.isAuthenticated">
-                    <base-button :text="langs.header.registration"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button :text="langs.header.order"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/cafe-profile" v-if="type === 'shops' && auth.isAuthenticated">
-                    <base-button :text="langs.header.profile"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/orders" v-if="type === 'shops' && auth.isAuthenticated">
-                    <base-button :text="langs.header.orders"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/active-orders" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button :text="langs.header.activeOrders"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/profile" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button :text="langs.header.profile"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/history" v-if="auth.isAuthenticated">
-                    <base-button :text="langs.header.history"></base-button>
-                </NuxtLink>
+                <BaseRedirectButton 
+                v-if="!auth.isAuthenticated"
+                :text="langs.header.login"
+                url="/login"></BaseRedirectButton>
+                <BaseRedirectButton 
+                v-if="!auth.isAuthenticated"
+                :text="langs.header.registration"
+                url="/registration"></BaseRedirectButton>
+                <BaseRedirectButton 
+                v-if="type === 'users' && auth.isAuthenticated"
+                :text="langs.header.order"
+                url="/order"></BaseRedirectButton>
+                <BaseRedirectButton 
+                v-if="type === 'shops' && auth.isAuthenticated"
+                :text="langs.header.profile"
+                url="/cafe-profile"></BaseRedirectButton>
+                <BaseRedirectButton 
+                v-if="type === 'shops' && auth.isAuthenticated"
+                :text="langs.header.orders"
+                url="/orders"></BaseRedirectButton>
+                <BaseRedirectButton 
+                v-if="type === 'users' && auth.isAuthenticated"
+                :text="langs.header.activeOrders"
+                url="/active-orders"></BaseRedirectButton>
+                <BaseRedirectButton 
+                v-if="type === 'users' && auth.isAuthenticated"
+                :text="langs.header.profile"
+                url="/profile"></BaseRedirectButton>
+                <BaseRedirectButton 
+                v-if="auth.isAuthenticated"
+                :text="langs.header.history"
+                url="/history"></BaseRedirectButton>
                     <base-button :text="langs.header.logout" 
                     v-on:click="auth.logout()" 
                     v-if="auth.isAuthenticated"
@@ -68,13 +73,18 @@ const type:ComputedRef<string> = computed(():string => {
 })
 
 </script>
-<style scoped lang="scss">
-.mobile_bar{
-  background-color: #FEF2F1;
+<style lang="scss">
+@import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
+
+.v-toolbar__content{
+  background-color: black;
   
 }
 .nav_container{
-    padding-bottom: 5rem;   
+    @media  screen and (max-width: 768px) {
+     border-bottom: 1px solid white;    
+        
+    }
 }
 .navigator{
     z-index: 10;
@@ -89,13 +99,14 @@ const type:ComputedRef<string> = computed(():string => {
     
 }
 .nav_btns{
-    background-color: #fcdfdc;
+    background-color: black;
     min-width: 60%;
 }
 .main_btn{
-    color: #1d0502;
-    
-    font-size: large;
+    color: white;
+    font-family: KARLA;
+    font-weight: 400;
+    font-size: 20px;
 }
 .nav_icon{
     display: flex;
@@ -104,6 +115,9 @@ const type:ComputedRef<string> = computed(():string => {
 }
 .logout_btn{
     max-width: 100px;
+}
+.mdi-menu::before{
+    color: white;
 }
 
 </style>
