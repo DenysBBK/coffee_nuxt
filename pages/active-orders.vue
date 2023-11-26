@@ -6,6 +6,7 @@
             :aletrType="typeOfAlert">
         </base-alert>
        <v-container class="orders_container">
+        
             <h1 class="text-center pb-10" v-if="userOrders.length" >{{ langs.activeOrders.title }}</h1>
             <h1 class="text-center pb-10" v-if="!userOrders.length">{{ langs.activeOrders.noOrders }}</h1>
             

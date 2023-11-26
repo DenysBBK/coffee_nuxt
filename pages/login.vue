@@ -36,6 +36,7 @@
                         <v-radio :label="langs.login.toCafeAccount" value="shops" ></v-radio>
                         <v-radio :label="langs.login.toUserAccount" value="users" ></v-radio>
                     </v-radio-group>
+                   
                     </div>
                     <base-button text="login" type="submit"></base-button>
                     </div>
@@ -78,6 +79,8 @@ const toAccountValidator = [
 const load:Ref<boolean> = ref(false)
 
 async function submitForm():Promise<void>{
+    console.log(toAccount.value)
+    
     if(email.value == '' || password.value == '' || email.value == null || password.value == null)return
     if(toAccount.value == ''){
         toAccount.isValid = false
@@ -112,7 +115,7 @@ useHead({
 })
 
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
 
 .login{
@@ -198,7 +201,9 @@ useHead({
    margin-bottom: 20px;
    padding-bottom: 10px;
    
+   
 }
+
 .login_inputs{
     padding-bottom: 30px;
 }
@@ -216,6 +221,7 @@ useHead({
 .v-selection-control {
     gap: 10px;    
     color: white;
+    opacity: 1;
 }
 .v-label--clickable{
     font-size: 20px;
@@ -224,6 +230,20 @@ useHead({
 .v-radio-group{
     color: white;
     
+}
+.v-text-field .v-field--no-label input, .v-text-field .v-field--active input{
+    color: white;
+}
+.mdi-radiobox-blank::before{
+    font-size: 30px;
+    opacity: 1;
+}
+.mdi-radiobox-marked::before{
+    font-size: 30px;
+    color: yellow;
+}
+.v-selection-control .v-label{
+    opacity: 1;
 }
 
 </style>

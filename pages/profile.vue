@@ -1,5 +1,11 @@
 <template>
-    <div>
+    <div class="profile_page">
+        <div class="profile_block">
+            <UserSideMenu/>
+           
+        </div>
+    </div>
+    <!-- <div>
         <user-profile v-if="!updatedProfile"
         :name="userName"
         :phone="userPhone"
@@ -14,7 +20,7 @@
         :cardNumber="userCard"
         :avatar="userAvatar"
         @edited="profileIsUpdated"></user-edit-profile>
-    </div>
+    </div> -->
 </template>
 <script setup lang="ts">
 import{languageState} from '../types/languageTypes'
@@ -68,3 +74,17 @@ useHead({
 })
 
 </script>
+<style scoped lang="scss">
+.profile{
+    &_page{
+
+    }
+    &_block{
+        max-width: 1600px;
+        margin: 0 auto;
+        border: 1px solid white;
+        border-radius: 10px;
+    }
+}
+
+</style>
