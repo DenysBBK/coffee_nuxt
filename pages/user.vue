@@ -27,21 +27,33 @@ console.log(route.value)
 .profile{
     &_links{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: start;
-        width: 30%;
+        width: 100%;
+        flex-wrap: wrap;
+        border-bottom: 1px solid white;
+        @media  screen and (min-width: 768px) {
+        flex-direction: column;
         border-right: 1px solid white;
+        width: 30%;
+        }
     }
     &_link{
         text-decoration: none;
-        font-size: 40px;
+        font-size: 20px;
         color: yellow;
         font-weight: 700;
         text-align: center;
-        border-bottom: 1px solid white; 
-        width: 100%;
+        width: 50%;
         padding: 15px;
         font-family: KARLA;
+        border-left: 1px solid white;
+        border-bottom: 1px solid white;
+        @media  screen and (min-width: 768px){
+            font-size:30px;
+            width: 100%;
+
+        }
         
     }
     &_link_active{
@@ -51,18 +63,27 @@ console.log(route.value)
     &_page{
         padding-left: 10px;
         padding-right: 10px;
-
+        padding-top:30px;
+        @media  screen and (min-width: 768px){
+            padding-top: 0px;
+        }
     }
     &_block{
         display: flex;
-        max-width: 1600px;
+        max-width: 1440px;
         margin: 0 auto;
-        
         border-radius: 10px;
         border: 1px solid white;
+        flex-direction: column;
+        @media  screen and (min-width: 768px) {
+        flex-direction: row;
+        }
     }
     &_content{
         width: 100%;
+        @media  screen and (min-width: 768px){
+            width: 70%;
+        }
     }
 }
 .test_title{

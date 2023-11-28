@@ -145,16 +145,13 @@ useHead({
     color: white;
     font-family: KARLA;
     @media  screen and (min-width: 480px) {
-       font-size: 50px;
-        
+       font-size: 50px;  
     }
     @media  screen and (min-width: 768px) {
-        font-size: 60px;
-        
+        font-size: 60px;  
     }
     @media  screen and (min-width: 1024px) {
-        font-size: 70px;
-        
+        font-size: 70px;   
     }
     @media  screen and (min-width: 1200px) {
         font-size: 80px;

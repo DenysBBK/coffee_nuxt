@@ -101,17 +101,24 @@ useHead({
     align-items: center;
     padding: 30px;
     border-bottom: 1px solid white;
-    
+    justify-content: center;
+    @media  screen and (min-width: 768px){
+        justify-content: flex-start;
+    }
     &__img{
-        max-width: 200px;
-        max-height: 200px;
+        max-width: 100px;
+        max-height: 100px;
+        @media  screen and (min-width: 768px){
+            max-width: 200px;
+            max-height: 200px;
+        }
        
         
     }
     &__name{
         color: white;
         font-family: KARLA;
-        font-size: 60px;
+        font-size: 50px;
         font-weight: 700;
 
     }
@@ -124,33 +131,43 @@ useHead({
     &__item{
         display: flex;
         gap: 10px;
+        flex-direction: column;
+        align-items: center;
+        @media  screen and (min-width: 768px){
+            flex-direction: row;
+        }
     }
 }
 .info{
     &_title{
-      font-family: KARLA;
-      color: yellow;
-      font-size: 40px;
-      font-weight: 700;  
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: yellow;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }
 
     }
     &_data{
+        font-size: 20px;
+        font-weight: 700;
         font-family: KARLA;
-      color: white;
-      font-size: 40px;
-      font-weight: 700;  
+        color: white;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }  
     }
 }
 .last_order{
     display: flex;
     flex-direction: column;
-  
     gap: 30px;
     padding-bottom: 30px;
     &__title{
         font-family: KARLA;
       color: yellow;
-      font-size: 40px;
+      font-size: 30px;
       font-weight: 700; 
       text-align: center;   
 
@@ -160,13 +177,18 @@ useHead({
         align-items: center;
         justify-content: space-between;
         padding: 20px;
+        flex-wrap: wrap;
+        flex-direction: column;
+        @media  screen and (min-width: 768px) {
+        flex-direction: row;
+        }
     }
 }
 .content{
     &__title{
     font-family: KARLA;
       color: white;
-      font-size: 40px;
+      font-size: 30px;
       font-weight: 700;
     }
 }
@@ -194,13 +216,13 @@ td{
     &__title{
         font-family: KARLA;
       color: yellow;
-      font-size: 40px;
+      font-size: 30px;
       font-weight: 700 
     }
     &__price{
         font-family: KARLA;
       color: white;
-      font-size: 40px;
+      font-size: 30px;
       font-weight: 700 
     }
 }
