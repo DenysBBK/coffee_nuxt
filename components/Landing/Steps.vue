@@ -26,11 +26,14 @@
 @import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
 
 .steps{
-    height: 100vh;
+   
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    @media screen and (min-width: 768px) {
+        height: 100vh;
+    }
     
     &_title{
         font-size: 50px;

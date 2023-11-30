@@ -13,7 +13,7 @@
 </template>
 <style scoped lang="scss">
 .about{
-    height: 100vh;
+    
     &_block{
         display: flex;
         margin: 0 auto;
@@ -26,7 +26,7 @@
         gap: 30px;
         @media  screen and (min-width: 768px) {
             flex-direction: row;
-            height: 100%;    
+            height: 100vh;    
         }
     }
     &_content{

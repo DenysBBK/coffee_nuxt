@@ -1,9 +1,21 @@
 import { defineStore } from "pinia";
-import { ordersState, orderPayload,ordersArr, userOrderItem, cafeOrderItem, userOrderData,updatedOrder} from 'types/orderTypes';
+import { ordersState, orderPayload,ordersArr, userOrderItem, cafeOrderItem, userOrderData,updatedOrder, lastOrder} from 'types/orderTypes';
 
 export const useOrderStore = defineStore('orders', {
     state:():ordersState => ({
-        orders:[]
+        orders:[],
+        lastUserOrder:{
+            cafeAvatar:0,
+            cafeId:0,
+            fromCafe:'Mike',
+            positionId:0,
+            positions:[{
+                name:'Mike',
+                price:12
+            }],
+            status:0,
+            userAvatar:0
+        }
     }),
     actions:{
         async getOrders(payload:orderPayload):Promise<void>{
@@ -29,7 +41,8 @@ export const useOrderStore = defineStore('orders', {
                     }
                     orders.push(item)
                     
-                }        
+                }
+                 
             }else{
                 for(let one in data){
                     let item:cafeOrderItem = {
@@ -47,7 +60,9 @@ export const useOrderStore = defineStore('orders', {
             }
            
             
-           this.$state.orders = orders
+           this.$state.orders = orders;
+
+
             
             
         },
@@ -134,6 +149,6 @@ export const useOrderStore = defineStore('orders', {
 
     },
     getters:{
-        getAllOrders:(state:ordersState) => state.orders 
+        getAllOrders:(state:ordersState) => state.orders,
     }
 })

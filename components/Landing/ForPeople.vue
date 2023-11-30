@@ -18,7 +18,7 @@
 @import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
 
 .people{
-    height: 100vh;
+    
 
     &_block{
         display: flex;
@@ -32,7 +32,7 @@
         gap: 30px;
         @media  screen and (min-width: 768px) {
             flex-direction: row;
-            height: 100%;    
+            height: 90vh   
         }
 
     }

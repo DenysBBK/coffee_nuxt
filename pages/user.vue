@@ -17,7 +17,7 @@
 const route = computed(() =>{
     return useRoute().fullPath
 })
-console.log(route.value)
+
 
 
 </script>

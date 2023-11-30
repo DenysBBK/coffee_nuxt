@@ -12,7 +12,8 @@ export interface profileState{
         id:number|null,
         name:string,
         phone:string
-        avatar:number
+        avatar:number,
+        orders:any
     },
     cafe:{
         address:string,
@@ -33,7 +34,8 @@ export interface getUserData{
     id:number,
     name:string,
     phone:string,
-    avatar:number
+    avatar:number,
+    orders:any
 }
 export interface getCafeData{
     address:string,

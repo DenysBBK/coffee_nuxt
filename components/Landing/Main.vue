@@ -12,66 +12,16 @@
    </div>
 </template>
 <style scoped lang="scss">
-// .main{
-//     max-width:1600px;
-//     margin:0 auto;
-//     display:flex;
-//     justify-content:space-between;
-//     height:90vh;
-//     align-items:center;
-//     padding-left:20px;
-//     padding-right:20px;
-//     @media screen and (max-width:1200px){
-//         flex-direction:column;
-//         text-align:center;
-//         justify-content:space-around;
-//         gap:30px
-//     }
-  
-    // &_title{
-    // color: yellow;
-    // max-width: 50%;
-    // font-family: KARLA;
-    // font-size: 70px;
-    // font-weight: 900;
-    // line-height: 90px;
-    // max-width:1200px;
-    // @media screen and (max-width:1600px){
-    //     font-size:60px;
-    // } 
-    // @media screen and (max-width:991px){
-    //     font-size:60px;
-    //     line-height:70px
-    // }
-    // @media screen and (max-width:814px){
-    //     font-size:60px;
-    //     line-height:60px
-    // }
-    // }
-    // &_img{
-    //     max-height:600px;
-    // @media screen and (max-width:1600px){
-    //     max-height:400px;
-    // }  
 
-    // }
-    // &_text{
-    //     display: flex;
-    //     flex-direction: column;
-    // }
-
-// }
-
-  
   .base_back{
     background-image: url('../../public/images/test.jpg');
     background-size: cover;
     background-position: center;
-    min-height: 90vh;
+    min-height: 100vh;
     width: 100%;
-    
-  
- 
+    @media  screen and (min-width: 480px) {
+      min-height: 90hv;
+    }
     
   }
   .base_info{

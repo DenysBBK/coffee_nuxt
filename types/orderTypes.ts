@@ -1,7 +1,8 @@
 import { Positions } from "./profileTypes"
 
 export interface ordersState{
-    orders:ordersArr[]
+    orders:ordersArr[],
+    lastUserOrder:lastOrder
 }
 export type orderPayload = string
 
@@ -17,6 +18,18 @@ export interface ordersArr{
     userId?:string,
     userName?:string,
     cafeAvatar:number,
+    userAvatar:number
+}
+export interface lastOrder{
+    cafeAvatar:number,
+    cafeId:number,
+    fromCafe:string,
+    positionId:number,
+    positions:[{
+        name:string,
+        price:number
+    }],
+    status:number,
     userAvatar:number
 }
 interface orderItem{

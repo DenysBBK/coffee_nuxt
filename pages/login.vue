@@ -96,7 +96,7 @@ async function submitForm():Promise<void>{
         
        await useAuthStore().signIn(actionPayload)
        load.value = false
-       toAccount.value == 'users' ? useRouter().push('/profile') : useRouter().push('/cafe-profile')
+       toAccount.value == 'users' ? useRouter().push('/user/profile') : useRouter().push('/cafe-profile')
        
     }catch(Er:any){
         load.value = false

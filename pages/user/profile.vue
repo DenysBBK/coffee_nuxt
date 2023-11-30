@@ -2,7 +2,11 @@
    <div class="profile_content">
         <div class="profile_data">
             <img :src="userAvatar(avatar)" class="profile_data__img">
-            <p class="profile_data__name">{{ name }}</p>
+            <div>
+                <p class="profile_data__name">{{ name }}</p>
+                <nuxt-link to="/order" class="info_title">Make order -></nuxt-link>
+
+            </div>
         </div>
         <div class="profile_info">
             <div class="profile_info__item">
@@ -22,69 +26,111 @@
                 <span class="info_data">{{ cardNumber }}</span>
             </div>
         </div>
-        <div class="last_order">
+        <div class="last_order" v-if="lastOrder">
             <h2 class="last_order__title">LAST ORDER</h2>
             <div class="last_order__content">
-                <img :src="userAvatar(cafeAvatar)" class="profile_data__img">
-                <p class="content__title">Aroma Cava</p>
+                <img :src="userAvatar(Number(lastOrder.cafeAvatar))" class="profile_data__img">
+                <p class="content__title">{{ lastOrder.fromCafe }}</p>
                 <div>
                     <table>
                         <tbody>
-                            <tr v-for="item in testData" :key="item.name">
+                            <tr v-for="(item, index) in lastOrder.positions" :key="index">
                                 <td class="table__title">{{ item.name }}</td>
-                                <td class="table__data">x{{ item.amount}}</td>
+                                <!-- <td class="table__data">x{{ item.amount}}</td> -->
                                 <td class="table__title">{{ item.price }} UAH</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="total">
                         <p class="total__title">Total price:</p>
-                        <p class="total__price">100 UAH</p>
+                        <p class="total__price">{{ lastOrderTotalPrice }} UAH</p>
                     </div>
                 </div>
-                <base-button text="Repeat order" @click="repeatLastOrder"></base-button>
+                <base-dialog @action="testF">
+                <template #openButton>
+                    Repeat order
+                </template>
+                <template #text>
+                    <h3 class="profile_data__name">Repeat the order</h3>
+                    <p>Positions:</p>
+                    <ul>
+                        <li v-for="(item, index) in lastOrder.positions" :key="index">
+                        <span class="total__title">- {{ item.name }}</span>
+                        <span> ''</span>
+                        <span  class="total__price">{{ item.price }} UAH</span>
+                        </li>
+                    </ul>
+                    <p class="total__price">Total price: {{ lastOrderTotalPrice }} UAH</p>
+                </template>
+                <template #buttonAction >
+                    repeat
+                </template>
+                </base-dialog>
+               
             </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
+
 import { languageState } from 'types/languageTypes';
+import { ordersArr } from 'types/orderTypes';
+
+
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang);
+
 
 const name:Ref<string> = ref('Name');
 const phone:Ref<string> = ref('0999999999');
 const bank:Ref<string> = ref('Monobank');
 const cardNumber:Ref<string> = ref('1234548383838383');
 const avatar:Ref<number> = ref(2);
-const cafeAvatar:Ref<number> = ref(8)
+const lastOrderTotalPrice:Ref<number> = ref(0)
+
+
+const data = useProfileStore().userInfo;
+
+const lastOrder:ComputedRef<ordersArr | null> = computed(() =>{
+    return useOrderStore().getAllOrders.length === 0? null : useOrderStore().getAllOrders.reduce((one, next) => one.positionId > next.positionId ? one:next)
+});
+
+function lastOrderCalculate(){
+    let sum = 0
+    lastOrder.value?.positions.forEach(one => sum = sum+ Number(one.price))
+    lastOrderTotalPrice.value = sum
+};
 
 function userAvatar(item:number):string{
     return `/images/${item}.png`
 }
-
-const testData = [
-    {
-    name:'Капучіно',
-    price:40,
-    amount:1
-    },
-    {
-    name:'Американо',
-    price:15,
-    amount:2
-    },
-    {
-    name:'Рістретто',
-    price:30,
-    amount:3
-    },
-]
-
+function testF(){
+    console.log('Hello, from order')
+    
+}
 function repeatLastOrder(){
     console.log('Last order')
     
 }
 
+onBeforeMount(async() => {
+    try{
+        await useProfileStore().getUserData();
+        await useOrderStore().getOrders('user');
+        name.value = data.name;
+        phone.value = data.phone;
+        bank.value = data.bank;
+        cardNumber.value = data.card;
+        avatar.value = data.avatar;
+        lastOrderCalculate()
+    }catch(error){
+        console.log(error)
+        
+    }
+})
+
+definePageMeta({
+    middleware:'authenticated'
+})
 
 useHead({
     title:langs.value.pageTitles.userProfile
@@ -108,6 +154,7 @@ useHead({
     &__img{
         max-width: 100px;
         max-height: 100px;
+        background-color: white;
         @media  screen and (min-width: 768px){
             max-width: 200px;
             max-height: 200px;
@@ -144,6 +191,7 @@ useHead({
         font-weight: 700;
         font-family: KARLA;
         color: yellow;
+        text-decoration: none;
         @media  screen and (min-width: 768px){
             font-size: 30px; 
         }

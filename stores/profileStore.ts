@@ -11,7 +11,8 @@ export const useProfileStore = defineStore('profile', {
             id:null,
             name:'',
             phone:'',
-            avatar:0
+            avatar:0,
+            orders:[]
         },
         cafe:{
             address:'',
@@ -57,15 +58,18 @@ export const useProfileStore = defineStore('profile', {
             let uid = localStorage.getItem('uid');
             const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}.json`);
             const data:getUserData = await responce.json();
+           
             
             this.$state.user.bank = data.bank;
             this.$state.user.card = data.card;
             this.$state.user.email = data.email;
             this.$state.user.id = data.id;
             this.$state.user.name = data.name;
-            this.$state.user.phone = data.phone
-            this.$state.user.avatar = data.avatar
-            
+            this.$state.user.phone = data.phone;
+            this.$state.user.avatar = data.avatar;
+            for(let item in data.orders){
+                this.$state.user.orders.push(item)
+            }
         },
         async postCafe(payload:postCafeData):Promise<void>{
             let uid = localStorage.getItem('uid');

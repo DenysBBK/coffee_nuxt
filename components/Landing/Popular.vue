@@ -73,7 +73,10 @@
 }
 .base_shops{
   padding-top: 70px;
-  height: 80vh;
+  @media  screen and (min-width: 768px){
+    height: 80vh;
+  }
+  // height: 80vh;
 }
 .shops_block{
   padding-top: 50px;
