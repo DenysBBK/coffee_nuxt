@@ -1,5 +1,10 @@
 <template>
    <div class="profile_content">
+    <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <div class="profile_data">
             <img :src="userAvatar(avatar)" class="profile_data__img">
             <div>
@@ -46,21 +51,25 @@
                         <p class="total__price">{{ lastOrderTotalPrice }} UAH</p>
                     </div>
                 </div>
-                <base-dialog @action="testF">
+                <base-dialog @action="repeatLastOrder">
                 <template #openButton>
                     Repeat order
                 </template>
                 <template #text>
-                    <h3 class="profile_data__name">Repeat the order</h3>
-                    <p>Positions:</p>
+                    <h3 class="dialog_title">Repeat the order</h3>
+                    <p class="dialog_shop_name">{{ lastOrder.fromCafe }}</p>
+                    <img :src="userAvatar(Number(lastOrder.cafeAvatar))" class="profile_data__img">
+                    <p class="dialog_w">Positions:</p>
                     <ul>
                         <li v-for="(item, index) in lastOrder.positions" :key="index">
-                        <span class="total__title">- {{ item.name }}</span>
+                        <span class="dialog_y">- {{ item.name }}</span>
                         <span> ''</span>
-                        <span  class="total__price">{{ item.price }} UAH</span>
+                        <span  class="dialog_w">{{ item.price }} UAH</span>
                         </li>
                     </ul>
-                    <p class="total__price">Total price: {{ lastOrderTotalPrice }} UAH</p>
+                    <div class="dialog_total_price">
+                        <p class="dialog_w">Total price: <span class="dialog_y">{{ lastOrderTotalPrice }}</span> UAH</p>
+                    </div>
                 </template>
                 <template #buttonAction >
                     repeat
@@ -74,11 +83,11 @@
 <script setup lang="ts">
 
 import { languageState } from 'types/languageTypes';
-import { ordersArr } from 'types/orderTypes';
+import { ordersArr, userOrderData } from 'types/orderTypes';
 
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang);
-
+    const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 const name:Ref<string> = ref('Name');
 const phone:Ref<string> = ref('0999999999');
@@ -103,12 +112,29 @@ function lastOrderCalculate(){
 function userAvatar(item:number):string{
     return `/images/${item}.png`
 }
-function testF(){
-    console.log('Hello, from order')
-    
-}
-function repeatLastOrder(){
-    console.log('Last order')
+async function repeatLastOrder():Promise<void>{
+    if(lastOrder.value && lastOrder.value.cafeId && lastOrder.value.fromCafe){
+        const orderData: userOrderData = {
+        uid:localStorage.getItem('uid'),
+        name:name.value,
+        positions:lastOrder.value?.positions,
+        id:lastOrder.value?.cafeId,
+        shopName:lastOrder.value?.fromCafe,
+        cafeAvatar:lastOrder.value?.cafeAvatar,
+        userAvatar:avatar.value
+    }
+    try{
+        await useProfileStore().getUserData()
+        console.log(orderData)
+        
+        show('success', 'Succes order');
+        await useOrderStore().postOrder(orderData);
+
+    }catch(error){
+        console.log(error)
+        
+    }
+    }
     
 }
 
@@ -122,6 +148,8 @@ onBeforeMount(async() => {
         cardNumber.value = data.card;
         avatar.value = data.avatar;
         lastOrderCalculate()
+        console.log(lastOrder.value)
+        
     }catch(error){
         console.log(error)
         

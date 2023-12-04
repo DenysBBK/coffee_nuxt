@@ -55,6 +55,46 @@ function actionButton(){
         }
 
     }
+    &_title{
+      color: white;
+      font-family: KARLA;
+      font-size: 30px;
+      font-weight: 700;
+      padding-bottom: 10px;
+      @media  screen and (min-width: 480px) {
+       font-size: 50px;  
+      }
+    }
+    &_shop_name{
+      font-family: KARLA;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      @media  screen and (min-width: 480px) {
+       font-size: 30px;  
+      }
+    }
+    &_y{
+      font-family: KARLA;
+      color: yellow;
+      font-size: 20px;
+      font-weight: 700; 
+      @media  screen and (min-width: 480px) {
+       font-size: 30px;  
+      }
+    }
+    &_w{
+      font-family: KARLA;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      @media  screen and (min-width: 480px) {
+       font-size: 30px;  
+      }
+    }
+    &_total_price{
+      padding-top: 20px;
+    }
     
 
 }
@@ -67,4 +107,8 @@ function actionButton(){
     padding: 5px 15px 5px 15px;
     border-radius: 20px 20px;
     margin-top: 10px;
-}</style>
+}
+
+
+
+</style>

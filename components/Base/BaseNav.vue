@@ -2,42 +2,44 @@
     <v-container class="nav_container">
         <nav class="navigation">
                 <NuxtLink to="/" class="navigation_routes">
-                <!-- <img src="../../public/images/coffee-cup.png"
-                height="50"
-                width="50"> -->
-                    <!-- <v-btn variant="text" class="main_btn">Take & Go</v-btn> -->
                     <button class="header_title">Take & Go</button>
                 </NuxtLink>
             <div class="navigation_routes">
-                <NuxtLink to="/login" v-if="!auth.isAuthenticated">
-                    <!-- <base-button :text="langs.header.login"></base-button> -->
-                    <button class="header_btn">LOGIN</button>
-                </NuxtLink>
-                <NuxtLink to="/registration">
-                    <!-- <base-button :text="langs.header.registration" v-if="!auth.isAuthenticated"></base-button> -->
-                    <button class="header_btn">REGISTRATION</button>
-                </NuxtLink>
-            
-                <NuxtLink to="/order" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button :text="langs.header.order"></base-button>
-                </NuxtLink>
+                <BaseRedirectButton
+                v-if="!auth.isAuthenticated"
+                :text="langs.header.login"
+                url="/login">
+                </BaseRedirectButton>
+
+                <BaseRedirectButton
+                v-if="!auth.isAuthenticated"
+                :text="langs.header.registration"
+                url="/registration">
+                </BaseRedirectButton>
+
+                <BaseRedirectButton
+                v-if="type === 'users' && auth.isAuthenticated"
+                :text="langs.header.order"
+                url="/order">
+                </BaseRedirectButton>
+
+                <BaseRedirectButton
+                v-if="type === 'users' && auth.isAuthenticated"
+                :text="langs.header.profile"
+                url="/user/profile">
+                </BaseRedirectButton>
+
                 <NuxtLink to="/cafe-profile" v-if="type === 'shops' && auth.isAuthenticated">
                     <base-button :text="langs.header.profile"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/orders" v-if="type === 'shops' && auth.isAuthenticated">
                     <base-button :text="langs.header.orders"></base-button>
                 </NuxtLink>
-                <NuxtLink to="/profile" v-if="type === 'users' && auth.isAuthenticated">
-                    <base-button :text="langs.header.profile"></base-button>
-                </NuxtLink>
-                <NuxtLink to="/history" v-if=" auth.isAuthenticated">
-                    <base-button :text="langs.header.history"></base-button>
-                </NuxtLink>
-                <base-button :text="langs.header.logout" 
+                <button
                 v-on:click="auth.logout()" 
                 v-if="auth.isAuthenticated"
-                class="logout_btn">
-            </base-button>
+                class="header_btn">{{ langs.header.logout }}
+            </button>
             <ClientOnly>
                 <BaseLanguage ></BaseLanguage>
             </ClientOnly>

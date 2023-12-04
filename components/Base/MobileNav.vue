@@ -43,15 +43,11 @@
                 <BaseRedirectButton 
                 v-if="type === 'users' && auth.isAuthenticated"
                 :text="langs.header.profile"
-                url="/profile"></BaseRedirectButton>
-                <BaseRedirectButton 
-                v-if="auth.isAuthenticated"
-                :text="langs.header.history"
-                url="/history"></BaseRedirectButton>
-                    <base-button :text="langs.header.logout" 
-                    v-on:click="auth.logout()" 
+                url="/user/profile"></BaseRedirectButton>
+                    <button
+                    @click="auth.logout()" 
                     v-if="auth.isAuthenticated"
-                    class="logout_btn"></base-button>
+                    class="logout_btn">{{ langs.header.logout }}</button>
                
             </div>
         </v-navigation-drawer>
@@ -91,7 +87,7 @@ const type:ComputedRef<string> = computed(():string => {
     
 }
 .mobile_btn{
-   
+   align-items: flex-start;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -114,7 +110,27 @@ const type:ComputedRef<string> = computed(():string => {
     text-decoration: none;
 }
 .logout_btn{
-    max-width: 100px;
+    position: relative;
+    color: white;
+    font-family: KARLA;
+    font-size: 22px;
+    font-weight: 300;
+    overflow: hidden; 
+
+    &::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0; 
+    height: 1px;
+    background-color: white;
+    transition: width 0.5s ease;  
+    }
+
+    &:hover::before{
+        width: 100%;
+    } 
 }
 .mdi-menu::before{
     color: white;
