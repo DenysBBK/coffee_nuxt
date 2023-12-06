@@ -10,7 +10,7 @@
                 <h3 class="order_filters__title">Filters</h3>
                 <div class="order_filters__drop">
                 <v-autocomplete
-                    :label="langs.order.chooseSity"
+                    :label="langs.order.chooseCity"
                     variant="outlined"
                     :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
                     v-model="choosenCity"
@@ -19,7 +19,7 @@
                 </v-autocomplete>
                 </div>
                 <!-- v-if="choosenCity !== null && shopsAddresses.length !== 0" -->
-                <div class="order_filters__drop">
+                <div class="order_filters__drop" v-if="choosenCity !== null && shopsAddresses.length !== 0">
                     <v-autocomplete
                     :label="langs.order.chooseAddress"
                     variant="outlined"
@@ -30,7 +30,12 @@
                 </div>
             </div>
             <div class="order_cards">
-
+                <div class="card" v-for="item in allShops" :key="item.id">
+                    <img :src="userAvatar(item.avatar)" class="card_avatar">
+                    <h3 class="card_name">{{ item.name }}</h3>
+                    <span class="card_rate">*****</span>
+                    <base-button text="Order" @click="go(item.id)"></base-button>
+                </div>
             </div>
         </div>
         <!-- <v-container class="order_container">
@@ -59,8 +64,8 @@ import { languageState } from 'types/languageTypes';
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 const router = useRouter()
-function go(){
-    router.push('order/12222245')
+function go(id:number){
+    router.push(`order/${id}`)
     
 }
 
@@ -73,7 +78,9 @@ const shops:ComputedRef<shopsArr[]> = computed(() => {
 function triggerAlert(data:string):void{
     show('success', data);
 };
-
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
+}
 
 const shopsAddresses:Ref<string[]> = ref([])
 const filteredShops:Ref<shopsArr[]> = ref([])
@@ -131,6 +138,8 @@ useHead({
 })
 </script>
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
+
 .order{
     &_page{
         padding-left: 10px;
@@ -147,9 +156,7 @@ useHead({
         border-radius: 10px;
         border: 1px solid white;
         flex-direction: column;
-        @media  screen and (min-width: 768px) {
-        flex-direction: row;
-        }
+        
     }
     &_filters{
         display: flex;
@@ -175,7 +182,44 @@ useHead({
         }
     }
     &_cards{
+        display: flex;
+        flex-wrap: wrap;
+       align-items: center;
+      justify-content: center;
+       gap: 20px;
+       
+        
 
+    }
+}
+.card{
+    // flex: 0 1 33.333%;
+    align-self: flex-start;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 15px;
+    &_avatar{
+        background-color: white;
+        max-width: 200px;
+        max-height: 200px;
+        align-items: center;
+    }
+    &_name{
+        font-family: KARLA;
+      color: yellow;
+      font-size: 30px;
+      font-weight: 700;
+    }
+    &_rate{
+        font-family: KARLA;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
     }
 }
 .v-input__control{

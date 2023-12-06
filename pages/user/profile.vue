@@ -262,7 +262,7 @@ useHead({
 }
 .content{
     &__title{
-    font-family: KARLA;
+      font-family: KARLA;
       color: white;
       font-size: 30px;
       font-weight: 700;
