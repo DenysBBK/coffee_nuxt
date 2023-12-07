@@ -57,7 +57,8 @@ function profileIsUpdated(data:any):void{
 
 onMounted(async () =>{
     try{
-        await useProfileStore().getCafeData();
+        const id = localStorage.getItem('uid')
+        await useProfileStore().getCafeData(id);
 
     }catch(error){
         console.log(error)
