@@ -19,7 +19,7 @@
                 </v-autocomplete>
                 </div>
                 <!-- v-if="choosenCity !== null && shopsAddresses.length !== 0" -->
-                <div class="order_filters__drop" v-if="choosenCity !== null && shopsAddresses.length !== 0">
+                <div class="order_filters__drop" v-show="choosenCity !== null && shopsAddresses.length !== 0">
                     <v-autocomplete
                     :label="langs.order.chooseAddress"
                     variant="outlined"

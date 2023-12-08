@@ -122,7 +122,7 @@
 .mdi-chevron-right{
   color: white;
 }
-.v-icon--size-default{
-  font-size: 50px;
-}
+// .v-icon--size-default{
+//   font-size: 50px;
+// }
 </style>
