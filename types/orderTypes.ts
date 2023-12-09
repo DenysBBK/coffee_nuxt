@@ -70,3 +70,13 @@ export interface updatedOrder{
     status:number,
     type:string
 }
+export interface addPosition{
+    name:string,
+    price:number,
+    amount:number
+}
+export interface userReview  {
+    userAvatar:number,
+    review:string,
+    rate:number
+}

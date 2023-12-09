@@ -10,7 +10,6 @@
                     <span class="credentials__city">{{ cafeData.address }}</span>
                 </div>
                 <v-rating readonly :length="5" :model-value="4" :size="32" active-color="yellow"/>
-                <!-- <span class="credentials__rate">*****</span> -->
             </div>
             <div class="cafe_data">
                 <div class="cafe_data__reviews">
@@ -27,28 +26,108 @@
                         </li>
                     </ul>
                 </div>
-                <div class="cafe_data__order"></div>
+                <div class="cafe_data__order">
+                    <div class="order_data">
+                       <h3 class="order_data__title">Order you coffe</h3> 
+                       <div class="order_data__items">
+                            <table class="order_data__table">
+                                <thead>
+                                    <tr>
+                                        <th class="position__name">Position</th>
+                                        <th class="position__name price">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in allPositions" :key="index" class="order_data__item" >
+                                        <td class="position__title">{{ item.name }}</td>
+                                        <td class="position__price">{{ item.price }}</td>
+                                        <td class="position__btns">
+                                            <button class="position__action" @click="decrement(item)">-</button>
+                                            <span class="position__amount" :class="{'positive': item.amount >= 1 }">{{ item.amount }}</span>
+                                            <button class="position__action" @click="increment(item)">+</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                       <div class="order_data__total">
+                        <span class="order_data__total__text">Total Price:</span>
+                        <span class="order_data__total__price">{{ totalOrderPrice }} UAH</span>
+                       </div>
+                       <div>
+                           <base-dialog @action="confirmOrder" v-if="totalAddedPositions.length">
+                                <template #openButton>
+                                        Order
+                                </template>
+                                <template #text>
+                                    <h3 class="dialog_title">Confirm order</h3>
+                                    <p class="dialog_w">Positions:</p>
+                                    <ul>
+                                        <li v-for="(item, index) in totalAddedPositions" :key="index">
+                                        <span class="dialog_y">- {{ item.name }}</span>
+                                        <span> ''</span>
+                                        <span  class="dialog_w">{{ item.price }} UAH</span>
+                                        </li>
+                                    </ul>
+                                    <div class="dialog_total_price">
+                                        <p class="dialog_w">Total price: <span class="dialog_y">{{ totalOrderPrice }}</span> UAH</p>
+                                    </div>
+                                </template>
+                                <template #buttonAction >
+                                    Confirm
+                                </template>
+                           </base-dialog>
+                       </div>
+                    </div>
+                </div>
             </div>
-            Hello
         </div>
     </div>
 </template>
 <script setup lang="ts">
+import {addPosition, userReview} from '../../types/orderTypes';
+
 const cafeData = computed(() => useProfileStore().cafeInfo);
-const router = useRouter()
-function returnToAllShops(){
-    router.push('/order')
-    
-    
-};
+const router = useRouter();
+const totalOrderPrice:Ref<number> = ref(0)
+
+
+
+const allPositions:Ref<addPosition[]> = ref([]);
+
 function userAvatar(item:number):string{
     return `/images/${item}.png`
+};
+
+
+const totalAddedPositions:Ref<addPosition[]> = ref([]);
+
+function confirmOrder(){
+    totalOrderPrice.value = 0
+    totalAddedPositions.value.length = 0;
+    allPositions.value.forEach(item => item.amount = 0)
+    console.log('I confirm odrer')
+    
 }
-interface userReview  {
-    userAvatar:number,
-    review:string,
-    rate:number
+
+function increment(item:addPosition):void{
+    totalAddedPositions.value.push(item)
+    item.amount = item.amount + 1;
+    totalOrderPrice.value = totalOrderPrice.value + item.price
+    
 }
+
+function decrement(item:addPosition):void{
+    if(item.amount == 0){
+        return
+    }
+    const itemToRemove = totalAddedPositions.value.indexOf(item)
+    totalAddedPositions.value.splice(itemToRemove, 1)
+    item.amount = item.amount - 1;
+    totalOrderPrice.value = totalOrderPrice.value - item.price;
+}
+
+
 const reviews:Ref<userReview[]> = ref([
     {
         userAvatar:2,
@@ -66,11 +145,22 @@ const reviews:Ref<userReview[]> = ref([
         rate:5
     }
 ])
+
 onBeforeMount(async () => {
     try{
         const route = useRoute()
         await useProfileStore().getCafeData(route.params.coffeshop);
-        console.log(cafeData.value)
+        cafeData.value.positions.forEach(item => {
+            let pos = {
+                name:item.name,
+                price:Number(item.price),
+                amount:0
+            }
+            allPositions.value.push(pos)
+            
+        })
+        console.log(allPositions.value)
+        
         
 
     }catch(error){
@@ -136,16 +226,27 @@ onBeforeMount(async () => {
     }
     &_data{
         display: flex;
+        flex-direction: column;
+        
+    
+        @media  screen and (min-width: 768px){
+            flex-direction: row;
+        }
 
         &__reviews{
-            max-width: 30%;
+            max-width: 100%;
             border-right: 1px solid white;
+           
+            @media  screen and (min-width: 768px){
+            width: 30%;
+        
+            }
         
         
 
         }
         &__order{
-
+            padding-bottom: 30px;
 
         }
     }
@@ -216,5 +317,125 @@ onBeforeMount(async () => {
         border-bottom: 1px solid white;
         padding-bottom: 30px;
     }
+}
+.order_data{
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    padding-right: 30px;
+
+
+    &__title{
+        font-size:40px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: yellow;
+        text-align: center;
+    }
+    &__item{
+       padding-top: 20px;
+
+    }
+    &__table{
+        padding-top: 30px;
+    }
+    &__btn{
+        padding-left: 20px;
+    }
+    &__total{
+        padding-top: 20px;
+        display: flex;
+        gap: 20px;
+        &__text{
+            font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: yellow;
+        text-align: start;
+        padding-bottom: 20px;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }
+
+        }
+        &__price{
+            font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: white;
+        text-align: start;
+        padding-bottom: 20px;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }  
+        }
+    }
+
+}
+.position{
+    &__name{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: white;
+        text-align: start;
+        padding-bottom: 20px;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }
+    }
+    &__price{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: yellow;
+        padding-left: 50px;
+        text-align: start;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }
+
+    }
+    &__title{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: white;
+        text-align: start;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }
+    }
+    &__action{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: white;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }
+
+    }
+    &__amount{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: white;
+        padding: 0 15px 0 15px;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        }
+
+    }
+    &__btns{
+        padding-left: 50px;
+    }
+}
+.positive{
+    color: rgb(60, 198, 60);
+
+}
+.price{
+    padding-left: 50px;
 }
 </style>
