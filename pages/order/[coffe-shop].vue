@@ -1,5 +1,10 @@
 <template>
     <div class="cafe_page">
+        <base-alert
+           v-if="showAlert"
+            :alertTitle="alertText"
+            :aletrType="typeOfAlert">
+        </base-alert>
         <BaseRedirectButton class="cafe_page__return" text="<-- To all coffee-shops" url="/order"></BaseRedirectButton>
         <div class="cafe_block">
             <div class="cafe_info">
@@ -85,12 +90,12 @@
     </div>
 </template>
 <script setup lang="ts">
-import {addPosition, userReview} from '../../types/orderTypes';
+import {addPosition, userReview, userOrderData} from '../../types/orderTypes';
 
 const cafeData = computed(() => useProfileStore().cafeInfo);
-const router = useRouter();
+const route = useRoute();
 const totalOrderPrice:Ref<number> = ref(0)
-
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 
 const allPositions:Ref<addPosition[]> = ref([]);
@@ -102,11 +107,26 @@ function userAvatar(item:number):string{
 
 const totalAddedPositions:Ref<addPosition[]> = ref([]);
 
-function confirmOrder(){
+async function confirmOrder(){
+    const orderData: userOrderData = {
+        uid:localStorage.getItem('uid'),
+        name:useProfileStore().user.name,
+        positions:totalAddedPositions.value,
+        id:cafeData.value.id,
+        shopName:cafeData.value.name,
+        cafeAvatar:cafeData.value.avatar,
+        userAvatar:useProfileStore().user.avatar
+    }
+    try{
+        await useOrderStore().postOrder(orderData)
+    }catch(error){
+        console.log(error)
+    }    
     totalOrderPrice.value = 0
     totalAddedPositions.value.length = 0;
     allPositions.value.forEach(item => item.amount = 0)
-    console.log('I confirm odrer')
+    console.log('I confirm odrer');
+    show('success', 'Succes order');
     
 }
 
@@ -159,7 +179,7 @@ onBeforeMount(async () => {
             allPositions.value.push(pos)
             
         })
-        console.log(allPositions.value)
+        
         
         
 
@@ -169,6 +189,9 @@ onBeforeMount(async () => {
     }
    
     
+})
+definePageMeta({
+    middleware:'authenticated'
 })
 </script>
 
@@ -227,7 +250,7 @@ onBeforeMount(async () => {
     &_data{
         display: flex;
         flex-direction: column;
-        
+       
     
         @media  screen and (min-width: 768px){
             flex-direction: row;
@@ -238,8 +261,10 @@ onBeforeMount(async () => {
             border-right: 1px solid white;
            
             @media  screen and (min-width: 768px){
-            width: 30%;
-        
+            width: 40%;
+            }
+            @media  screen and (min-width: 1024px) {
+                width: 30%;
             }
         
         
@@ -303,10 +328,13 @@ onBeforeMount(async () => {
         margin-left: 15px;
     }
     &__text{
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 400;
         font-family: KARLA;
         color: white;
+        @media  screen and (min-width: 480px) {
+            font-size: 20px;
+        }
     }
     &__title{
         font-size:40px;
@@ -323,6 +351,10 @@ onBeforeMount(async () => {
     flex-direction: column;
     padding-left: 30px;
     padding-right: 30px;
+    align-items: center;
+    @media  screen and (min-width: 768px){
+        align-items: flex-start;
+    }
 
 
     &__title{
@@ -389,10 +421,13 @@ onBeforeMount(async () => {
         font-weight: 700;
         font-family: KARLA;
         color: yellow;
-        padding-left: 50px;
+        padding-left: 20px;
         text-align: start;
         @media  screen and (min-width: 768px){
             font-size: 30px; 
+        }
+        @media  screen and (min-width: 480px) {
+            padding-left: 50px;
         }
 
     }
@@ -421,14 +456,18 @@ onBeforeMount(async () => {
         font-weight: 700;
         font-family: KARLA;
         color: white;
-        padding: 0 15px 0 15px;
+        padding: 0 5px 0 5px;
         @media  screen and (min-width: 768px){
-            font-size: 30px; 
+            font-size: 30px;
+            padding: 0 15px 0 15px; 
         }
 
     }
     &__btns{
-        padding-left: 50px;
+        padding-left: 10px;
+        @media  screen and (min-width: 480px) {
+            padding-left: 50px;
+        }
     }
 }
 .positive{
@@ -436,6 +475,10 @@ onBeforeMount(async () => {
 
 }
 .price{
-    padding-left: 50px;
+    padding-left: 20px;
+    @media  screen and (min-width: 480px) {
+            padding-left: 50px;
+        }
+    
 }
 </style>

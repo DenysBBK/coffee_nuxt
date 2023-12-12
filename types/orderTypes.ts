@@ -57,7 +57,7 @@ export interface cafeOrderItem extends orderItem{
 
 export interface userOrderData {
     name:string,
-    id:number,
+    id:number | null,
     shopName:string,
     uid:string | null,
     positions:Positions[],

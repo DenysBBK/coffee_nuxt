@@ -50,7 +50,7 @@
                 <div class="profile_update">
                 <v-btn variant="outlined" v-on:click="edited"
                 :loading="load" type="submit">{{ langs.userProfile.save }}</v-btn>
-            </div>
+                </div>
         </v-form>
         </v-container>
     </div>

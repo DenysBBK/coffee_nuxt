@@ -1,6 +1,7 @@
 export interface Positions{
     name:string,
-    price:string
+    price:number,
+    amount:number
 }
 
 

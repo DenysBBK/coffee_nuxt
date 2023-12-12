@@ -49,6 +49,10 @@ const route = computed(() =>{
         font-family: KARLA;
         border-left: 1px solid white;
         border-bottom: 1px solid white;
+        &:hover{
+            color: black;
+            background-color: white;
+        };
         @media  screen and (min-width: 768px){
             font-size:30px;
             width: 100%;
