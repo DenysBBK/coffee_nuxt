@@ -87,7 +87,7 @@ import { ordersArr, userOrderData } from 'types/orderTypes';
 
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang);
-    const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 const name:Ref<string> = ref('Name');
 const phone:Ref<string> = ref('0999999999');
