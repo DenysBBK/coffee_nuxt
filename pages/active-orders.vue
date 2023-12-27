@@ -81,13 +81,10 @@ async function finishOrder(index:number):Promise<void>{
 onBeforeMount(async() => {
     try{
     await useOrderStore().getOrders('user');
-    
     console.log(langs.value.activeOrders)
     
-    
     }catch(error){
-        console.log(error)
-        
+        console.log(error)   
     }
 })
 definePageMeta({
