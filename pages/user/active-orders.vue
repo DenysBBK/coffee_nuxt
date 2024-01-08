@@ -21,9 +21,36 @@
                     <p class="item__btn-status">{{ status(item.status) }}</p>
                     <!-- <v-btn @click="finishOrder(index)" class="item__btn-action" v-if="item.status === 2" >{{  }}</v-btn> -->
                     <!-- <base-button @click="finishOrder(index)" :text="langs.activeOrders.finish" ></base-button> -->
-                    <base-dialog @action="finishOrder(index)">
+                    <base-dialog @action="finishOrder(index)"
+                    @close-dialog="cleanInputs">
                         <template #openButton>
                             {{ langs.activeOrders.finish }}
+                        </template>
+                        <template #text>
+                            <h3 class="dialog_title">Finish the order</h3>
+                            <p class="dialog_shop_name">{{ item.fromCafe}}</p>
+                            <img class="item__name-img" :src="userAvatar(Number(item.cafeAvatar))">
+                            <p class="dialog_w">Positions:</p>
+                            <ul>
+                                <li v-for="(it, ind) in item.positions" :key="ind">
+                                <span class="dialog_y">- {{ it.name }}</span>
+                                <span> ''</span>
+                                <span  class="dialog_w">{{ it.price }} UAH</span>
+                                </li> 
+                            </ul>
+                            <div class="dialog_review">
+                                <p class="dialog_w">Leave review</p>
+                                <textarea class="dialog_textarea" v-model="ReviewText"></textarea>
+                                <v-rating
+                                v-model="ReviewRating"
+                                color="white"
+                                active-color="yellow"
+                                hover></v-rating>
+                            </div>
+
+                        </template>
+                        <template #buttonAction >
+                            finish
                         </template>
                     </base-dialog>
                 </div>
@@ -44,7 +71,12 @@ const userOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3).reverse()
 });
 
-
+const ReviewRating:Ref<number> = ref(0);
+const ReviewText:Ref<string> = ref('');
+function cleanInputs(){
+    ReviewRating.value = 0;
+    ReviewText.value = ''
+}
 function status(item:number):string{
             if(item === 0)return langs.value.activeOrders.pending;
             if(item === 1)return langs.value.activeOrders.preparing;
@@ -60,6 +92,10 @@ function userAvatar(item:number):string{
 }
 
 async function finishOrder(index:number):Promise<void>{
+    console.log(ReviewText.value);
+    console.log(ReviewRating.value)
+    
+    
     userOrders.value[index].status == 3;
             let findOrder = {
                 position:userOrders.value[index].positionId,

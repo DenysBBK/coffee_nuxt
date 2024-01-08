@@ -12,7 +12,7 @@
             <v-btn class="button" @click="actionButton">
                 <slot name="buttonAction"></slot>
             </v-btn>
-          <v-btn @click="dialog = false" class="dialog_btns__close">
+          <v-btn @click="closeDialog" class="dialog_btns__close">
             Close
           </v-btn>
           </div>
@@ -23,8 +23,11 @@
 <script setup lang="ts">
 const dialog:Ref<boolean> = ref(false);
 
-const emit = defineEmits(['action'])
-
+const emit = defineEmits(['action','close-dialog'])
+function closeDialog(){
+  dialog.value = false;
+  emit('close-dialog')
+}
 function actionButton(){
     dialog.value = false
     emit('action')
@@ -51,7 +54,7 @@ function actionButton(){
         justify-content: space-between;
         &__close{
            align-self: flex-end;
-           margin-bottom: -30px;
+           
         }
 
     }
@@ -94,6 +97,23 @@ function actionButton(){
     }
     &_total_price{
       padding-top: 20px;
+    }
+    &_review{
+      padding-top: 15px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+    &_textarea{
+      color: white;
+      resize: none;
+      border: 1px solid yellow;
+      border-radius: 15px;
+      padding: 15px;
+      overflow: hidden;
+      height: 150px;
+      width: 100%;
     }
     
 
