@@ -60,7 +60,10 @@ export interface userOrderData {
     id:number | null,
     shopName:string,
     uid:string | null,
-    positions:Positions[],
+    positions:[{
+        name:string,
+        price:string
+    }],
     userAvatar:number,
     cafeAvatar:number
 }

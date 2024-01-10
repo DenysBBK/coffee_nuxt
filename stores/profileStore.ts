@@ -96,9 +96,9 @@ export const useProfileStore = defineStore('profile', {
             }
             
         },
-        async getCafeData(payload:string):Promise<void>{
-            let uid = localStorage.getItem('uid');
-            const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops/${payload}.json`);
+        async getCafeData():Promise<void>{
+            let cid = localStorage.getItem('uid');
+            const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops/${cid}.json`);
             const data:getCafeData = await responce.json();
 
             this.$state.cafe.address = data.address
