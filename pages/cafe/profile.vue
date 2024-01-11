@@ -163,6 +163,7 @@ useHead({
         flex-direction: column;
         padding-left: 30px;
         border-bottom: 1px solid white;
+        padding-bottom: 20px;
         @media  screen and (min-width: 480px) {
        flex-direction: row;
     }

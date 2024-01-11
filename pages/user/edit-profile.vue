@@ -155,11 +155,6 @@ onBeforeMount(async() => {
     }
 }
 
-
-
-
-
-
 .avatar{
     &_title{
         font-size: 20px;
@@ -207,6 +202,7 @@ onBeforeMount(async() => {
     }
     &_input{
         max-width: 100%;
+        border: 1px solid white;
         @media  screen and (min-width: 480px) {
             max-width: 80%;
         }
@@ -225,6 +221,7 @@ onBeforeMount(async() => {
         padding-bottom: 40px;
     }
 }
+
 .profile_img{
     max-width: 70px;
         max-height: 70px;

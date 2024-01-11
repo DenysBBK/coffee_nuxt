@@ -1,7 +1,11 @@
-export interface Positions{
+export interface OrderPositions{
     name:string,
     price:number,
-    amount:number
+    amount?:number,
+}
+export interface Positions{
+    name:string,
+    price:string,
 }
 
 
