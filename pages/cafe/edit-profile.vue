@@ -30,13 +30,13 @@
                         v-model="cafeName"
                         :rules="nameValidator"
                     ></v-text-field>
-                    <v-text-field
+                    <v-combobox
                         class="edit_input"
+                        :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"    
                         :label="langs.cafeProfile.city"
-                        type="text"
                         v-model="cafeCity"
                         :rules="cityValidator"
-                    ></v-text-field>
+                    ></v-combobox>
                     <v-text-field
                         class="edit_input"
                         :label="langs.cafeProfile.address"
@@ -52,7 +52,44 @@
                 </div>
                 <div class="positions">
                     <h3 class="positions__title">{{ langs.cafeProfile.updatePositions }}</h3>
-
+                    <table class="positions__table">
+                        <thead class="positions__table-head">
+                            <tr>
+                                <th class="positions__table-title">
+                                    {{ langs.cafeProfile.item }}
+                                </th>
+                                <th class="positions__table-price">
+                                    {{ langs.cafeProfile.price }}
+                                </th>
+                            
+                            </tr>
+                        </thead>
+                        <tbody class="positions__table-body">
+                            <tr v-for="(item, index) in cafePositions" :key="index" class="positions__table-item">
+                                <td :id="'name'+index" class="positions__table-text">{{ item.name }}</td>
+                                <td :id="'price'+index" class="positions__table-text-price">{{ item.price }} UAH</td>
+                                <td><v-btn variant="tonal" size="x-small" v-on:click="deletePosition(index)" class="positions__table-btn">{{ langs.cafeProfile.delete }}</v-btn></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="add">
+                    <v-text-field
+                    class="edit_input"
+                        :label="langs.cafeProfile.posItem"
+                        type="text"
+                        v-model="newPosition.name">
+                    </v-text-field>
+                    <v-text-field
+                    class="edit_input"
+                        :label="langs.cafeProfile.posPrice"
+                        type="text"
+                        v-model="newPosition.price">
+                    </v-text-field>
+                    <div class="add__btns">
+                        <v-btn icon="mdi-checkbox-marked-circle" class="approve_btn" v-on:click="pushPosition"></v-btn>
+                        <v-btn icon="mdi-cancel" class="disapprove_btn" v-on:click="addNewPosition"></v-btn>
+                    </div>
                 </div>
             </div>
         </v-form>
@@ -77,6 +114,11 @@ let cafePositions:Positions[] = reactive([{
     name:'',
     price:''
 }]);
+const isNewPositionInputActive:Ref<boolean> = ref(false);
+const newPosition:Positions = reactive({
+    name:'',
+    price:''
+})
 
 //Validations
 const isValidData:Ref<boolean> = ref(true);
@@ -114,6 +156,22 @@ function changeAvatar(item:number):void{
 }
 function allImages(item:number):string{
     return `/images/${item}.png`
+};
+function deletePosition(index:number):void{
+    cafePositions.splice(index, 1)   
+};
+function pushPosition():void{
+    cafePositions.push({
+        name:newPosition.name,
+        price:newPosition.price
+    })
+    addNewPosition()
+    newPosition.price = '';
+    newPosition.name = '';
+}
+
+function addNewPosition():void{
+    isNewPositionInputActive.value = !isNewPositionInputActive.value
 }
 
 onBeforeMount(async() => {
@@ -226,6 +284,116 @@ useHead({
     align-items: center;
     background-color: white;
 }
+.positions{
+
+    &__title{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: white;
+        padding-bottom: 20px;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+        } 
+    }
+
+    &__table{
+
+        &-head{
+
+        }
+        &-title{
+            font-size: 10px;
+            font-weight: 700;
+            font-family: KARLA;
+            color: yellow;
+            text-align: start;
+            padding-bottom: 20px;
+            @media  screen and (min-width: 768px){
+                font-size: 20px; 
+            } 
+
+        }
+        &-price{
+            font-size: 10px;
+            font-weight: 700;
+            font-family: KARLA;
+            color: yellow;
+            text-align: start;
+            padding-left: 20px;
+            @media  screen and (min-width: 768px){
+                font-size: 20px; 
+            } 
+
+        }
+        &-body{
+
+        }
+        &-item{
+
+
+        }
+        &-text{
+            font-size: 10px;
+            font-weight: 700;
+            font-family: KARLA;
+            color: white;
+            padding-bottom: 20px;
+          
+            @media  screen and (min-width: 768px){
+                font-size: 20px; 
+            } 
+
+        }
+        &-text-price{
+            font-size: 10px;
+            font-weight: 700;
+            font-family: KARLA;
+            color: white;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            @media  screen and (min-width: 768px){
+                font-size: 20px; 
+            } 
+        }
+        &-btn{
+            color: yellow;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+    }
+
+}
+.add{
+    padding-top: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+    @media  screen and (min-width: 480px) {
+       flex-direction: row; 
+    }
+    &__btns{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: -10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .v-input__control{
     background-color: black;
     border: 0.1px white solid;
