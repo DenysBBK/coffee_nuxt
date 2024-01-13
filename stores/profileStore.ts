@@ -15,9 +15,9 @@ export const useProfileStore = defineStore('profile', {
             orders:[]
         },
         cafe:{
-            address:'',
+            address:'No address',
             name:'',
-            phone:'',
+            phone:'No phone',
             id:null,
             email:'',
             positions:[{
@@ -25,7 +25,12 @@ export const useProfileStore = defineStore('profile', {
                 price:''
             }],
             city:'',
-            avatar:7
+            avatar:7,
+            reviews:[{
+                userAvatar:0,
+                rate:1,
+                review:''
+            }]
         },
         shops:[]
     }),
@@ -109,6 +114,18 @@ export const useProfileStore = defineStore('profile', {
             this.$state.cafe.positions = data.positions
             this.$state.cafe.city = data.city
             this.$state.cafe.avatar = data.avatar
+          
+            
+            const allReviews = [];
+            for(let one in data.reviews){
+                const item = {
+                    userAvatar:data.reviews[one].userAvatar,
+                    rate:data.reviews[one].rate,
+                    review:data.reviews[one].review
+                };
+            allReviews.push(item)
+            };
+            this.$state.cafe.reviews = allReviews
 
             
             

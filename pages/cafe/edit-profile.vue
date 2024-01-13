@@ -52,7 +52,8 @@
                 </div>
                 <div class="positions">
                     <h3 class="positions__title">{{ langs.cafeProfile.updatePositions }}</h3>
-                    <table class="positions__table">
+                    <h3 class="positions__title" v-if="!cafePositions">You have no positions. You can add them</h3>
+                    <table class="positions__table" v-if="cafePositions.length >= 1">
                         <thead class="positions__table-head">
                             <tr>
                                 <th class="positions__table-title">
@@ -117,10 +118,7 @@ const cafeCity:Ref<string> = ref(' ');
 const cafeAddress:Ref<string> = ref(' ');
 const cafePhone:Ref<string> = ref(' ');
 const cafeAvatar:Ref<number> = ref(7); 
-let cafePositions:Positions[] = reactive([{
-    name:'',
-    price:''
-}]);
+const cafePositions:Positions[] = reactive([]);
 const isNewPositionInputActive:Ref<boolean> = ref(false);
 const newPosition:Positions = reactive({
     name:'',
@@ -168,6 +166,11 @@ function deletePosition(index:number):void{
     cafePositions.splice(index, 1)   
 };
 function pushPosition():void{
+    console.log(newPosition.name)
+    console.log(newPosition.price)
+    console.log(cafePositions)
+    
+    
     cafePositions.push({
         name:newPosition.name,
         price:newPosition.price
@@ -208,9 +211,13 @@ onBeforeMount(async() => {
         cafeName.value = cafeData.name;
         cafeAddress.value = cafeData.address;
         cafeCity.value = cafeData.city;
-        cafePositions = cafeData.positions
-        cafePhone.value = cafeData.phone
-        cafeAvatar.value = cafeData.avatar    
+        cafePhone.value = cafeData.phone;
+        cafeAvatar.value = cafeData.avatar;
+        cafeData.positions.forEach(one => {
+            cafePositions.push(one)
+        })    
+       
+        
     }catch(error){
         console.log(error)
         

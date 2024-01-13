@@ -28,7 +28,8 @@ export interface profileState{
         email:string,
         positions:Positions[],
         city:string,
-        avatar:number
+        avatar:number,
+        reviews:reviewsArr[]
     },
     shops:shopsArr[]
 }
@@ -42,6 +43,11 @@ export interface getUserData{
     avatar:number,
     orders:any
 }
+export interface reviewsArr{
+    userAvatar:number,
+    review:string,
+    rate:number
+}
 export interface getCafeData{
     address:string,
     name:string,
@@ -50,7 +56,8 @@ export interface getCafeData{
     email:string,
     positions:Positions[],
     city:string,
-    avatar:number
+    avatar:number,
+    reviews:reviewsArr[],
 }
 export interface postUserData{
     phone:string | undefined,

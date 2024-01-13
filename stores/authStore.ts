@@ -110,7 +110,8 @@ export const useAuthStore = defineStore('auth', {
                     name:payload.name,
                     id:theId,
                     avatar:avatarType,
-                    city:payload.city
+                    city:payload.city,
+                    reviews:[]
                     }
                 }
                 console.log(regData)

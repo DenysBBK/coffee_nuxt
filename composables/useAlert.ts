@@ -1,4 +1,4 @@
-// import {ref, watch} from 'vue'
+
 
 export default function useAlert(){
     type alertType = "error" | "success" | "warning" | "info" | undefined
@@ -20,7 +20,7 @@ export default function useAlert(){
         if (newValue) {
           setTimeout(() => {
             close();
-          }, 4000);
+          }, 3000);
         }
       });
 

@@ -133,7 +133,7 @@ export const useOrderStore = defineStore('orders', {
                 if(data2[one].positionId == payload.position){
                     const updatedData2 = {
                         ...data2[one],
-                        status:payload.status
+                        status:payload.status,
                     }
                     const resp2 = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${back}/${payload.placeId}/orders/${one}.json`,{
                         method:'PUT',
@@ -145,6 +145,14 @@ export const useOrderStore = defineStore('orders', {
                     }
                 }
             }
+            const oldCafeData = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${back}/${payload.placeId}/reviews/.json`,{
+                method:'POST',
+                body:JSON.stringify(payload.orderReview)
+            });
+            const oldResponce = await oldCafeData.json();
+            console.log(oldResponce)
+                        
+            
         }
 
     },

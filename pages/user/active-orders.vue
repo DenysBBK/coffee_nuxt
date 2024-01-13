@@ -19,7 +19,7 @@
                 </div>
                 <div class="item__btn">
                     <p class="item__btn-status">{{ status(item.status) }}</p>
-                    <base-dialog @action="finishOrder(index)"
+                    <base-dialog @action="finishOrder(index)" v-if="item.status === 2"
                     @close-dialog="cleanInputs">
                         <template #openButton>
                             {{ langs.activeOrders.finish }}
@@ -38,9 +38,9 @@
                             </ul>
                             <div class="dialog_review">
                                 <p class="dialog_w">Leave review</p>
-                                <textarea class="dialog_textarea" v-model="ReviewText"></textarea>
+                                <textarea class="dialog_textarea" v-model="userReview.review"></textarea>
                                 <v-rating
-                                v-model="ReviewRating"
+                                v-model="userReview.rate"
                                 color="white"
                                 active-color="yellow"
                                 hover></v-rating>
@@ -58,6 +58,7 @@
 </template>
 <script setup lang="ts">
 import { ordersArr } from 'types/orderTypes';
+import { reviewsArr } from 'types/profileTypes';
 
 import{languageState} from 'types/languageTypes'
 
@@ -69,11 +70,15 @@ const userOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3).reverse()
 });
 
-const ReviewRating:Ref<number> = ref(0);
-const ReviewText:Ref<string> = ref('');
+const userReview:Ref<reviewsArr> = ref({
+    userAvatar:useProfileStore().user.avatar,
+    rate:0,
+    review:''
+})
+
 function cleanInputs(){
-    ReviewRating.value = 0;
-    ReviewText.value = ''
+    userReview.value.rate = 0;
+    userReview.value.review = ''
 }
 function status(item:number):string{
             if(item === 0)return langs.value.activeOrders.pending;
@@ -90,8 +95,8 @@ function userAvatar(item:number):string{
 }
 
 async function finishOrder(index:number):Promise<void>{
-    console.log(ReviewText.value);
-    console.log(ReviewRating.value)
+   console.log(userReview.value)
+   
     
     
     userOrders.value[index].status == 3;
@@ -99,7 +104,8 @@ async function finishOrder(index:number):Promise<void>{
                 position:userOrders.value[index].positionId,
                 placeId:userOrders.value[index].cafeId,
                 status:3,
-                type:'users'
+                type:'users',
+                orderReview:userReview.value
             }
     try{
         await useOrderStore().updateOrder(findOrder);
@@ -180,9 +186,6 @@ useHead({
 
     &__positions{
 
-        &-list{
-
-        }
         &-title{
             color: yellow;
             font-family: KARLA;

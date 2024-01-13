@@ -29,18 +29,6 @@
                 :text="langs.header.order"
                 url="/order"></BaseRedirectButton>
                 <BaseRedirectButton 
-                v-if="type === 'shops' && auth.isAuthenticated"
-                :text="langs.header.profile"
-                url="/cafe-profile"></BaseRedirectButton>
-                <BaseRedirectButton 
-                v-if="type === 'shops' && auth.isAuthenticated"
-                :text="langs.header.orders"
-                url="/orders"></BaseRedirectButton>
-                <BaseRedirectButton 
-                v-if="type === 'users' && auth.isAuthenticated"
-                :text="langs.header.activeOrders"
-                url="/active-orders"></BaseRedirectButton>
-                <BaseRedirectButton 
                 v-if="type === 'users' && auth.isAuthenticated"
                 :text="langs.header.profile"
                 url="/user/profile"></BaseRedirectButton>

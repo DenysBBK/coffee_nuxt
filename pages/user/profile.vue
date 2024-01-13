@@ -84,10 +84,10 @@
 
 import { languageState } from 'types/languageTypes';
 import { ordersArr, userOrderData } from 'types/orderTypes';
+const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang);
-const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
 const name:Ref<string> = ref('Name');
 const phone:Ref<string> = ref('0999999999');
@@ -127,8 +127,8 @@ async function repeatLastOrder():Promise<void>{
         await useProfileStore().getUserData()
         console.log(orderData)
         
-        show('success', 'Succes order');
         await useOrderStore().postOrder(orderData);
+        show('success', 'Succes order');
 
     }catch(error){
         console.log(error)

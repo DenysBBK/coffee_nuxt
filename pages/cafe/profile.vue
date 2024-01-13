@@ -1,10 +1,6 @@
 <template>
     <div class="profile_content">
-        <base-alert
-            v-if="showAlert"
-            :alertTitle="alertText"
-            :aletrType="typeOfAlert">
-        </base-alert>
+       
         <div class="profile_data">
             <div>
                 <img :src="userAvatar(cafeData.avatar)" class="profile_data__img">
@@ -18,28 +14,30 @@
                 </div>
                 <div class="profile_info__item">
                     <span class="info_title">{{ langs.cafeProfile.address }}:</span>
-                    <span class="info_data">{{ cafeData.address}}</span>
+                    <span class="info_data">{{ cafeData.address || 'No address'}}</span>
                 </div>
                 <div class="profile_info__item">
                     <span class="info_title">{{ langs.cafeProfile.phone }}:</span>
-                    <span class="info_data">{{ cafeData.phone}}</span>
+                    <span class="info_data">{{ cafeData.phone || 'No phone'}}</span>
                 </div>
             </div>
         </div>
         <div class="profile_data__rate">
-            <p class="profile_data__rate-text">Rate: 4</p>
+            <p class="profile_data__rate-text">Rate: {{ rating }}/5</p>
             <v-rating
                 readonly
                 :length="5"
                 size="32"
-                :model-value="4"
+                :model-value="rating"
                 active-color="yellow"
+                half-increments
                 color="white">
             </v-rating>
         </div>
         <div class="profile_main">
             <div class="profile_main__positions">
-                <h3 class="positions__title">Awailable positions</h3>
+                <h3 class="positions__title" v-if="cafeData.positions">Awailable positions</h3>
+                <h3 class="positions__title" v-if="!cafeData.positions">You have no available positions</h3>
                 <ul class="positions__list">
                     <li class="positions__item" v-for="(item, index) in cafeData.positions" :key="index">
                         <span class="positions__item-name">{{ item.name }}</span>
@@ -48,9 +46,10 @@
                 </ul>
             </div>
             <div class="profile_main__reviews">
-                <h3 class="review__title">Reviews</h3>
-                    <ul class="review__list">
-                        <li v-for="(item, index) in reviews" :key="index" class="review__item">
+                <h3 class="review__title">Reviews:</h3>
+                <h3 class="review__title" v-if="!cafeData.reviews">You have no reviews</h3>
+                    <ul class="review__list" v-if="cafeData.reviews">
+                        <li v-for="(item, index) in cafeData.reviews" :key="index" class="review__item">
                             <div>
                                 <img :src="userAvatar(item.userAvatar)" class="review__avatar">
                             </div>
@@ -74,42 +73,42 @@ import { languageState } from 'types/languageTypes';
 import { userReview } from 'types/orderTypes';
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang);
-const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
-const cafeData = useProfileStore().cafeInfo
+
+const cafeData = useProfileStore().cafeInfo;
+
+const rating:Ref<number> = ref(0);
+
+function ratingCalculate(){
+    if(cafeData.reviews){
+        cafeData.reviews.forEach(one => {
+        rating.value = rating.value + one.rate
+        
+    })
+    rating.value = rating.value / cafeData.reviews.length
+    }else{
+        rating.value = 0
+    }
+    
+    
+    
+    
+}
+   
+
 
 function userAvatar(item:number):string{
     return `/images/${item}.png`
 }
-const reviews:Ref<userReview[]> = ref([
-    {
-        userAvatar:2,
-        review:'Very good cafe',
-        rate:3
-    },
-    {
-        userAvatar:3,
-        review:'Super tasty coffee, I like it',
-        rate:4
-    },
-    {
-        userAvatar:1,
-        review:'Неодмінно буду пити каву лише в цій кавярні!',
-        rate:5
-    }
-])
-
-
 
 onBeforeMount(async() => {
     try{
         await useProfileStore().getCafeData();
-        console.log(cafeData)
+        ratingCalculate()
         
     }
     catch(error){
-        console.log(error)
-        
+        console.log(error)       
     }
 })
 
@@ -268,9 +267,6 @@ useHead({
     }
 }
 .review{
-   &__list{
-    
-   }
     &__item{
         display: flex;
         gap: 30px;

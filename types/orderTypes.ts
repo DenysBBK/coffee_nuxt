@@ -1,4 +1,5 @@
 import { Positions } from "./profileTypes"
+import { reviewsArr } from "./profileTypes"
 
 export interface ordersState{
     orders:ordersArr[],
@@ -71,12 +72,17 @@ export interface updatedOrder{
     placeId:string | number | undefined,
     position:number,
     status:number,
-    type:string
+    type:string,
+    orderReview:reviewsArr
 }
 export interface addPosition{
     name:string,
     price:number,
     amount:number
+}
+export interface addedPosition{
+    name:string,
+    price:string
 }
 export interface userReview  {
     userAvatar:number,

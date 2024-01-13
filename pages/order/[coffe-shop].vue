@@ -90,7 +90,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import {addPosition, userReview, userOrderData} from '../../types/orderTypes';
+import {addPosition, addedPosition, userReview, userOrderData} from '../../types/orderTypes';
 
 const cafeData = computed(() => useProfileStore().cafeInfo);
 const route = useRoute();
@@ -105,7 +105,7 @@ function userAvatar(item:number):string{
 };
 
 
-const totalAddedPositions:Ref<addPosition[]> = ref([]);
+const totalAddedPositions:Ref = ref([]);
 
 async function confirmOrder(){
     const orderData: userOrderData = {

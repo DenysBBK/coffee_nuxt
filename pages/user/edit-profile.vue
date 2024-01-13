@@ -60,8 +60,8 @@
 </template>
 <script setup lang="ts">
 import{languageState} from '../../types/languageTypes'
-
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
+
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
 const name:Ref<string> = ref('Name');
@@ -152,9 +152,6 @@ useHead({
 @import "../../assets/editInput.scss";
 
 .edit{
-    &_content{
-
-    }
     &_main{
         
         padding: 0 5px 0 5px;
@@ -200,9 +197,6 @@ useHead({
         &:hover{
             outline:2px black solid;
         }
-    }
-    &_old__text{
-
     }
     &_inputs{
         display: flex;
