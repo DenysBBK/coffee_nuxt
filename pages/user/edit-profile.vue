@@ -138,10 +138,19 @@ onBeforeMount(async() => {
         
     }
 })
+definePageMeta({
+    middleware:'authenticated'
+})
 
+useHead({
+    title:langs.value.pageTitles.userProfile
+})
 
 </script>
-<style lang="scss">
+<style scoped lang="scss">
+@import "../../assets/editProfile.scss";
+@import "../../assets/editInput.scss";
+
 .edit{
     &_content{
 
@@ -199,22 +208,6 @@ onBeforeMount(async() => {
         display: flex;
         flex-direction: column;
         padding-top: 20px;
-    }
-    &_input{
-        max-width: 100%;
-        border: 1px solid white;
-        @media  screen and (min-width: 480px) {
-            max-width: 80%;
-        }
-        @media  screen and (min-width: 768px) {
-            max-width: 60%;
-        }
-        @media  screen and (min-width: 1024px) {
-            max-width: 50%;   
-        }
-        @media  screen and (min-width: 1200px) {
-            max-width: 40%;
-        }
     }
     &_btn{
         padding-left: 20px;

@@ -73,15 +73,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="add">
+                <div class="add" v-if="isNewPositionInputActive">
                     <v-text-field
-                    class="edit_input"
+                        class="add_input"
                         :label="langs.cafeProfile.posItem"
                         type="text"
                         v-model="newPosition.name">
                     </v-text-field>
                     <v-text-field
-                    class="edit_input"
+                        class="add_input"
                         :label="langs.cafeProfile.posPrice"
                         type="text"
                         v-model="newPosition.price">
@@ -91,8 +91,15 @@
                         <v-btn icon="mdi-cancel" class="disapprove_btn" v-on:click="addNewPosition"></v-btn>
                     </div>
                 </div>
+                <div class="add_btn">
+                    <base-button v-if="!isNewPositionInputActive" :text="langs.cafeProfile.addNew" class="update_btn" v-on:click="addNewPosition">{{ langs.cafeProfile.addNew }}</base-button>
+                </div>
             </div>
         </v-form>
+        <div class="profile_update">
+            <base-button :text="langs.cafeProfile.saveBtn" @click="edited"></base-button>
+
+        </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -174,6 +181,27 @@ function addNewPosition():void{
     isNewPositionInputActive.value = !isNewPositionInputActive.value
 }
 
+async function edited():Promise<void>{
+    if(!isValidData.value){
+        return   
+    }
+    const cafeUpdatedData = {
+        address:cafeAddress.value,
+        phone:cafePhone.value,
+        positions:cafePositions,
+        city:cafeCity.value,
+        name:cafeName.value,
+        avatar:cafeAvatar.value
+    }
+    try{
+        await useProfileStore().postCafe(cafeUpdatedData);
+        show('success', langs.value.alerts.profileUpdated)
+    }catch(error){
+        console.log(error)
+        
+    }
+};
+
 onBeforeMount(async() => {
     try{
         await useProfileStore().getCafeData();
@@ -199,6 +227,8 @@ useHead({
 
 </script>
 <style lang="scss">
+@import "../../assets/editProfile.scss";
+@import "../../assets/editInput.scss";
 .edit{
     &_content{
 
@@ -257,22 +287,22 @@ useHead({
         flex-direction: column;
         padding-top: 20px;
     }
-    &_input{
-        max-width: 100%;
-        color: white;
-        @media  screen and (min-width: 480px) {
-            max-width: 80%;
-        }
-        @media  screen and (min-width: 768px) {
-            max-width: 60%;
-        }
-        @media  screen and (min-width: 1024px) {
-            max-width: 50%;   
-        }
-        @media  screen and (min-width: 1200px) {
-            max-width: 40%;
-        }
-    }
+    // &_input{
+    //     max-width: 100%;
+    //     color: white;
+    //     @media  screen and (min-width: 480px) {
+    //         max-width: 80%;
+    //     }
+    //     @media  screen and (min-width: 768px) {
+    //         max-width: 60%;
+    //     }
+    //     @media  screen and (min-width: 1024px) {
+    //         max-width: 50%;   
+    //     }
+    //     @media  screen and (min-width: 1200px) {
+    //         max-width: 40%;
+    //     }
+    // }
     &_btn{
         padding-left: 20px;
         padding-bottom: 40px;
@@ -303,7 +333,7 @@ useHead({
 
         }
         &-title{
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
             font-family: KARLA;
             color: yellow;
@@ -315,7 +345,7 @@ useHead({
 
         }
         &-price{
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
             font-family: KARLA;
             color: yellow;
@@ -334,7 +364,7 @@ useHead({
 
         }
         &-text{
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
             font-family: KARLA;
             color: white;
@@ -346,7 +376,7 @@ useHead({
 
         }
         &-text-price{
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
             font-family: KARLA;
             color: white;
@@ -379,41 +409,31 @@ useHead({
         align-items: center;
         margin-top: -10px;
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.v-input__control{
-    background-color: black;
-    border: 0.1px white solid;
-   
-    margin-top: 10px;
+    &_btn{
+        padding-bottom: 20px;
+    }
+    &_input{
+        color: white;
+        width: 100%; 
+        background-color: black;
+        border: 1px white solid;
+        margin-top: 10px;
     opacity: 1;
+    }
 }
-.v-field-label{
-    opacity: 1;
-    color: yellow;
+.approve_btn{
+    color: green;
 }
-.v-field__input{
-    color: yellow;
+.disapprove_btn{
+    color: red;
 }
-.v-field__append-inner{
-    color: yellow;
-    opacity: 1;
+.profile_update{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
 }
-.mdi-menu-down{
-    opacity: 1;
-}
+
+
 
 </style>

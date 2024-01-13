@@ -169,7 +169,7 @@ const reviews:Ref<userReview[]> = ref([
 onBeforeMount(async () => {
     try{
         const route = useRoute()
-        await useProfileStore().getCafeData(route.params.coffeshop);
+        await useProfileStore().getOneCafeData(route.params.coffeshop);
         cafeData.value.positions.forEach(item => {
             let pos = {
                 name:item.name,

@@ -108,12 +108,19 @@ function actionButton(){
     &_textarea{
       color: white;
       resize: none;
-      border: 1px solid yellow;
+      border: 1px solid white;
       border-radius: 15px;
       padding: 15px;
       overflow: hidden;
       height: 150px;
       width: 100%;
+      outline: none; 
+      &:focus {
+        border: 1px solid yellow;
+     
+  }
+
+  
     }
     
 

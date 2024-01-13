@@ -222,13 +222,13 @@ useHead({
       font-weight: 700;
     }
 }
-.v-input__control{
-    background-color: black;
-    border: 0.1px white solid;
+// .v-input__control{
+//     background-color: black;
+//     border: 0.1px white solid;
    
-    margin-top: 10px;
-    opacity: 1;
-}
+//     margin-top: 10px;
+//     opacity: 1;
+// }
 .v-field-label{
     opacity: 1;
     color: yellow;

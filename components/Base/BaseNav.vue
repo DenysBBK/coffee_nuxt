@@ -29,12 +29,12 @@
                 url="/user/profile">
                 </BaseRedirectButton>
 
-                <NuxtLink to="/cafe-profile" v-if="type === 'shops' && auth.isAuthenticated">
+                <!-- <NuxtLink to="/cafe-profile" v-if="type === 'shops' && auth.isAuthenticated">
                     <base-button :text="langs.header.profile"></base-button>
                 </NuxtLink>
                 <NuxtLink to="/orders" v-if="type === 'shops' && auth.isAuthenticated">
                     <base-button :text="langs.header.orders"></base-button>
-                </NuxtLink>
+                </NuxtLink> -->
                 <button
                 v-on:click="auth.logout()" 
                 v-if="auth.isAuthenticated"

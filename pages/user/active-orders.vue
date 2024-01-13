@@ -19,8 +19,6 @@
                 </div>
                 <div class="item__btn">
                     <p class="item__btn-status">{{ status(item.status) }}</p>
-                    <!-- <v-btn @click="finishOrder(index)" class="item__btn-action" v-if="item.status === 2" >{{  }}</v-btn> -->
-                    <!-- <base-button @click="finishOrder(index)" :text="langs.activeOrders.finish" ></base-button> -->
                     <base-dialog @action="finishOrder(index)"
                     @close-dialog="cleanInputs">
                         <template #openButton>
