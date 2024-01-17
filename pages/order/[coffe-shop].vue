@@ -14,13 +14,13 @@
                     <span class="credentials__city">{{ cafeData.city }}</span>
                     <span class="credentials__city">{{ cafeData.address }}</span>
                 </div>
-                <v-rating readonly :length="5" :model-value="4" :size="32" active-color="yellow"/>
+                <v-rating readonly :length="5" :model-value="rating" color="white" :size="32" active-color="yellow"/>
             </div>
             <div class="cafe_data">
                 <div class="cafe_data__reviews">
                     <h3 class="review__title">Reviews</h3>
                     <ul class="review__block">
-                        <li v-for="(item, index) in reviews" :key="index" class="review__item">
+                        <li v-for="(item, index) in cafeData.reviews" :key="index" class="review__item">
                             <div>
                                 <img :src="userAvatar(item.userAvatar)" class="review__avatar">
                             </div>
@@ -103,7 +103,7 @@ const allPositions:Ref<addPosition[]> = ref([]);
 function userAvatar(item:number):string{
     return `/images/${item}.png`
 };
-
+const rating:Ref<number> = ref(0);
 
 const totalAddedPositions:Ref = ref([]);
 
@@ -145,26 +145,19 @@ function decrement(item:addPosition):void{
     totalAddedPositions.value.splice(itemToRemove, 1)
     item.amount = item.amount - 1;
     totalOrderPrice.value = totalOrderPrice.value - item.price;
+};
+
+function ratingCalculate(){
+    if(cafeData.value.reviews){
+        cafeData.value.reviews.forEach(one => {
+        rating.value = rating.value + one.rate
+        
+    })
+    rating.value = rating.value / cafeData.value.reviews.length
+    }else{
+        rating.value = 0
+    }    
 }
-
-
-const reviews:Ref<userReview[]> = ref([
-    {
-        userAvatar:2,
-        review:'Very good cafe',
-        rate:3
-    },
-    {
-        userAvatar:3,
-        review:'Super tasty coffee, I like it',
-        rate:4
-    },
-    {
-        userAvatar:1,
-        review:'Неодмінно буду пити каву лише в цій кавярні!',
-        rate:5
-    }
-])
 
 onBeforeMount(async () => {
     try{
@@ -179,6 +172,7 @@ onBeforeMount(async () => {
             allPositions.value.push(pos)
             
         })
+        ratingCalculate()
         
         
         

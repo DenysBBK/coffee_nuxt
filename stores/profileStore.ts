@@ -1,3 +1,4 @@
+import { it } from "node:test";
 import { defineStore } from "pinia";
 import { profileState, getUserData, getCafeData, postUserData, postCafeData,shopsArr  } from "types/profileTypes";
 
@@ -142,6 +143,16 @@ export const useProfileStore = defineStore('profile', {
             this.$state.cafe.positions = data.positions
             this.$state.cafe.city = data.city
             this.$state.cafe.avatar = data.avatar
+            const allReviews = [];
+            for(let one in data.reviews){
+                const item = {
+                    userAvatar:data.reviews[one].userAvatar,
+                    rate:data.reviews[one].rate,
+                    review:data.reviews[one].review
+                };
+            allReviews.push(item)
+            };
+            this.$state.cafe.reviews = allReviews
         },
         async getCoffeeShops():Promise<void>{
             const responce = await fetch('https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops.json');
@@ -157,10 +168,24 @@ export const useProfileStore = defineStore('profile', {
                     name:data[one].name,
                     phone:data[one].phone,
                     positions:data[one].positions,
-                    avatar:data[one].avatar
+                    avatar:data[one].avatar,
+                    reviews:data[one].reviews,
+                    totalRating:0
                 };
-                shops.push(item)
+                let rating = 0;
+                if(item.reviews){
+                    for(let rev in item.reviews){
+                        rating = rating + item.reviews[rev].rate                        
+                    }
+                item.totalRating = rating / Object.keys(item.reviews).length;
+                console.log(item)
+                
+                }                
+                shops.push(item);
             };
+            console.log(shops);
+
+                        
            
             
             if(!data){

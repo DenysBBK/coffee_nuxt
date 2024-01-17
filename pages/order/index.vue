@@ -33,32 +33,24 @@
                 <div class="card" v-for="item in allShops" :key="item.id">
                     <img :src="userAvatar(item.avatar)" class="card_avatar">
                     <h3 class="card_name">{{ item.name }}</h3>
-                    <span class="card_rate">*****</span>
+                    <p class="card_norating" v-if="item.totalRating <= 0">No rating</p>
+                    <v-rating v-if="item.totalRating > 0"
+                        readonly
+                        :length="5"
+                        size="32"
+                        :model-value="item.totalRating"
+                        active-color="yellow"
+                        half-increments
+                        color="white">
+                    </v-rating>
                     <base-button text="Order" @click="go(item.id)"></base-button>
                 </div>
             </div>
         </div>
-        <!-- <v-container class="order_container">
-            <h1 class="text-center pb-10" >{{ langs.order.title }}</h1>
-            <p class="order_text" v-if="choosenCity !== null &&  shopsAddresses.length === 0">
-                {{ langs.order.noShops }}
-            </p>
-            <div class="order_cards">
-                <base-card
-                v-for="item in allShops"
-                :key="item.id"
-                :name="item.name"
-                :positions="item.positions"
-                :avatar="item.avatar"
-                :fullData="item"
-                @makeOrder="triggerAlert"
-               ></base-card>
-            </div>
-        </v-container> -->
     </div>
 </template>
 <script setup lang="ts">
-import { shopsArr } from 'types/profileTypes';
+import { shopsArr, getCafeData } from 'types/profileTypes';
 import { languageState } from 'types/languageTypes';
 
 const langs:ComputedRef<languageState> = computed(() => useLanguageStore().lang)
@@ -107,7 +99,7 @@ function changeAddress():void{
     })
 }
 
-const allShops:ComputedRef<shopsArr[] | undefined> = computed(() =>{
+const allShops:ComputedRef<shopsArr[]> = computed(() =>{
     if(choosenCity.value == null){
         return shops.value
     }else if(choosenCity.value !== null && choosenAdress.value == null){
@@ -118,12 +110,16 @@ const allShops:ComputedRef<shopsArr[] | undefined> = computed(() =>{
 })
 
 
+
 onBeforeMount(async() => {
     try{
         await useProfileStore().getCoffeeShops()
         shops.value.forEach(item => {
-        shopsCity.value.push(item.city)
+        shopsCity.value.push(item.city);
+        
+        
     });
+    // console.log(allShops.value)
         
     }catch(error){
         console.log(error)
@@ -221,14 +217,14 @@ useHead({
       font-size: 30px;
       font-weight: 700;
     }
+    &_norating{
+        color: white;
+        font-family: KARLA;
+        font-size: 20px;
+        font-weight: 700;  
+    }
 }
-// .v-input__control{
-//     background-color: black;
-//     border: 0.1px white solid;
-   
-//     margin-top: 10px;
-//     opacity: 1;
-// }
+
 .v-field-label{
     opacity: 1;
     color: yellow;

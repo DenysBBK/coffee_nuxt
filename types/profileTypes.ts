@@ -82,6 +82,8 @@ export interface shopsArr{
     name:string,
     phone:string,
     positions:Positions[],
-    avatar:number
+    avatar:number,
+    reviews:reviewsArr[],
+    totalRating:number
     
 }

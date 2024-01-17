@@ -88,11 +88,7 @@ function ratingCalculate(){
     rating.value = rating.value / cafeData.reviews.length
     }else{
         rating.value = 0
-    }
-    
-    
-    
-    
+    }    
 }
    
 
