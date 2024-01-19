@@ -128,12 +128,12 @@ async function repeatLastOrder():Promise<void>{
         console.log(orderData)
         
         await useOrderStore().postOrder(orderData);
-        show('success', 'Succes order');
-
+        
     }catch(error){
         console.log(error)
         
     }
+    show('success', 'Succes order');
     }
     
 }

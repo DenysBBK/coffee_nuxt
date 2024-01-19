@@ -7,9 +7,10 @@
         </base-alert>
         <div class="order_block">
             <div class="order_filters">
-                <h3 class="order_filters__title">Filters</h3>
+                <h3 class="order_filters__title">Filters:</h3>
                 <div class="order_filters__drop">
                 <v-autocomplete
+                    class="tolik"
                     :label="langs.order.chooseCity"
                     variant="outlined"
                     :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
@@ -134,6 +135,8 @@ useHead({
 })
 </script>
 <style lang="scss">
+@import "../../assets/editProfile.scss";
+@import "../../assets/editInput.scss";
 @import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
 
 .order{
@@ -239,4 +242,5 @@ useHead({
 .mdi-menu-down{
     opacity: 1;
 }
+
 </style>

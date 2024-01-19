@@ -14,12 +14,16 @@
                     <span class="credentials__city">{{ cafeData.city }}</span>
                     <span class="credentials__city">{{ cafeData.address }}</span>
                 </div>
-                <v-rating readonly :length="5" :model-value="rating" color="white" :size="32" active-color="yellow"/>
+                <div>
+                    <p class="order_data__title">{{ rating ? rating:0}}/5</p>
+                    <v-rating readonly :length="5" :model-value="rating" color="white" :size="32" active-color="yellow"/>
+                </div>
             </div>
             <div class="cafe_data">
                 <div class="cafe_data__reviews">
                     <h3 class="review__title">Reviews</h3>
-                    <ul class="review__block">
+                    <h3 v-if="!cafeData.reviews.length" class="review__noreviews">Cafe have no reviews</h3>
+                    <ul class="review__block" v-if="cafeData.reviews.length">
                         <li v-for="(item, index) in cafeData.reviews" :key="index" class="review__item">
                             <div>
                                 <img :src="userAvatar(item.userAvatar)" class="review__avatar">
@@ -93,7 +97,6 @@
 import {addPosition, addedPosition, userReview, userOrderData} from '../../types/orderTypes';
 
 const cafeData = computed(() => useProfileStore().cafeInfo);
-const route = useRoute();
 const totalOrderPrice:Ref<number> = ref(0)
 const { showAlert, typeOfAlert, alertText, show, close } = useAlert();
 
@@ -337,7 +340,23 @@ definePageMeta({
         color: yellow;
         text-align: center;
         border-bottom: 1px solid white;
-        padding-bottom: 30px;
+        padding-bottom: 10px;
+    }
+    &__noreviews{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: KARLA;
+        color: white;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid white;
+        @media  screen and (min-width: 768px){
+            font-size: 30px; 
+            padding-bottom: 0px;
+            border: none;
+        }
+
     }
 }
 .order_data{
