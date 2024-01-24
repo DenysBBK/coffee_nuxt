@@ -186,6 +186,7 @@ useHead({
        align-items: center;
       justify-content: center;
        gap: 20px;
+       padding-bottom: 20px;
        
         
 

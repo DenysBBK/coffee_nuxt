@@ -26,7 +26,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-      
+      padding-top: 50px;
         max-width: 1600px;
         padding-left: 20px;
         padding-right: 20px;

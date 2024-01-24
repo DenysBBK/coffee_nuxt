@@ -30,6 +30,7 @@
         padding-left: 20px;
         padding-right: 20px;
         gap: 30px;
+        padding-top: 50px;
         @media  screen and (min-width: 768px) {
             flex-direction: row;
             height: 90vh   

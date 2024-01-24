@@ -217,7 +217,7 @@ useHead({
         width: 100%;
        
        margin: 0 auto;
-
+        padding-top: 20px;
        padding-left: 20px;
        padding-right: 20px;
        @media  screen and (min-width: 1024px) {

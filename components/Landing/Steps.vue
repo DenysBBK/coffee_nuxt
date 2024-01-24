@@ -31,6 +31,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding-top: 50px;
     @media screen and (min-width: 768px) {
         height: 100vh;
     }

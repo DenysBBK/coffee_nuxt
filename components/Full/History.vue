@@ -36,7 +36,6 @@ const showedItems:ComputedRef<ordersArr[]> = computed(() => {
     return ordersItems.value.slice(0, pagination.value)
 });
 const showPaginationButton:Ref<boolean> = ref(true)
-console.log(showedItems.value)
 
 function loadMoreItems(){
 

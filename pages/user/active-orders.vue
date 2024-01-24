@@ -7,7 +7,7 @@
         </base-alert>
         <h1 class="no-orders" v-if="!userOrders.length">{{ langs.activeOrders.noOrders }}</h1>
         <div class="active__list">
-            <div class="active__list_item" v-for="(item, index) in userOrders" :key="index">
+            <div class="active__list_item" v-for="(item, index) in showedItems" :key="index">
                 <div class="item__name">
                     <img :src=userAvatar(item.cafeAvatar) class="item__name-img">
                     <p class="item__name-text">{{ item.fromCafe }}</p>
@@ -51,8 +51,13 @@
                             finish
                         </template>
                     </base-dialog>
+                    
                 </div>
+                
             </div>
+                <div class="active_btn" v-if="showPaginationButton">
+                    <base-button text="More" @click="loadMoreItems"></base-button>
+                </div>
         </div>
     </div>
 </template>
@@ -93,6 +98,26 @@ function status(item:number):string{
 function userAvatar(item:number):string{
     return `/images/${item}.png`
 }
+
+const pagination:Ref<number> = ref(5);
+const showedItems:ComputedRef<ordersArr[]> = computed(() => {
+    return userOrders.value.slice(0, pagination.value)
+});
+const showPaginationButton:Ref<boolean> = ref(true)
+
+    function loadMoreItems(){
+
+pagination.value = pagination.value + 5;
+console.log('More items')
+
+}
+watch(pagination, (newV, oldV) => {
+if(pagination.value >= userOrders.value.length){
+    showPaginationButton.value = false
+}
+})
+
+
 
 async function finishOrder(index:number):Promise<void>{
    console.log(userReview.value)
@@ -158,6 +183,12 @@ useHead({
                 flex-direction: row;
             }
         }
+    }
+    &_btn{
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+        justify-content: center;
     }
 
 }
