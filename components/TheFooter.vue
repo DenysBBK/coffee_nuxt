@@ -16,7 +16,7 @@
                 <NuxtLink to="/terms">
                     <button class="c_btn">{{ langs.footer.terms }}</button>
                 </NuxtLink>
-                <NuxtLink to="/terms">
+                <NuxtLink to="/privacy">
                     <button class="c_btn">
                         {{ langs.footer.privacy }}
                     </button>

@@ -209,15 +209,18 @@ useHead({
 
 .reg{
     &_page{
-        height: 80vh;
+        // height: 80vh;
         display: flex;
         align-items: center;
+        @media  screen and (min-width: 1024px){
+            height: 80vh;
+        }
     }
     &_block{
         width: 100%;
        
        margin: 0 auto;
-        padding-top: 20px;
+        padding-top: 50px;
        padding-left: 20px;
        padding-right: 20px;
        @media  screen and (min-width: 1024px) {

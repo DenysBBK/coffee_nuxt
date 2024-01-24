@@ -2,17 +2,21 @@
     <v-container class="error_container">
         <h1 class="error_title">404</h1>
         <h3 class="error_subtitle">Page not found</h3>
-        <img src="./public/images/coffee-cup.png" class="error_img">
+        <img src="./public/images/closed.jpg" class="error_img">
        
-        <NuxtLink to="/" class="error_link">To main page</NuxtLink>
+        <BaseRedirectButton
+        text="To main page"
+        url="/"></BaseRedirectButton>
+        
     </v-container>
 </template>
 <style scoped lang="scss">
 .error{
     &_container{
-        width: 100%;
-    background-color: #fcdfdc;
-    border-radius: 5%;
+    width: 100%;
+    background-color: black;
+    border-radius: 15px;
+    border: 1px solid white;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -20,6 +24,7 @@
     align-items: center;
     margin: auto;
     gap: 20px;
+    padding-left: 20px;
 
 // @media screen and (min-width: 750px) {
 //     width: 50%;
@@ -28,19 +33,21 @@
     }
     &_title{
         font-size: 130px;
+        color: yellow;
 
     }
     &_img{
-        max-width: 40%;
-        max-height: 40%;
+        max-width: 70%;
+        max-height: 70%;
         
         @media screen and (min-width: 750px) {
-        max-width: 20%;
-        max-height: 20%;
+        max-width: 50%;
+        max-height: 50%;
     }
         
     }
     &_subtitle{
+        color: yellow;
         font-size: 40px;
         text-align: center;
         align-self: center;

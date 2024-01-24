@@ -120,9 +120,12 @@ useHead({
 
 .login{
     &_page{
-        height: 80vh;
+        height: 100vh;
         display: flex;
         align-items: center;
+        @media  screen and (min-width: 1024px){
+            height: 80vh;
+        }
     }
     &_block{
       width: 100%;
