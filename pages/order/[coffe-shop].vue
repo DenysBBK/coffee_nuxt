@@ -232,7 +232,7 @@ definePageMeta({
         &__avatar{
             max-width: 100px;
             max-height: 100px;
-            background-color: white;
+           
             @media  screen and (min-width: 768px){
                 max-width: 200px;
                 max-height: 200px;

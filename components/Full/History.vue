@@ -16,7 +16,7 @@
                 <p class="item__date">{{ date(item.positionId)}}</p>
             </li>
         </ul>
-        <div class="history_btn" v-if="showPaginationButton">
+        <div class="history_btn" v-if="showPaginationButton && ordersItems.length > 5">
             <base-button text="More" @click="loadMoreItems"></base-button>
         </div>
     </div>
@@ -127,7 +127,7 @@ onBeforeMount(async() => {
         &_img{
             max-width: 75px;
             max-height: 75px;
-            background-color: white;
+         
         }
         &_name{
             color: white;

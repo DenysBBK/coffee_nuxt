@@ -73,7 +73,7 @@ export interface updatedOrder{
     position:number,
     status:number,
     type:string,
-    orderReview:reviewsArr
+    orderReview?:reviewsArr
 }
 export interface addPosition{
     name:string,

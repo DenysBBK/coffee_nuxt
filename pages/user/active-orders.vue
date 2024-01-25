@@ -202,7 +202,7 @@ useHead({
         &-img{
             max-width: 75px;
             max-height: 75px;
-            background-color: white;
+           
 
         }
         &-text{

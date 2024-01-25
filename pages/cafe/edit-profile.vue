@@ -237,9 +237,6 @@ useHead({
 @import "../../assets/editProfile.scss";
 @import "../../assets/editInput.scss";
 .edit{
-    &_content{
-
-    }
     &_main{
         
         padding: 0 5px 0 5px;
@@ -286,30 +283,11 @@ useHead({
             outline:2px black solid;
         }
     }
-    &_old__text{
-
-    }
     &_inputs{
         display: flex;
         flex-direction: column;
         padding-top: 20px;
     }
-    // &_input{
-    //     max-width: 100%;
-    //     color: white;
-    //     @media  screen and (min-width: 480px) {
-    //         max-width: 80%;
-    //     }
-    //     @media  screen and (min-width: 768px) {
-    //         max-width: 60%;
-    //     }
-    //     @media  screen and (min-width: 1024px) {
-    //         max-width: 50%;   
-    //     }
-    //     @media  screen and (min-width: 1200px) {
-    //         max-width: 40%;
-    //     }
-    // }
     &_btn{
         padding-left: 20px;
         padding-bottom: 40px;
@@ -319,7 +297,6 @@ useHead({
     max-width: 70px;
     max-height: 70px;
     align-items: center;
-    background-color: white;
 }
 .positions{
 
@@ -335,17 +312,12 @@ useHead({
     }
 
     &__table{
-
-        &-head{
-
-        }
         &-title{
             font-size: 12px;
             font-weight: 700;
             font-family: KARLA;
             color: yellow;
             text-align: start;
-            padding-bottom: 20px;
             @media  screen and (min-width: 768px){
                 font-size: 20px; 
             } 
@@ -361,13 +333,6 @@ useHead({
             @media  screen and (min-width: 768px){
                 font-size: 20px; 
             } 
-
-        }
-        &-body{
-
-        }
-        &-item{
-
 
         }
         &-text{

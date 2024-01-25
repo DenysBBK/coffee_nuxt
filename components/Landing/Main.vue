@@ -5,12 +5,17 @@
           <h1>Your coffee, your way, your choice. Order online and pick up a taste on the way!</h1>
           <BaseRedirectButton
             text="JOIN AND ORDER ->"
-            url="/login"
+            :url="nesUrl"
           ></BaseRedirectButton>
         </div>
       </div> 
    </div>
 </template>
+<script setup>
+
+let isToken = localStorage.getItem('token')
+const nesUrl = isToken? '/order' : '/registration'
+</script>
 <style scoped lang="scss">
 
   .base_back{

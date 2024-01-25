@@ -193,7 +193,6 @@ useHead({
     }
 }
 .card{
-    // flex: 0 1 33.333%;
     align-self: flex-start;
     padding: 30px;
     display: flex;
@@ -204,7 +203,7 @@ useHead({
     border: 1px solid white;
     border-radius: 15px;
     &_avatar{
-        background-color: white;
+        
         max-width: 200px;
         max-height: 200px;
         align-items: center;

@@ -135,7 +135,7 @@ useHead({
     &__img{
         max-width: 120px;
         max-height: 120px;
-        background-color: white;
+        
         @media  screen and (min-width: 768px){
             max-width: 200px;
             max-height: 200px;
@@ -218,8 +218,10 @@ useHead({
     &__positions{
         border-bottom: 1px solid white;
         padding: 20px 20px 20px 20px;
+        
         @media  screen and (min-width: 911px){
             border-right: 1px solid white;
+            max-width: 50%;
         }
 
     }

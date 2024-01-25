@@ -6,7 +6,7 @@
                 <p class="content_info">At Take and Go, we've made it easier than ever for you to satisfy your coffee cravings. Whether you're in a hurry and need your daily caffeine fix on the go, or you simply want to skip the lines and pre-order your favorite coffee, our platform has got you covered</p>
                 <BaseRedirectButton
                 text="Try now ->"
-                url="/login"></BaseRedirectButton>
+                :url="nesUrl"></BaseRedirectButton>
             </div>
             <div class="img_block">
                 <img src="../../public/images/people.jpg" class="people_img">
@@ -14,6 +14,11 @@
         </div>
     </section>
 </template>
+<script setup>
+
+let isToken = localStorage.getItem('token')
+const nesUrl = isToken? '/order' : '/registration'
+</script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
 

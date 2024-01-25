@@ -7,7 +7,7 @@
         </base-alert>
         <h1 class="no-orders" v-if="!shopOrders.length">{{ langs.orders.noOrders }}</h1>
         <div class="active__list">
-            <div class="active__list_item" v-for="(item, index) in shopOrders" :key="index">
+            <div class="active__list_item" v-for="(item, index) in showedItems" :key="index">
                 <div class="item__name">
                     <img :src=userAvatar(item.userAvatar) class="item__name-img">
                     <p class="item__name-text">{{ item.userName }}</p>
@@ -46,6 +46,9 @@
                     </base-dialog>
                 </div>
             </div>
+            <div class="history_btn" v-if="showPaginationButton && shopOrders.length > 5">
+                <base-button text="More" @click="loadMoreItems"></base-button>
+            </div>
         </div>
     </div>
 </template>
@@ -60,7 +63,23 @@ const shopOrders:ComputedRef<ordersArr[]> = computed(() => {
     return useOrderStore().getAllOrders.filter(one => one.status !== 3).reverse()
 })
 
+const pagination:Ref<number> = ref(5);
+const showedItems:ComputedRef<ordersArr[]> = computed(() => {
+    return shopOrders.value.slice(0, pagination.value)
+});
+const showPaginationButton:Ref<boolean> = ref(true)
 
+function loadMoreItems(){
+
+    pagination.value = pagination.value + 5;
+    console.log('More items')
+    
+}
+watch(pagination, (newV, oldV) => {
+    if(pagination.value >= shopOrders.value.length){
+        showPaginationButton.value = false
+    }
+})
 
 
 function userAvatar(item:number):string{
@@ -150,7 +169,7 @@ useHead({
         &-img{
             max-width: 75px;
             max-height: 75px;
-            background-color: white;
+           
 
         }
         &-text{
@@ -207,5 +226,11 @@ useHead({
     font-size: 30px;
     font-family: KARLA;
     color: yellow;
+}
+.history_btn{
+    display: flex;
+        align-items: center;
+        
+        justify-content: center;
 }
 </style>
