@@ -14,7 +14,7 @@
                 </div>
                 <div class="item__positions">
                     <ul class="item__positions-list" v-for="(pos, i) in item.positions" :key="i">
-                        <li class="item__positions-title">{{ pos.name }} {{ pos.price }}, <span class="item__positions-currency">UAH</span></li>
+                        <li class="item__positions-title">{{ pos.name }}, <span class="item__positions-currency">{{ pos.price }} UAH</span></li>
                     </ul>
                 </div>
                 <div class="item__btn">
@@ -55,7 +55,7 @@
                 </div>
                 
             </div>
-                <div class="active_btn" v-if="showPaginationButton">
+                <div class="active_btn" v-if="showPaginationButton && userOrders.length > 5">
                     <base-button text="More" @click="loadMoreItems"></base-button>
                 </div>
         </div>
@@ -226,6 +226,9 @@ useHead({
         &-currency{
             color: white;
         }
+        &-list{
+            list-style-type: none;
+        }
     }
 
     &__btn{
@@ -253,6 +256,7 @@ useHead({
     font-size: 30px;
     font-family: KARLA;
     color: yellow;
+    padding-top: 30px;
 }
 
 </style>

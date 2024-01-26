@@ -20,15 +20,15 @@
             </div>
             <div class="profile_info__item">
                 <span class="info_title">{{ langs.userProfile.phone }}:</span>
-                <span class="info_data">{{ phone }}</span>
+                <span class="info_data">{{ phone || 'No phone' }}</span>
             </div>
             <div class="profile_info__item">
                 <span class="info_title">{{ langs.userProfile.bank }}:</span>
-                <span class="info_data">{{ bank }}</span>
+                <span class="info_data">{{ bank || 'No bank' }}</span>
             </div>
             <div class="profile_info__item">
                 <span class="info_title">{{ langs.userProfile.cardNumber }}:</span>
-                <span class="info_data">{{ cardNumber }}</span>
+                <span class="info_data">{{ cardNumber || 'No card number' }}</span>
             </div>
         </div>
         <div class="last_order" v-if="lastOrder">

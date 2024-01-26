@@ -48,13 +48,19 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item, index) in allPositions" :key="index" class="order_data__item" >
-                                        <td class="position__title">{{ item.name }}</td>
-                                        <td class="position__price">{{ item.price }}</td>
-                                        <td class="position__btns">
+                                        <td class="position__title">{{ `${index+1}. ${item.name}` }}</td>
+                                        <td class="position__price">{{ item.price }}
+                                            <div>
+                                                <button class="position__action" @click="decrement(item)">-</button>
+                                                <span class="position__amount" :class="{'positive': item.amount >= 1 }">{{ item.amount }}</span>
+                                                <button class="position__action" @click="increment(item)">+</button>
+                                            </div>
+                                        </td>
+                                        <!-- <td class="position__btns">
                                             <button class="position__action" @click="decrement(item)">-</button>
                                             <span class="position__amount" :class="{'positive': item.amount >= 1 }">{{ item.amount }}</span>
                                             <button class="position__action" @click="increment(item)">+</button>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -436,8 +442,11 @@ definePageMeta({
         color: yellow;
         padding-left: 20px;
         text-align: start;
+        display: flex;
+        gap: 20px;
         @media  screen and (min-width: 768px){
             font-size: 30px; 
+            gap: 40px;
         }
         @media  screen and (min-width: 480px) {
             padding-left: 50px;
@@ -445,13 +454,15 @@ definePageMeta({
 
     }
     &__title{
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 700;
         font-family: KARLA;
         color: white;
         text-align: start;
+        width: 50%;
         @media  screen and (min-width: 768px){
             font-size: 30px; 
+            width: 50%;
         }
     }
     &__action{
@@ -479,7 +490,7 @@ definePageMeta({
     &__btns{
         padding-left: 10px;
         @media  screen and (min-width: 480px) {
-            padding-left: 50px;
+            // padding-left: 50px;
         }
     }
 }

@@ -113,10 +113,16 @@ async function submitForm():Promise<void>{
 useHead({
     title:langs.value.pageTitles.login
 })
+onMounted(() => {
+    const instance = getCurrentInstance();
+instance?.proxy?.$forceUpdate();
+})
 
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
+
+
 
 .login{
     &_page{
@@ -245,5 +251,6 @@ useHead({
 .v-selection-control .v-label{
     opacity: 1;
 }
+
 
 </style>

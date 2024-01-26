@@ -1,7 +1,7 @@
 <template>
     <div class="history">
        
-        <h1 class="text-center pb-10" v-if="!ordersItems.length" >{{ langs.history.noItems }}</h1>
+        <h1 class="history__no-items" v-if="!ordersItems.length" >{{ langs.history.noItems }}</h1>
         <ul class="history_list"> 
             <li class="history_list__item" v-for="(item, index) in showedItems" :key="index">
                 <div class="item__avatar">
@@ -117,6 +117,13 @@ onBeforeMount(async() => {
         align-items: center;
         padding-bottom: 20px;
         justify-content: center;
+    }
+    &__no-items{
+        text-align: center;
+    font-size: 30px;
+    font-family: KARLA;
+    color: yellow;
+    padding-top: 30px;
     }
 }
 .item{
