@@ -12,8 +12,8 @@
       show-arrows
     >
       <v-slide-group-item
-        v-for="n in 16"
-        :key="n"
+        v-for="(item, index) in topTenShops" 
+        :key="index"
         v-slot="{ selectedClass }"
       >
         <v-card
@@ -22,12 +22,27 @@
         >
           
             <div class="shop">
-          <h4 class="shop_title">Kyiv</h4>
-          <p class="shop_name">Aroma Cava</p>
-          <img src="../../public/images/8.png" class="shop_img">
-          <p class="shop_rate">Rate: *****</p>
-          <nuxt-link to="/login">
+          <h4 class="shop_title">{{ item.city }}</h4>
+          <p class="shop_name">{{ item.name }}</p>
+          <img :src="userAvatar(item.avatar)" class="shop_img">
+          <p class="shop_rate" v-if="item.totalRating <= 0">No rate</p>
+          <div>
+
+            <v-rating v-if="item.totalRating > 0"
+              readonly
+              :length="5"
+              size="32"
+              :model-value="item.totalRating"
+              active-color="yellow"
+              half-increments
+              color="white">
+            </v-rating>
+          </div>
+          <nuxt-link to="/login" v-if="!btnText && !isCafeAccount" >
             <button class="shop_btn">Login</button>
+          </nuxt-link>
+          <nuxt-link :to="createLink(item.id)" v-if="btnText">
+            <button class="shop_btn">Order</button>
           </nuxt-link>
         </div>
           
@@ -39,6 +54,55 @@
         </div> 
       </div>
 </template>
+<script setup lang="ts">
+import { shopsArr} from 'types/profileTypes';
+
+const shops:ComputedRef<shopsArr[]> = computed(() => {
+    return useProfileStore().shopsInfo
+})
+const topTenShops:Ref<shopsArr[]> = ref([]);
+
+function filterShops(){
+  let allShops = shops.value.sort((one, next) => next.totalRating - one.totalRating);
+  topTenShops.value = allShops
+
+}
+
+function userAvatar(item:number):string{
+    return `/images/${item}.png`
+};
+
+const btnText:ComputedRef<boolean> = computed(() => {
+  if(localStorage.getItem('type') == 'users'){
+    return true
+  }else{
+    return false
+  }
+})
+const isCafeAccount:ComputedRef<boolean> = computed(() => {
+  if(localStorage.getItem('type') == 'shops'){
+    return true
+  }else{
+    return false
+  }
+})
+function createLink(id:number){
+  return `/order/${id}`
+}
+
+
+
+
+
+onBeforeMount(async() => {
+  try{
+    await useProfileStore().getCoffeeShops()
+    filterShops()    
+  }catch(error){
+
+  }
+})
+</script>
 <style lang="scss">
 .sheet{
   margin: 0 auto;

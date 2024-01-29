@@ -2,19 +2,44 @@
     <div class="main">
         <div class="base_back">
         <div class="base_info">
-          <h1>Your coffee, your way, your choice. Order online and pick up a taste on the way!</h1>
+          <h1 class="base_title">Your coffee, your way, your choice. Order online and pick up a taste on the way!</h1>
           <BaseRedirectButton
             text="JOIN AND ORDER ->"
             :url="nesUrl"
+            class="base_redirect-btn"
           ></BaseRedirectButton>
         </div>
       </div> 
    </div>
 </template>
 <script setup>
+import {gsap} from 'gsap'
 
 let isToken = localStorage.getItem('token')
 const nesUrl = isToken? '/order' : '/registration'
+
+
+onMounted(() => {
+
+  const mainText = document.querySelector('.base_title');
+  gsap.fromTo(mainText, {
+    x:-500
+  },{
+    x:0,
+    duration:3
+  });
+  const mainBtn = document.querySelector('.base_redirect-btn');
+  gsap.fromTo(mainBtn, {
+    x:500
+  },{
+    x:0,
+    duration:3
+  });
+}
+
+
+)
+
 </script>
 <style scoped lang="scss">
 

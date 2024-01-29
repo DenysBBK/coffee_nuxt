@@ -15,9 +15,28 @@
     </section>
 </template>
 <script setup>
-
+import {gsap} from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 let isToken = localStorage.getItem('token')
 const nesUrl = isToken? '/order' : '/registration'
+
+
+onMounted(() => {
+    const triggerImg = document.querySelector('.img_block');
+    const showText = document.querySelector('.people_content');
+    gsap.fromTo(showText,{
+        scrollTrigger:{
+            trigger:triggerImg,
+            start:'center center',
+            end:'center center'
+        },
+        y:500
+    },{
+        y:0,
+        duration:5
+    })
+})
 </script>
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");

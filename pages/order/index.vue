@@ -120,7 +120,6 @@ onBeforeMount(async() => {
         
         
     });
-    // console.log(allShops.value)
         
     }catch(error){
         console.log(error)
