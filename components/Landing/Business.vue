@@ -25,6 +25,7 @@ const nesUrl = isToken? '/profile' : '/registration'
 .people{
   
 
+    padding-top: 50px;
     &_block{
         display: flex;
         margin: 0 auto;
