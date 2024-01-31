@@ -1,9 +1,21 @@
 import { defineStore } from "pinia";
-import { ordersState, orderPayload,ordersArr, userOrderItem, cafeOrderItem, userOrderData,updatedOrder} from 'types/orderTypes';
+import { ordersState, orderPayload,ordersArr, userOrderItem, cafeOrderItem, userOrderData,updatedOrder, lastOrder} from 'types/orderTypes';
 
 export const useOrderStore = defineStore('orders', {
     state:():ordersState => ({
-        orders:[]
+        orders:[],
+        lastUserOrder:{
+            cafeAvatar:0,
+            cafeId:0,
+            fromCafe:'Mike',
+            positionId:0,
+            positions:[{
+                name:'Mike',
+                price:12
+            }],
+            status:0,
+            userAvatar:0
+        }
     }),
     actions:{
         async getOrders(payload:orderPayload):Promise<void>{
@@ -29,7 +41,8 @@ export const useOrderStore = defineStore('orders', {
                     }
                     orders.push(item)
                     
-                }        
+                }
+                 
             }else{
                 for(let one in data){
                     let item:cafeOrderItem = {
@@ -47,7 +60,9 @@ export const useOrderStore = defineStore('orders', {
             }
            
             
-           this.$state.orders = orders
+           this.$state.orders = orders;
+
+
             
             
         },
@@ -118,7 +133,7 @@ export const useOrderStore = defineStore('orders', {
                 if(data2[one].positionId == payload.position){
                     const updatedData2 = {
                         ...data2[one],
-                        status:payload.status
+                        status:payload.status,
                     }
                     const resp2 = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${back}/${payload.placeId}/orders/${one}.json`,{
                         method:'PUT',
@@ -130,10 +145,18 @@ export const useOrderStore = defineStore('orders', {
                     }
                 }
             }
+            const oldCafeData = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/${back}/${payload.placeId}/reviews/.json`,{
+                method:'POST',
+                body:JSON.stringify(payload.orderReview)
+            });
+            const oldResponce = await oldCafeData.json();
+            console.log(oldResponce)
+                        
+            
         }
 
     },
     getters:{
-        getAllOrders:(state:ordersState) => state.orders 
+        getAllOrders:(state:ordersState) => state.orders,
     }
 })

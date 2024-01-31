@@ -1,82 +1,88 @@
 <template>
-    <div>
+    <div class="reg_page">
         <base-alert
            v-if="showAlert"
             :alertTitle="alertText"
             :aletrType="typeOfAlert">
         </base-alert>
-        <v-container class="login_container">
-            <h1 class="text-center pb-3" >{{ langs.registration.main }}</h1>
-            <h4 class="text-center">{{ langs.registration.haveAccount }} <NuxtLink to="/login" class="signin"> {{ langs.registration.toLogin }}</NuxtLink> </h4>
-            <v-form @submit.prevent="submitRegForm">
-                <div class="choose_btns">
-                    <v-btn v-on:click="toUserAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'users'}">{{ langs.registration.toUser }}</v-btn>
-                    <v-btn v-on:click="toShopAccout" type="button" variant="text" :class="{'bg-blue':toAccount == 'shops'}">{{ langs.registration.toCaffe }}</v-btn>
-                </div>
-                <v-text-field
-                v-model="name"
-                :label="toAccount == 'users' ? langs.registration.name:langs.registration.cafeName"
-                class="login_input"
-                :rules="nameValidator">
-                </v-text-field>
-                <v-text-field
-                    v-model="email"
-                    :label="langs.registration.email"
-                    class="login_input"
-                    :rules="emailValidator">
-                </v-text-field>
-                <v-text-field
-                    v-model="password"
-                    type="password"
-                    :label="langs.registration.password"
-                    class="login_input"
-                    :rules="passwordValidator">
-                </v-text-field>
-                <v-text-field
-                    v-model="passwordConfirmation"
-                    type="password"
-                    :label="langs.registration.confirmPassword"
-                    class="login_input"
-                    :rules="confirmationRules">
-                </v-text-field>
-                <v-combobox
-                v-if="!toUserAccount"
-                class="login_input"
-                :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
-                :label="langs.registration.city"
-                v-model="city"
-                :rules="cityValidator"
-                >
-
-                </v-combobox>
-                <v-checkbox v-model="checkbox"
-                :rules="checkBoxValidator">
-                    <template v-slot:label>
-                        <div>
-                        {{ langs.registration.agree }}
-                            <v-tooltip location="bottom">
-                                <template v-slot:activator="{ props }">
-                                <NuxtLink to="/terms" class="terms">{{ langs.registration.terms }}</NuxtLink>
-                                </template>
-                                Opens in new window
-                            </v-tooltip>
-                        {{ langs.registration.and }}
-                        <ClientOnly>
-                        <v-tooltip location="bottom">
-                                <template v-slot:activator="{ props }">
-                                <NuxtLink to="/privacy-policy" class="terms">{{ langs.registration.policy }}</NuxtLink>
-                                </template>
-                                Opens in new window
-                        </v-tooltip>
-                    </ClientOnly>
-                        </div>
-                    </template>
-                </v-checkbox>
-                <div class="signup_btn">
-                    <v-btn class="login_btn" type="submit">{{ langs.registration.register }}</v-btn>
+        <div class="reg_block">
+            <v-form @submit.prevent="submitRegForm" class="reg_form">
+                <div class="form_content">
+                    <h1 class="reg_title">{{ langs.registration.main }}</h1>
+                    <h4 class="reg_link">{{ langs.registration.haveAccount }}  <BaseRedirectButton
+                        :text="langs.registration.toLogin"
+                        url="/login"
+                       class="login_btn"></BaseRedirectButton> </h4>
+                    <div class="reg_choose_btns">
+                        <h5 class="reg_choose_btns_title">Create account as:</h5>
+                        <v-btn class="reg_choose_btn" v-on:click="toUserAccout" type="button" variant="text" :class="{'reg_choose_btn_active':toAccount == 'users'}">{{ langs.registration.toUser }}</v-btn>
+                        <v-btn class="reg_choose_btn" v-on:click="toShopAccout" type="button" variant="text" :class="{'reg_choose_btn_active':toAccount == 'shops'}">{{ langs.registration.toCaffe }}</v-btn>
+                    </div>
+                    <v-text-field
+                        v-model="name"
+                        :label="toAccount == 'users' ? langs.registration.name:langs.registration.cafeName"
+                        class="reg_input"
+                        :rules="nameValidator">
+                    </v-text-field>
+                    <v-text-field
+                        v-model="email"
+                        :label="langs.registration.email"
+                        class="reg_input"
+                        :rules="emailValidator">
+                    </v-text-field>
+                    <v-text-field
+                        v-model="password"
+                        type="password"
+                        :label="langs.registration.password"
+                        class="reg_input"
+                        :rules="passwordValidator">
+                    </v-text-field>
+                    <v-text-field
+                        v-model="passwordConfirmation"
+                        type="password"
+                        :label="langs.registration.confirmPassword"
+                        class="reg_input"
+                        :rules="confirmationRules">
+                    </v-text-field>
+                    <v-combobox
+                        v-if="!toUserAccount"
+                        class="reg_input"
+                        :items="['Kiev', 'Kharkiv', 'Odessa', 'Dnipro', 'Lviv', 'Donetsk', 'Zaporizhia', 'Kryvyi Rih', 'Mykolaiv', 'Mariupol', 'Luhansk', 'Vinnytsia', 'Makiivka', 'Simferopol', 'Kherson', 'Poltava', 'Chernihiv', 'Cherkasy', 'Zhytomyr', 'Sumy', 'Rivne', 'Ternopil', 'Kirovohrad', 'Ivano-Frankivsk', 'Lutsk', 'Lysychansk', 'Uzhhorod', 'Enerhodar']"
+                        :label="langs.registration.city"
+                        v-model="city"
+                        :rules="cityValidator">
+                    </v-combobox>
+                    <v-checkbox v-model="checkbox"
+                        :rules="checkBoxValidator">
+                            <template v-slot:label>
+                                <div>
+                                    {{ langs.registration.agree }}
+                                        <v-tooltip location="bottom">
+                                            <template v-slot:activator="{ props }">
+                                            <NuxtLink to="/terms" class="reg_terms">{{ langs.registration.terms }}</NuxtLink>
+                                            </template>
+                                            Opens in new window
+                                        </v-tooltip>
+                                    {{ langs.registration.and }}
+                                    <ClientOnly>
+                                        <v-tooltip location="bottom">
+                                                <template v-slot:activator="{ props }">
+                                                <NuxtLink to="/privacy-policy" class="reg_terms">{{ langs.registration.policy }}</NuxtLink>
+                                                </template>
+                                                Opens in new window
+                                        </v-tooltip>
+                                    </ClientOnly>
+                                </div>
+                            </template>
+                    </v-checkbox>
+                    <base-button :text="langs.registration.register" type="submit"></base-button>
                 </div>
             </v-form>
-        </v-container>
+            <div class="reg_img">
+                <img src="../public/images/registration.jpg" class="reg_form_img">
+            </div>
+        </div>
+        
     </div>
 </template>
 <script setup lang="ts">
@@ -198,45 +204,107 @@ useHead({
 });
 
 </script>
-<style scoped lang="scss">
-.signin{
-    text-decoration: none;
-    color: #08377d;
-}
-.login_container{
-    width: 100%;
-    background-color: #fcdfdc;
-    border-radius: 5%;
-    
+<style lang="scss">
+@import url("https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
 
-@media screen and (min-width: 750px) {
-    width: 50%;
-    
-}
-}
-.login_input{
-   background-color: #cff7fc;
-   color: #1d0502;
-   padding-bottom: 10px;
-   
-}
-.choose_btns{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-.terms{
-    color: blue;
-    text-decoration: none;
-}
-.login_btn{
+.reg{
+    &_page{
+        // height: 80vh;
+        display: flex;
+        align-items: center;
+        @media  screen and (min-width: 1024px){
+            height: 80vh;
+        }
+    }
+    &_block{
+        width: 100%;
+       
+       margin: 0 auto;
+        padding-top: 50px;
+       padding-left: 20px;
+       padding-right: 20px;
+       @media  screen and (min-width: 1024px) {
+        display: flex;
+       justify-content: space-between; 
+       align-items: center;
+       max-width: 1600px;
+        
+    }
+    }
+    &_title{
+        font-size: 40px;
     color: white;
-    background-color: #08377d;
+    font-family: KARLA;
+    }
+    &_link{
+        color: yellow;
+        font-size: 20px;
+        font-family: KARLA;
+        padding-bottom: 20px;
+    }
+    &_signin{
+
+    }
+    &_form{
+        width: 100%;
+    }
+    &_img{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%; 
+    }
+    &_form_img{
+        max-width: 100%;
+        max-height: 100%;
+        display: none;
+        @media  screen and (min-width: 1024px) {
+            max-width: 70%;
+            max-height: 70%;
+            display: inline;
+        
+        }
+    }
+    &_choose_btns{
+        padding-bottom: 30px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        &_title{
+            color: white;
+            font-size: 20px;
+            font-weight: 400;
+            font-family: KARLA;
+        }
+    }
+    &_choose_btn{
+        color: white;
+        font-family: KARLA;
+        font-size: 16px;
+    }
+    &_choose_btn_active{
+        color: black;
+        background-color: yellow;
+    }
+    &_input{
+        background-color: black;
+        border: 1px solid white;
+        color: yellow;
+        border-radius: 10px 10px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+    &_terms{
+        text-decoration: none;
+        color: yellow;
+    }
+
 }
-.signup_btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.mdi-checkbox-blank-outline::before{
+    font-size: 30px;
+}
+.mdi-checkbox-marked::before{
+    font-size: 30px;
+    color: yellow;
 }
 </style>

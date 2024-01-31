@@ -1,6 +1,11 @@
+export interface OrderPositions{
+    name:string,
+    price:number,
+    amount?:number,
+}
 export interface Positions{
     name:string,
-    price:string
+    price:string,
 }
 
 
@@ -12,7 +17,8 @@ export interface profileState{
         id:number|null,
         name:string,
         phone:string
-        avatar:number
+        avatar:number,
+        orders:any
     },
     cafe:{
         address:string,
@@ -22,7 +28,8 @@ export interface profileState{
         email:string,
         positions:Positions[],
         city:string,
-        avatar:number
+        avatar:number,
+        reviews:reviewsArr[]
     },
     shops:shopsArr[]
 }
@@ -33,7 +40,13 @@ export interface getUserData{
     id:number,
     name:string,
     phone:string,
-    avatar:number
+    avatar:number,
+    orders:any
+}
+export interface reviewsArr{
+    userAvatar:number,
+    review:string,
+    rate:number
 }
 export interface getCafeData{
     address:string,
@@ -43,7 +56,8 @@ export interface getCafeData{
     email:string,
     positions:Positions[],
     city:string,
-    avatar:number
+    avatar:number,
+    reviews:reviewsArr[],
 }
 export interface postUserData{
     phone:string | undefined,
@@ -68,6 +82,8 @@ export interface shopsArr{
     name:string,
     phone:string,
     positions:Positions[],
-    avatar:number
+    avatar:number,
+    reviews:reviewsArr[],
+    totalRating:number
     
 }

@@ -1,7 +1,9 @@
 import { Positions } from "./profileTypes"
+import { reviewsArr } from "./profileTypes"
 
 export interface ordersState{
-    orders:ordersArr[]
+    orders:ordersArr[],
+    lastUserOrder:lastOrder
 }
 export type orderPayload = string
 
@@ -17,6 +19,18 @@ export interface ordersArr{
     userId?:string,
     userName?:string,
     cafeAvatar:number,
+    userAvatar:number
+}
+export interface lastOrder{
+    cafeAvatar:number,
+    cafeId:number,
+    fromCafe:string,
+    positionId:number,
+    positions:[{
+        name:string,
+        price:number
+    }],
+    status:number,
     userAvatar:number
 }
 interface orderItem{
@@ -44,10 +58,13 @@ export interface cafeOrderItem extends orderItem{
 
 export interface userOrderData {
     name:string,
-    id:number,
+    id:number | null,
     shopName:string,
     uid:string | null,
-    positions:Positions[],
+    positions:[{
+        name:string,
+        price:string
+    }],
     userAvatar:number,
     cafeAvatar:number
 }
@@ -55,5 +72,20 @@ export interface updatedOrder{
     placeId:string | number | undefined,
     position:number,
     status:number,
-    type:string
+    type:string,
+    orderReview?:reviewsArr
+}
+export interface addPosition{
+    name:string,
+    price:number,
+    amount:number
+}
+export interface addedPosition{
+    name:string,
+    price:string
+}
+export interface userReview  {
+    userAvatar:number,
+    review:string,
+    rate:number
 }

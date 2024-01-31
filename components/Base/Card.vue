@@ -80,7 +80,9 @@ async function orderRequest(data:Positions[]):Promise<void>{
       userAvatar:useProfileStore().userInfo.avatar              
     }
   try{
-    await useProfileStore().getUserData()
+    await useProfileStore().getUserData();
+    console.log(orderData)
+    
     await useOrderStore().postOrder(orderData);
   
   }catch(error){

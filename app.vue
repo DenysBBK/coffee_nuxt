@@ -27,7 +27,7 @@ html,
 body{
   height: 100%;
   background-position: center;
-  background-color:#FEF2F1 ;
+  background-color:black ;
   z-index: 0;
 }
 #__nuxt{
@@ -50,7 +50,11 @@ body{
   box-sizing: border-box;
 }
 .header{
-  padding-bottom: 2.5rem;
+  @media  screen and (min-width: 768px) {
+    padding-bottom: 2.5rem;
+        
+    }
+ 
  
 }
 .page-enter-from{
@@ -71,6 +75,25 @@ body{
 .page-leave-from{
   opacity: 1;
   transform: translateX(0);
+}
+::-webkit-scrollbar {
+  width: 8px; 
+  background: white; 
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: yellow;
+}
+
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px 20px; 
+}
+
+
+::-webkit-scrollbar-horizontal {
+  display: none;
 }
 
 </style>
