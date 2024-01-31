@@ -32,9 +32,7 @@
     max-width: 1600px;
     margin: 0 auto;
     padding: 0px 20px 0px 20px;
-    @media screen and (min-width: 768px) {
-        height: 100vh;
-    }
+  
     
     &_title{
         font-size: 50px;
@@ -79,6 +77,7 @@
         gap: 30px;
         flex-wrap: wrap;
         padding-top: 30px;
+        
     }
 }
 
