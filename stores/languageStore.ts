@@ -112,7 +112,7 @@ export const useLanguageStore = defineStore('language', {
         },
         order:{
             title:'Make an order',
-            chooseSity:'Choose your sity',
+            chooseCity:'Choose your sity',
             chooseAddress:'Choose the address',
             noShops:'There are no coffee shops in this city',
             makeOrder:'Order',
@@ -293,7 +293,7 @@ export const useLanguageStore = defineStore('language', {
         this.$state.order.add = data.order.add;
         this.$state.order.chooseAddress = data.order.chooseAddress;
         this.$state.order.chooseDrink = data.order.chooseDrink;
-        this.$state.order.chooseSity = data.order.chooseSity;
+        this.$state.order.chooseCity = data.order.chooseCity;
         this.$state.order.closeModal = data.order.closeModal;
         this.$state.order.confirmOrder = data.order.confirmOrder;
         this.$state.order.makeOrder = data.order.makeOrder;

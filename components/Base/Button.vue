@@ -11,7 +11,13 @@ const props = defineProps({
 </script>
 <style scoped>
 .button{
-    color:#FEF2F1;
-    background-color: #7d4e08;
+    color: black;
+    font-weight: 600;
+    font-family: KARLA;
+    font-size: 20px;
+    background-color: yellow;
+    padding: 5px 15px 5px 15px;
+    border-radius: 20px 20px;
+    margin-top: 10px;
 }
 </style>

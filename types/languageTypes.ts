@@ -108,7 +108,7 @@ export interface languageState{
     },
     order:{
         title:string,
-        chooseSity:string,
+        chooseCity:string,
         chooseAddress:string,
         noShops:string,
         makeOrder:string,

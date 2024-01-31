@@ -1,3 +1,4 @@
+import { it } from "node:test";
 import { defineStore } from "pinia";
 import { profileState, getUserData, getCafeData, postUserData, postCafeData,shopsArr  } from "types/profileTypes";
 
@@ -11,12 +12,13 @@ export const useProfileStore = defineStore('profile', {
             id:null,
             name:'',
             phone:'',
-            avatar:0
+            avatar:0,
+            orders:[]
         },
         cafe:{
-            address:'',
+            address:'No address',
             name:'',
-            phone:'',
+            phone:'No phone',
             id:null,
             email:'',
             positions:[{
@@ -24,7 +26,12 @@ export const useProfileStore = defineStore('profile', {
                 price:''
             }],
             city:'',
-            avatar:7
+            avatar:7,
+            reviews:[{
+                userAvatar:0,
+                rate:1,
+                review:''
+            }]
         },
         shops:[]
     }),
@@ -57,15 +64,18 @@ export const useProfileStore = defineStore('profile', {
             let uid = localStorage.getItem('uid');
             const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}.json`);
             const data:getUserData = await responce.json();
+           
             
             this.$state.user.bank = data.bank;
             this.$state.user.card = data.card;
             this.$state.user.email = data.email;
             this.$state.user.id = data.id;
             this.$state.user.name = data.name;
-            this.$state.user.phone = data.phone
-            this.$state.user.avatar = data.avatar
-            
+            this.$state.user.phone = data.phone;
+            this.$state.user.avatar = data.avatar;
+            for(let item in data.orders){
+                this.$state.user.orders.push(item)
+            }
         },
         async postCafe(payload:postCafeData):Promise<void>{
             let uid = localStorage.getItem('uid');
@@ -93,8 +103,8 @@ export const useProfileStore = defineStore('profile', {
             
         },
         async getCafeData():Promise<void>{
-            let uid = localStorage.getItem('uid');
-            const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops/${uid}.json`);
+            let cid = localStorage.getItem('uid');
+            const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops/${cid}.json`);
             const data:getCafeData = await responce.json();
 
             this.$state.cafe.address = data.address
@@ -105,6 +115,44 @@ export const useProfileStore = defineStore('profile', {
             this.$state.cafe.positions = data.positions
             this.$state.cafe.city = data.city
             this.$state.cafe.avatar = data.avatar
+          
+            
+            const allReviews = [];
+            for(let one in data.reviews){
+                const item = {
+                    userAvatar:data.reviews[one].userAvatar,
+                    rate:data.reviews[one].rate,
+                    review:data.reviews[one].review
+                };
+            allReviews.push(item)
+            };
+            this.$state.cafe.reviews = allReviews
+
+            
+            
+        },
+        async getOneCafeData(cid:string):Promise<void>{
+            const responce = await fetch(`https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops/${cid}.json`);
+            const data:getCafeData = await responce.json();
+
+            this.$state.cafe.address = data.address
+            this.$state.cafe.email = data.email
+            this.$state.cafe.id = data.id
+            this.$state.cafe.name = data.name
+            this.$state.cafe.phone = data.phone
+            this.$state.cafe.positions = data.positions
+            this.$state.cafe.city = data.city
+            this.$state.cafe.avatar = data.avatar
+            const allReviews = [];
+            for(let one in data.reviews){
+                const item = {
+                    userAvatar:data.reviews[one].userAvatar,
+                    rate:data.reviews[one].rate,
+                    review:data.reviews[one].review
+                };
+            allReviews.push(item)
+            };
+            this.$state.cafe.reviews = allReviews
         },
         async getCoffeeShops():Promise<void>{
             const responce = await fetch('https://coffee-app-fc81b-default-rtdb.europe-west1.firebasedatabase.app/shops.json');
@@ -120,10 +168,24 @@ export const useProfileStore = defineStore('profile', {
                     name:data[one].name,
                     phone:data[one].phone,
                     positions:data[one].positions,
-                    avatar:data[one].avatar
+                    avatar:data[one].avatar,
+                    reviews:data[one].reviews,
+                    totalRating:0
                 };
-                shops.push(item)
+                let rating = 0;
+                if(item.reviews){
+                    for(let rev in item.reviews){
+                        rating = rating + item.reviews[rev].rate                        
+                    }
+                item.totalRating = rating / Object.keys(item.reviews).length;
+                console.log(item)
+                
+                }                
+                shops.push(item);
             };
+            console.log(shops);
+
+                        
            
             
             if(!data){

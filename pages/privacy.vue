@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="terms_block">
         <v-container class="order_container">
             <div>
                 <div class="title">{{ langs.pageTitles.privacyPolicy }}</div>
@@ -62,11 +62,14 @@ useHead({
 <style scoped lang="scss">
 .order{
     &_container{
-    background-color: #cff7fc;
+    background-color: #000000;
     border-radius: 5%;
     width: 100%;
+    border: 1px solid white;
+    border-radius: 15px;
+    padding: 20px;
     @media screen and (min-width: 860px) {
-    width: 50%;
+    width: 70%;
     }
 }
 }
@@ -75,5 +78,9 @@ useHead({
     padding-bottom: 30px;
     font-size: 40px;
     font-weight: 600;
+    color: white;
+}
+.terms_block{
+    padding-top: 50px;
 }
 </style>

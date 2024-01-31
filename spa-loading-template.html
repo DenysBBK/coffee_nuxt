@@ -2,31 +2,25 @@
     <div class="spinner"></div>
 </div>
 
-<style scoped>
+<style scoped lang="scss">
 .preloader-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #FEF2F1; /* Белый фон */
-    height: 100vh; /* Занимаем всю высоту видимой области */
+    background-color: #000000;
+    width: 100vw;
+    height: 100vh;
 }
 
 
 .spinner {
-    /* Size */
     height: 4rem;
     width: 4rem;
-
-    /* Create a curve at the top */
-    border: 4px solid #d1d5db;
-    border-top-color: #3b82f6;
+    border: 4px solid yellow;
+    border-top-color: yellow;
     border-radius: 50%;
-    
-
     animation: spinner 800ms linear infinite;
-
-    /* Убираем отступы по краям */
     margin: 0;
     padding: 0;
 }
@@ -41,7 +35,6 @@
 }
 
 img {
-    /* Убираем отступы */
     margin: 0;
 }
 
