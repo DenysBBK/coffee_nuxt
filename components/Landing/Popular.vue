@@ -138,7 +138,7 @@ onBeforeMount(async() => {
 .base_shops{
   padding-top: 70px;
   @media  screen and (min-width: 768px){
-    height: 80vh;
+    height: 100vh;
   }
   // height: 80vh;
 }

@@ -38,7 +38,7 @@ const nesUrl = isToken? '/order' : '/registration'
         padding-top: 50px;
         @media  screen and (min-width: 768px) {
             flex-direction: row;
-            height: 90vh   
+            height: 100vh   
         }
 
     }
