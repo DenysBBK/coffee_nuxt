@@ -209,12 +209,10 @@ useHead({
 
 .reg{
     &_page{
-        // height: 80vh;
         display: flex;
         align-items: center;
-        @media  screen and (min-width: 1024px){
-            height: 80vh;
-        }
+       padding-top: 20px;
+       
     }
     &_block{
         width: 100%;

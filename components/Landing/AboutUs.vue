@@ -13,7 +13,7 @@
 </template>
 <style scoped lang="scss">
 .about{
-    
+    padding-top: 150px;
     &_block{
         display: flex;
         margin: 0 auto;

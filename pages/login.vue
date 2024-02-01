@@ -129,9 +129,7 @@ instance?.proxy?.$forceUpdate();
         height: 100vh;
         display: flex;
         align-items: center;
-        @media  screen and (min-width: 1024px){
-            height: 80vh;
-        }
+
     }
     &_block{
       width: 100%;
