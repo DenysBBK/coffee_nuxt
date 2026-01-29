@@ -6,6 +6,7 @@
                :title="alertTitle"
                class="alert"
                v-if="visible"
+               data-testid="base-alert"
                ></v-alert>
         </transition>
     </teleport>
